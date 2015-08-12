@@ -35,6 +35,8 @@
 #include "sqstdstring.h"
 #include "sqstdaux.h"
 
+#include "sqratimport.h"
+
 void printfunc(HSQUIRRELVM v,const SQChar *s,...)
 {
     va_list vl;
@@ -69,6 +71,8 @@ int main(int argc, const char * argv[]) {
     sqstd_register_systemlib(v);
     sqstd_register_mathlib(v);
     sqstd_register_stringlib(v);
+    
+    sqrat_register_importlib(v);
     
     sqstd_seterrorhandlers(v);
     

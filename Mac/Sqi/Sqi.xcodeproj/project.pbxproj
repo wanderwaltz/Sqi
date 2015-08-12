@@ -57,6 +57,49 @@
 		4446DC6A1B7900B60009F435 /* libSquirrel3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DBD71B7900640009F435 /* libSquirrel3.a */; };
 		4446DC6C1B7901FA0009F435 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DC6B1B7901FA0009F435 /* libc++.dylib */; };
 		4446DC721B79059E0009F435 /* libc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DC711B79059E0009F435 /* libc.dylib */; };
+		4482DE6A1B7BA8990067E9B8 /* libSQRat-0.9.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4482DE641B7BA8720067E9B8 /* libSQRat-0.9.1.a */; };
+		4482DED51B7BA8A40067E9B8 /* gtest-death-test.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE741B7BA8A40067E9B8 /* gtest-death-test.h */; };
+		4482DED61B7BA8A40067E9B8 /* gtest-message.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE751B7BA8A40067E9B8 /* gtest-message.h */; };
+		4482DED71B7BA8A40067E9B8 /* gtest-param-test.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE761B7BA8A40067E9B8 /* gtest-param-test.h */; };
+		4482DED81B7BA8A40067E9B8 /* gtest-spi.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE781B7BA8A40067E9B8 /* gtest-spi.h */; };
+		4482DED91B7BA8A40067E9B8 /* gtest-test-part.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE791B7BA8A40067E9B8 /* gtest-test-part.h */; };
+		4482DEDA1B7BA8A40067E9B8 /* gtest-typed-test.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE7A1B7BA8A40067E9B8 /* gtest-typed-test.h */; };
+		4482DEDB1B7BA8A40067E9B8 /* gtest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE7B1B7BA8A40067E9B8 /* gtest.h */; };
+		4482DEDC1B7BA8A40067E9B8 /* gtest_pred_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE7C1B7BA8A40067E9B8 /* gtest_pred_impl.h */; };
+		4482DEDD1B7BA8A40067E9B8 /* gtest_prod.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE7D1B7BA8A40067E9B8 /* gtest_prod.h */; };
+		4482DEDE1B7BA8A40067E9B8 /* gtest-death-test-internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE7F1B7BA8A40067E9B8 /* gtest-death-test-internal.h */; };
+		4482DEDF1B7BA8A40067E9B8 /* gtest-filepath.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE801B7BA8A40067E9B8 /* gtest-filepath.h */; };
+		4482DEE01B7BA8A40067E9B8 /* gtest-internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE811B7BA8A40067E9B8 /* gtest-internal.h */; };
+		4482DEE11B7BA8A40067E9B8 /* gtest-linked_ptr.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE821B7BA8A40067E9B8 /* gtest-linked_ptr.h */; };
+		4482DEE21B7BA8A40067E9B8 /* gtest-param-util-generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE831B7BA8A40067E9B8 /* gtest-param-util-generated.h */; };
+		4482DEE31B7BA8A40067E9B8 /* gtest-param-util.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE851B7BA8A40067E9B8 /* gtest-param-util.h */; };
+		4482DEE41B7BA8A40067E9B8 /* gtest-port.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE861B7BA8A40067E9B8 /* gtest-port.h */; };
+		4482DEE51B7BA8A40067E9B8 /* gtest-string.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE871B7BA8A40067E9B8 /* gtest-string.h */; };
+		4482DEE61B7BA8A40067E9B8 /* gtest-type-util.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE881B7BA8A40067E9B8 /* gtest-type-util.h */; };
+		4482DEEA1B7BA8A40067E9B8 /* gtest-internal-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE911B7BA8A40067E9B8 /* gtest-internal-inl.h */; };
+		4482DEF01B7BA8A40067E9B8 /* sqmodule.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE981B7BA8A40067E9B8 /* sqmodule.h */; };
+		4482DEF11B7BA8A40067E9B8 /* sqratAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE9A1B7BA8A40067E9B8 /* sqratAllocator.h */; };
+		4482DEF21B7BA8A40067E9B8 /* sqratArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE9B1B7BA8A40067E9B8 /* sqratArray.h */; };
+		4482DEF31B7BA8A40067E9B8 /* sqratClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE9C1B7BA8A40067E9B8 /* sqratClass.h */; };
+		4482DEF41B7BA8A40067E9B8 /* sqratClassType.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE9D1B7BA8A40067E9B8 /* sqratClassType.h */; };
+		4482DEF51B7BA8A40067E9B8 /* sqratConst.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE9E1B7BA8A40067E9B8 /* sqratConst.h */; };
+		4482DEF61B7BA8A40067E9B8 /* sqratFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE9F1B7BA8A40067E9B8 /* sqratFunction.h */; };
+		4482DEF71B7BA8A40067E9B8 /* sqratGlobalMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA01B7BA8A40067E9B8 /* sqratGlobalMethods.h */; };
+		4482DEF81B7BA8A40067E9B8 /* sqratMemberMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA11B7BA8A40067E9B8 /* sqratMemberMethods.h */; };
+		4482DEF91B7BA8A40067E9B8 /* sqratObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA21B7BA8A40067E9B8 /* sqratObject.h */; };
+		4482DEFA1B7BA8A40067E9B8 /* sqratOverloadMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA31B7BA8A40067E9B8 /* sqratOverloadMethods.h */; };
+		4482DEFB1B7BA8A40067E9B8 /* sqratScript.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA41B7BA8A40067E9B8 /* sqratScript.h */; };
+		4482DEFC1B7BA8A40067E9B8 /* sqratTable.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA51B7BA8A40067E9B8 /* sqratTable.h */; };
+		4482DEFD1B7BA8A40067E9B8 /* sqratTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA61B7BA8A40067E9B8 /* sqratTypes.h */; };
+		4482DEFE1B7BA8A40067E9B8 /* sqratUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA71B7BA8A40067E9B8 /* sqratUtil.h */; };
+		4482DEFF1B7BA8A40067E9B8 /* sqratVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA81B7BA8A40067E9B8 /* sqratVM.h */; };
+		4482DF001B7BA8A40067E9B8 /* sqrat.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEA91B7BA8A40067E9B8 /* sqrat.h */; };
+		4482DF011B7BA8A40067E9B8 /* sqratimport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEAA1B7BA8A40067E9B8 /* sqratimport.h */; };
+		4482DF031B7BA8A40067E9B8 /* sqratimport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4482DEB11B7BA8A40067E9B8 /* sqratimport.cpp */; };
+		4482DF091B7BA8A40067E9B8 /* Fixture.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DEBB1B7BA8A40067E9B8 /* Fixture.h */; };
+		4482DF191B7BA8A40067E9B8 /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DED01B7BA8A40067E9B8 /* Vector.h */; };
+		4482DF1A1B7BA8A40067E9B8 /* sqratThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4482DED21B7BA8A40067E9B8 /* sqratThread.cpp */; };
+		4482DF1B1B7BA8A40067E9B8 /* sqratThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DED31B7BA8A40067E9B8 /* sqratThread.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +109,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4446DBD61B7900640009F435;
 			remoteInfo = Squirrel3;
+		};
+		4482DE681B7BA8920067E9B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4446DBC11B78FFF80009F435 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4482DE631B7BA8720067E9B8;
+			remoteInfo = "SQRat-0.9.1";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -82,7 +132,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4446DBC91B78FFF80009F435 /* Sqi */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Sqi; sourceTree = BUILT_PRODUCTS_DIR; };
+		4446DBC91B78FFF80009F435 /* sqi */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sqi; sourceTree = BUILT_PRODUCTS_DIR; };
 		4446DBCC1B78FFF80009F435 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4446DBD71B7900640009F435 /* libSquirrel3.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSquirrel3.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4446DBDE1B7900810009F435 /* COMPILE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COMPILE; sourceTree = "<group>"; };
@@ -167,6 +217,99 @@
 		4446DC341B7900810009F435 /* squirrel.dsw */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = squirrel.dsw; sourceTree = "<group>"; };
 		4446DC6B1B7901FA0009F435 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		4446DC711B79059E0009F435 /* libc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libc.dylib; path = usr/lib/libc.dylib; sourceTree = SDKROOT; };
+		4482DE641B7BA8720067E9B8 /* libSQRat-0.9.1.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSQRat-0.9.1.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4482DE6C1B7BA8A40067E9B8 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
+		4482DE6E1B7BA8A40067E9B8 /* build_gtest.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_gtest.sh; sourceTree = "<group>"; };
+		4482DE6F1B7BA8A40067E9B8 /* CHANGES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGES; sourceTree = "<group>"; };
+		4482DE701B7BA8A40067E9B8 /* CONTRIBUTORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CONTRIBUTORS; sourceTree = "<group>"; };
+		4482DE711B7BA8A40067E9B8 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		4482DE741B7BA8A40067E9B8 /* gtest-death-test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-death-test.h"; sourceTree = "<group>"; };
+		4482DE751B7BA8A40067E9B8 /* gtest-message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-message.h"; sourceTree = "<group>"; };
+		4482DE761B7BA8A40067E9B8 /* gtest-param-test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-param-test.h"; sourceTree = "<group>"; };
+		4482DE771B7BA8A40067E9B8 /* gtest-param-test.h.pump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gtest-param-test.h.pump"; sourceTree = "<group>"; };
+		4482DE781B7BA8A40067E9B8 /* gtest-spi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-spi.h"; sourceTree = "<group>"; };
+		4482DE791B7BA8A40067E9B8 /* gtest-test-part.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-test-part.h"; sourceTree = "<group>"; };
+		4482DE7A1B7BA8A40067E9B8 /* gtest-typed-test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-typed-test.h"; sourceTree = "<group>"; };
+		4482DE7B1B7BA8A40067E9B8 /* gtest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gtest.h; sourceTree = "<group>"; };
+		4482DE7C1B7BA8A40067E9B8 /* gtest_pred_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gtest_pred_impl.h; sourceTree = "<group>"; };
+		4482DE7D1B7BA8A40067E9B8 /* gtest_prod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gtest_prod.h; sourceTree = "<group>"; };
+		4482DE7F1B7BA8A40067E9B8 /* gtest-death-test-internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-death-test-internal.h"; sourceTree = "<group>"; };
+		4482DE801B7BA8A40067E9B8 /* gtest-filepath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-filepath.h"; sourceTree = "<group>"; };
+		4482DE811B7BA8A40067E9B8 /* gtest-internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-internal.h"; sourceTree = "<group>"; };
+		4482DE821B7BA8A40067E9B8 /* gtest-linked_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-linked_ptr.h"; sourceTree = "<group>"; };
+		4482DE831B7BA8A40067E9B8 /* gtest-param-util-generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-param-util-generated.h"; sourceTree = "<group>"; };
+		4482DE841B7BA8A40067E9B8 /* gtest-param-util-generated.h.pump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gtest-param-util-generated.h.pump"; sourceTree = "<group>"; };
+		4482DE851B7BA8A40067E9B8 /* gtest-param-util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-param-util.h"; sourceTree = "<group>"; };
+		4482DE861B7BA8A40067E9B8 /* gtest-port.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-port.h"; sourceTree = "<group>"; };
+		4482DE871B7BA8A40067E9B8 /* gtest-string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-string.h"; sourceTree = "<group>"; };
+		4482DE881B7BA8A40067E9B8 /* gtest-type-util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-type-util.h"; sourceTree = "<group>"; };
+		4482DE891B7BA8A40067E9B8 /* gtest-type-util.h.pump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gtest-type-util.h.pump"; sourceTree = "<group>"; };
+		4482DE8B1B7BA8A40067E9B8 /* gtest.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = gtest.vcproj; sourceTree = "<group>"; };
+		4482DE8C1B7BA8A40067E9B8 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		4482DE8E1B7BA8A40067E9B8 /* gtest-all.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gtest-all.cc"; sourceTree = "<group>"; };
+		4482DE8F1B7BA8A40067E9B8 /* gtest-death-test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gtest-death-test.cc"; sourceTree = "<group>"; };
+		4482DE901B7BA8A40067E9B8 /* gtest-filepath.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gtest-filepath.cc"; sourceTree = "<group>"; };
+		4482DE911B7BA8A40067E9B8 /* gtest-internal-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "gtest-internal-inl.h"; sourceTree = "<group>"; };
+		4482DE921B7BA8A40067E9B8 /* gtest-port.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gtest-port.cc"; sourceTree = "<group>"; };
+		4482DE931B7BA8A40067E9B8 /* gtest-test-part.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gtest-test-part.cc"; sourceTree = "<group>"; };
+		4482DE941B7BA8A40067E9B8 /* gtest-typed-test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gtest-typed-test.cc"; sourceTree = "<group>"; };
+		4482DE951B7BA8A40067E9B8 /* gtest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gtest.cc; sourceTree = "<group>"; };
+		4482DE961B7BA8A40067E9B8 /* gtest_main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gtest_main.cc; sourceTree = "<group>"; };
+		4482DE981B7BA8A40067E9B8 /* sqmodule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqmodule.h; sourceTree = "<group>"; };
+		4482DE9A1B7BA8A40067E9B8 /* sqratAllocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratAllocator.h; sourceTree = "<group>"; };
+		4482DE9B1B7BA8A40067E9B8 /* sqratArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratArray.h; sourceTree = "<group>"; };
+		4482DE9C1B7BA8A40067E9B8 /* sqratClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratClass.h; sourceTree = "<group>"; };
+		4482DE9D1B7BA8A40067E9B8 /* sqratClassType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratClassType.h; sourceTree = "<group>"; };
+		4482DE9E1B7BA8A40067E9B8 /* sqratConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratConst.h; sourceTree = "<group>"; };
+		4482DE9F1B7BA8A40067E9B8 /* sqratFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratFunction.h; sourceTree = "<group>"; };
+		4482DEA01B7BA8A40067E9B8 /* sqratGlobalMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratGlobalMethods.h; sourceTree = "<group>"; };
+		4482DEA11B7BA8A40067E9B8 /* sqratMemberMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratMemberMethods.h; sourceTree = "<group>"; };
+		4482DEA21B7BA8A40067E9B8 /* sqratObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratObject.h; sourceTree = "<group>"; };
+		4482DEA31B7BA8A40067E9B8 /* sqratOverloadMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratOverloadMethods.h; sourceTree = "<group>"; };
+		4482DEA41B7BA8A40067E9B8 /* sqratScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratScript.h; sourceTree = "<group>"; };
+		4482DEA51B7BA8A40067E9B8 /* sqratTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratTable.h; sourceTree = "<group>"; };
+		4482DEA61B7BA8A40067E9B8 /* sqratTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratTypes.h; sourceTree = "<group>"; };
+		4482DEA71B7BA8A40067E9B8 /* sqratUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratUtil.h; sourceTree = "<group>"; };
+		4482DEA81B7BA8A40067E9B8 /* sqratVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratVM.h; sourceTree = "<group>"; };
+		4482DEA91B7BA8A40067E9B8 /* sqrat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqrat.h; sourceTree = "<group>"; };
+		4482DEAA1B7BA8A40067E9B8 /* sqratimport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratimport.h; sourceTree = "<group>"; };
+		4482DEAB1B7BA8A40067E9B8 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		4482DEAC1B7BA8A40067E9B8 /* running_tests.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = running_tests.txt; sourceTree = "<group>"; };
+		4482DEAE1B7BA8A40067E9B8 /* sq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sq.c; sourceTree = "<group>"; };
+		4482DEAF1B7BA8A40067E9B8 /* sq.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sq.vcproj; sourceTree = "<group>"; };
+		4482DEB11B7BA8A40067E9B8 /* sqratimport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqratimport.cpp; sourceTree = "<group>"; };
+		4482DEB21B7BA8A40067E9B8 /* sqratimport.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sqratimport.vcproj; sourceTree = "<group>"; };
+		4482DEB31B7BA8A40067E9B8 /* sqrat.sln */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sqrat.sln; sourceTree = "<group>"; };
+		4482DEB51B7BA8A40067E9B8 /* ArrayBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArrayBinding.cpp; sourceTree = "<group>"; };
+		4482DEB61B7BA8A40067E9B8 /* build_tests.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_tests.sh; sourceTree = "<group>"; };
+		4482DEB71B7BA8A40067E9B8 /* ClassBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClassBinding.cpp; sourceTree = "<group>"; };
+		4482DEB81B7BA8A40067E9B8 /* ClassInstances.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClassInstances.cpp; sourceTree = "<group>"; };
+		4482DEB91B7BA8A40067E9B8 /* ClassProperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClassProperties.cpp; sourceTree = "<group>"; };
+		4482DEBA1B7BA8A40067E9B8 /* ConstBindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConstBindings.cpp; sourceTree = "<group>"; };
+		4482DEBB1B7BA8A40067E9B8 /* Fixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fixture.h; sourceTree = "<group>"; };
+		4482DEBC1B7BA8A40067E9B8 /* FuncInputArgumentType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FuncInputArgumentType.cpp; sourceTree = "<group>"; };
+		4482DEBD1B7BA8A40067E9B8 /* FunctionOverload.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FunctionOverload.cpp; sourceTree = "<group>"; };
+		4482DEBE1B7BA8A40067E9B8 /* FunctionParams.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FunctionParams.cpp; sourceTree = "<group>"; };
+		4482DEBF1B7BA8A40067E9B8 /* ImportTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImportTest.cpp; sourceTree = "<group>"; };
+		4482DEC01B7BA8A40067E9B8 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
+		4482DEC11B7BA8A40067E9B8 /* NullPointerReturn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NullPointerReturn.cpp; sourceTree = "<group>"; };
+		4482DEC21B7BA8A40067E9B8 /* run_tests.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run_tests.sh; sourceTree = "<group>"; };
+		4482DEC31B7BA8A40067E9B8 /* RunStackHandling.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RunStackHandling.cpp; sourceTree = "<group>"; };
+		4482DEC41B7BA8A40067E9B8 /* ScriptLoading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptLoading.cpp; sourceTree = "<group>"; };
+		4482DEC61B7BA8A40067E9B8 /* hello.nut */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hello.nut; sourceTree = "<group>"; };
+		4482DEC71B7BA8A40067E9B8 /* samplemodule.nut */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = samplemodule.nut; sourceTree = "<group>"; };
+		4482DEC81B7BA8A40067E9B8 /* sqrattest.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sqrattest.vcproj; sourceTree = "<group>"; };
+		4482DEC91B7BA8A40067E9B8 /* SqratVM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SqratVM.cpp; sourceTree = "<group>"; };
+		4482DECA1B7BA8A40067E9B8 /* SqratVM2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SqratVM2.cpp; sourceTree = "<group>"; };
+		4482DECB1B7BA8A40067E9B8 /* SquirrelFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SquirrelFunctions.cpp; sourceTree = "<group>"; };
+		4482DECC1B7BA8A40067E9B8 /* SuspendVM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SuspendVM.cpp; sourceTree = "<group>"; };
+		4482DECD1B7BA8A40067E9B8 /* TableBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TableBinding.cpp; sourceTree = "<group>"; };
+		4482DECE1B7BA8A40067E9B8 /* UniqueObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UniqueObject.cpp; sourceTree = "<group>"; };
+		4482DECF1B7BA8A40067E9B8 /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
+		4482DED01B7BA8A40067E9B8 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		4482DED21B7BA8A40067E9B8 /* sqratThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqratThread.cpp; sourceTree = "<group>"; };
+		4482DED31B7BA8A40067E9B8 /* sqratThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqratThread.h; sourceTree = "<group>"; };
+		4482DED41B7BA8A40067E9B8 /* sqratthread.vcproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sqratthread.vcproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +317,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4482DE6A1B7BA8990067E9B8 /* libSQRat-0.9.1.a in Frameworks */,
 				4446DC721B79059E0009F435 /* libc.dylib in Frameworks */,
 				4446DC6C1B7901FA0009F435 /* libc++.dylib in Frameworks */,
 				4446DC6A1B7900B60009F435 /* libSquirrel3.a in Frameworks */,
@@ -181,6 +325,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4446DBD41B7900640009F435 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4482DE611B7BA8720067E9B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -204,8 +355,9 @@
 		4446DBCA1B78FFF80009F435 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4446DBC91B78FFF80009F435 /* Sqi */,
+				4446DBC91B78FFF80009F435 /* sqi */,
 				4446DBD71B7900640009F435 /* libSquirrel3.a */,
+				4482DE641B7BA8720067E9B8 /* libSQRat-0.9.1.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,6 +373,7 @@
 		4446DBDC1B7900810009F435 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4482DE6B1B7BA8A40067E9B8 /* sqrat-0.9.1 */,
 				4446DBDD1B7900810009F435 /* SQUIRREL3 */,
 			);
 			name = Vendor;
@@ -370,6 +523,209 @@
 			path = squirrel;
 			sourceTree = "<group>";
 		};
+		4482DE6B1B7BA8A40067E9B8 /* sqrat-0.9.1 */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE6C1B7BA8A40067E9B8 /* Doxyfile */,
+				4482DE6D1B7BA8A40067E9B8 /* gtest-1.3.0 */,
+				4482DE971B7BA8A40067E9B8 /* include */,
+				4482DEAB1B7BA8A40067E9B8 /* README.txt */,
+				4482DEAC1B7BA8A40067E9B8 /* running_tests.txt */,
+				4482DEAD1B7BA8A40067E9B8 /* sq */,
+				4482DEB01B7BA8A40067E9B8 /* sqimport */,
+				4482DEB31B7BA8A40067E9B8 /* sqrat.sln */,
+				4482DEB41B7BA8A40067E9B8 /* sqrattest */,
+				4482DED11B7BA8A40067E9B8 /* sqratthread */,
+			);
+			path = "sqrat-0.9.1";
+			sourceTree = "<group>";
+		};
+		4482DE6D1B7BA8A40067E9B8 /* gtest-1.3.0 */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE6E1B7BA8A40067E9B8 /* build_gtest.sh */,
+				4482DE6F1B7BA8A40067E9B8 /* CHANGES */,
+				4482DE701B7BA8A40067E9B8 /* CONTRIBUTORS */,
+				4482DE711B7BA8A40067E9B8 /* COPYING */,
+				4482DE721B7BA8A40067E9B8 /* include */,
+				4482DE8A1B7BA8A40067E9B8 /* msvc */,
+				4482DE8C1B7BA8A40067E9B8 /* README */,
+				4482DE8D1B7BA8A40067E9B8 /* src */,
+			);
+			path = "gtest-1.3.0";
+			sourceTree = "<group>";
+		};
+		4482DE721B7BA8A40067E9B8 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE731B7BA8A40067E9B8 /* gtest */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		4482DE731B7BA8A40067E9B8 /* gtest */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE741B7BA8A40067E9B8 /* gtest-death-test.h */,
+				4482DE751B7BA8A40067E9B8 /* gtest-message.h */,
+				4482DE761B7BA8A40067E9B8 /* gtest-param-test.h */,
+				4482DE771B7BA8A40067E9B8 /* gtest-param-test.h.pump */,
+				4482DE781B7BA8A40067E9B8 /* gtest-spi.h */,
+				4482DE791B7BA8A40067E9B8 /* gtest-test-part.h */,
+				4482DE7A1B7BA8A40067E9B8 /* gtest-typed-test.h */,
+				4482DE7B1B7BA8A40067E9B8 /* gtest.h */,
+				4482DE7C1B7BA8A40067E9B8 /* gtest_pred_impl.h */,
+				4482DE7D1B7BA8A40067E9B8 /* gtest_prod.h */,
+				4482DE7E1B7BA8A40067E9B8 /* internal */,
+			);
+			path = gtest;
+			sourceTree = "<group>";
+		};
+		4482DE7E1B7BA8A40067E9B8 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE7F1B7BA8A40067E9B8 /* gtest-death-test-internal.h */,
+				4482DE801B7BA8A40067E9B8 /* gtest-filepath.h */,
+				4482DE811B7BA8A40067E9B8 /* gtest-internal.h */,
+				4482DE821B7BA8A40067E9B8 /* gtest-linked_ptr.h */,
+				4482DE831B7BA8A40067E9B8 /* gtest-param-util-generated.h */,
+				4482DE841B7BA8A40067E9B8 /* gtest-param-util-generated.h.pump */,
+				4482DE851B7BA8A40067E9B8 /* gtest-param-util.h */,
+				4482DE861B7BA8A40067E9B8 /* gtest-port.h */,
+				4482DE871B7BA8A40067E9B8 /* gtest-string.h */,
+				4482DE881B7BA8A40067E9B8 /* gtest-type-util.h */,
+				4482DE891B7BA8A40067E9B8 /* gtest-type-util.h.pump */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		4482DE8A1B7BA8A40067E9B8 /* msvc */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE8B1B7BA8A40067E9B8 /* gtest.vcproj */,
+			);
+			path = msvc;
+			sourceTree = "<group>";
+		};
+		4482DE8D1B7BA8A40067E9B8 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE8E1B7BA8A40067E9B8 /* gtest-all.cc */,
+				4482DE8F1B7BA8A40067E9B8 /* gtest-death-test.cc */,
+				4482DE901B7BA8A40067E9B8 /* gtest-filepath.cc */,
+				4482DE911B7BA8A40067E9B8 /* gtest-internal-inl.h */,
+				4482DE921B7BA8A40067E9B8 /* gtest-port.cc */,
+				4482DE931B7BA8A40067E9B8 /* gtest-test-part.cc */,
+				4482DE941B7BA8A40067E9B8 /* gtest-typed-test.cc */,
+				4482DE951B7BA8A40067E9B8 /* gtest.cc */,
+				4482DE961B7BA8A40067E9B8 /* gtest_main.cc */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		4482DE971B7BA8A40067E9B8 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE981B7BA8A40067E9B8 /* sqmodule.h */,
+				4482DE991B7BA8A40067E9B8 /* sqrat */,
+				4482DEA91B7BA8A40067E9B8 /* sqrat.h */,
+				4482DEAA1B7BA8A40067E9B8 /* sqratimport.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		4482DE991B7BA8A40067E9B8 /* sqrat */ = {
+			isa = PBXGroup;
+			children = (
+				4482DE9A1B7BA8A40067E9B8 /* sqratAllocator.h */,
+				4482DE9B1B7BA8A40067E9B8 /* sqratArray.h */,
+				4482DE9C1B7BA8A40067E9B8 /* sqratClass.h */,
+				4482DE9D1B7BA8A40067E9B8 /* sqratClassType.h */,
+				4482DE9E1B7BA8A40067E9B8 /* sqratConst.h */,
+				4482DE9F1B7BA8A40067E9B8 /* sqratFunction.h */,
+				4482DEA01B7BA8A40067E9B8 /* sqratGlobalMethods.h */,
+				4482DEA11B7BA8A40067E9B8 /* sqratMemberMethods.h */,
+				4482DEA21B7BA8A40067E9B8 /* sqratObject.h */,
+				4482DEA31B7BA8A40067E9B8 /* sqratOverloadMethods.h */,
+				4482DEA41B7BA8A40067E9B8 /* sqratScript.h */,
+				4482DEA51B7BA8A40067E9B8 /* sqratTable.h */,
+				4482DEA61B7BA8A40067E9B8 /* sqratTypes.h */,
+				4482DEA71B7BA8A40067E9B8 /* sqratUtil.h */,
+				4482DEA81B7BA8A40067E9B8 /* sqratVM.h */,
+			);
+			path = sqrat;
+			sourceTree = "<group>";
+		};
+		4482DEAD1B7BA8A40067E9B8 /* sq */ = {
+			isa = PBXGroup;
+			children = (
+				4482DEAE1B7BA8A40067E9B8 /* sq.c */,
+				4482DEAF1B7BA8A40067E9B8 /* sq.vcproj */,
+			);
+			path = sq;
+			sourceTree = "<group>";
+		};
+		4482DEB01B7BA8A40067E9B8 /* sqimport */ = {
+			isa = PBXGroup;
+			children = (
+				4482DEB11B7BA8A40067E9B8 /* sqratimport.cpp */,
+				4482DEB21B7BA8A40067E9B8 /* sqratimport.vcproj */,
+			);
+			path = sqimport;
+			sourceTree = "<group>";
+		};
+		4482DEB41B7BA8A40067E9B8 /* sqrattest */ = {
+			isa = PBXGroup;
+			children = (
+				4482DEB51B7BA8A40067E9B8 /* ArrayBinding.cpp */,
+				4482DEB61B7BA8A40067E9B8 /* build_tests.sh */,
+				4482DEB71B7BA8A40067E9B8 /* ClassBinding.cpp */,
+				4482DEB81B7BA8A40067E9B8 /* ClassInstances.cpp */,
+				4482DEB91B7BA8A40067E9B8 /* ClassProperties.cpp */,
+				4482DEBA1B7BA8A40067E9B8 /* ConstBindings.cpp */,
+				4482DEBB1B7BA8A40067E9B8 /* Fixture.h */,
+				4482DEBC1B7BA8A40067E9B8 /* FuncInputArgumentType.cpp */,
+				4482DEBD1B7BA8A40067E9B8 /* FunctionOverload.cpp */,
+				4482DEBE1B7BA8A40067E9B8 /* FunctionParams.cpp */,
+				4482DEBF1B7BA8A40067E9B8 /* ImportTest.cpp */,
+				4482DEC01B7BA8A40067E9B8 /* Main.cpp */,
+				4482DEC11B7BA8A40067E9B8 /* NullPointerReturn.cpp */,
+				4482DEC21B7BA8A40067E9B8 /* run_tests.sh */,
+				4482DEC31B7BA8A40067E9B8 /* RunStackHandling.cpp */,
+				4482DEC41B7BA8A40067E9B8 /* ScriptLoading.cpp */,
+				4482DEC51B7BA8A40067E9B8 /* scripts */,
+				4482DEC81B7BA8A40067E9B8 /* sqrattest.vcproj */,
+				4482DEC91B7BA8A40067E9B8 /* SqratVM.cpp */,
+				4482DECA1B7BA8A40067E9B8 /* SqratVM2.cpp */,
+				4482DECB1B7BA8A40067E9B8 /* SquirrelFunctions.cpp */,
+				4482DECC1B7BA8A40067E9B8 /* SuspendVM.cpp */,
+				4482DECD1B7BA8A40067E9B8 /* TableBinding.cpp */,
+				4482DECE1B7BA8A40067E9B8 /* UniqueObject.cpp */,
+				4482DECF1B7BA8A40067E9B8 /* Vector.cpp */,
+				4482DED01B7BA8A40067E9B8 /* Vector.h */,
+			);
+			path = sqrattest;
+			sourceTree = "<group>";
+		};
+		4482DEC51B7BA8A40067E9B8 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4482DEC61B7BA8A40067E9B8 /* hello.nut */,
+				4482DEC71B7BA8A40067E9B8 /* samplemodule.nut */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		4482DED11B7BA8A40067E9B8 /* sqratthread */ = {
+			isa = PBXGroup;
+			children = (
+				4482DED21B7BA8A40067E9B8 /* sqratThread.cpp */,
+				4482DED31B7BA8A40067E9B8 /* sqratThread.h */,
+				4482DED41B7BA8A40067E9B8 /* sqratthread.vcproj */,
+			);
+			path = sqratthread;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -405,6 +761,53 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4482DE621B7BA8720067E9B8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4482DF011B7BA8A40067E9B8 /* sqratimport.h in Headers */,
+				4482DEF61B7BA8A40067E9B8 /* sqratFunction.h in Headers */,
+				4482DED61B7BA8A40067E9B8 /* gtest-message.h in Headers */,
+				4482DEF41B7BA8A40067E9B8 /* sqratClassType.h in Headers */,
+				4482DEDC1B7BA8A40067E9B8 /* gtest_pred_impl.h in Headers */,
+				4482DEF01B7BA8A40067E9B8 /* sqmodule.h in Headers */,
+				4482DF1B1B7BA8A40067E9B8 /* sqratThread.h in Headers */,
+				4482DEF91B7BA8A40067E9B8 /* sqratObject.h in Headers */,
+				4482DEE51B7BA8A40067E9B8 /* gtest-string.h in Headers */,
+				4482DEF71B7BA8A40067E9B8 /* sqratGlobalMethods.h in Headers */,
+				4482DEE11B7BA8A40067E9B8 /* gtest-linked_ptr.h in Headers */,
+				4482DEFA1B7BA8A40067E9B8 /* sqratOverloadMethods.h in Headers */,
+				4482DEE61B7BA8A40067E9B8 /* gtest-type-util.h in Headers */,
+				4482DED81B7BA8A40067E9B8 /* gtest-spi.h in Headers */,
+				4482DF001B7BA8A40067E9B8 /* sqrat.h in Headers */,
+				4482DEE01B7BA8A40067E9B8 /* gtest-internal.h in Headers */,
+				4482DEF31B7BA8A40067E9B8 /* sqratClass.h in Headers */,
+				4482DED91B7BA8A40067E9B8 /* gtest-test-part.h in Headers */,
+				4482DEFB1B7BA8A40067E9B8 /* sqratScript.h in Headers */,
+				4482DEFF1B7BA8A40067E9B8 /* sqratVM.h in Headers */,
+				4482DEF51B7BA8A40067E9B8 /* sqratConst.h in Headers */,
+				4482DEE31B7BA8A40067E9B8 /* gtest-param-util.h in Headers */,
+				4482DEDF1B7BA8A40067E9B8 /* gtest-filepath.h in Headers */,
+				4482DEDE1B7BA8A40067E9B8 /* gtest-death-test-internal.h in Headers */,
+				4482DEF81B7BA8A40067E9B8 /* sqratMemberMethods.h in Headers */,
+				4482DEFC1B7BA8A40067E9B8 /* sqratTable.h in Headers */,
+				4482DF191B7BA8A40067E9B8 /* Vector.h in Headers */,
+				4482DEDD1B7BA8A40067E9B8 /* gtest_prod.h in Headers */,
+				4482DEDA1B7BA8A40067E9B8 /* gtest-typed-test.h in Headers */,
+				4482DEFE1B7BA8A40067E9B8 /* sqratUtil.h in Headers */,
+				4482DF091B7BA8A40067E9B8 /* Fixture.h in Headers */,
+				4482DEFD1B7BA8A40067E9B8 /* sqratTypes.h in Headers */,
+				4482DEE41B7BA8A40067E9B8 /* gtest-port.h in Headers */,
+				4482DEF11B7BA8A40067E9B8 /* sqratAllocator.h in Headers */,
+				4482DEF21B7BA8A40067E9B8 /* sqratArray.h in Headers */,
+				4482DEE21B7BA8A40067E9B8 /* gtest-param-util-generated.h in Headers */,
+				4482DEDB1B7BA8A40067E9B8 /* gtest.h in Headers */,
+				4482DED71B7BA8A40067E9B8 /* gtest-param-test.h in Headers */,
+				4482DEEA1B7BA8A40067E9B8 /* gtest-internal-inl.h in Headers */,
+				4482DED51B7BA8A40067E9B8 /* gtest-death-test.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -419,11 +822,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				4482DE691B7BA8920067E9B8 /* PBXTargetDependency */,
 				4446DC691B7900B20009F435 /* PBXTargetDependency */,
 			);
 			name = sqi;
 			productName = Sqi;
-			productReference = 4446DBC91B78FFF80009F435 /* Sqi */;
+			productReference = 4446DBC91B78FFF80009F435 /* sqi */;
 			productType = "com.apple.product-type.tool";
 		};
 		4446DBD61B7900640009F435 /* Squirrel3 */ = {
@@ -443,6 +847,23 @@
 			productReference = 4446DBD71B7900640009F435 /* libSquirrel3.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		4482DE631B7BA8720067E9B8 /* SQRat-0.9.1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4482DE651B7BA8720067E9B8 /* Build configuration list for PBXNativeTarget "SQRat-0.9.1" */;
+			buildPhases = (
+				4482DE601B7BA8720067E9B8 /* Sources */,
+				4482DE611B7BA8720067E9B8 /* Frameworks */,
+				4482DE621B7BA8720067E9B8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SQRat-0.9.1";
+			productName = "SQRat-0.9.1";
+			productReference = 4482DE641B7BA8720067E9B8 /* libSQRat-0.9.1.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -456,6 +877,9 @@
 						CreatedOnToolsVersion = 6.3.1;
 					};
 					4446DBD61B7900640009F435 = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					4482DE631B7BA8720067E9B8 = {
 						CreatedOnToolsVersion = 6.3.1;
 					};
 				};
@@ -474,6 +898,7 @@
 			targets = (
 				4446DBC81B78FFF80009F435 /* sqi */,
 				4446DBD61B7900640009F435 /* Squirrel3 */,
+				4482DE631B7BA8720067E9B8 /* SQRat-0.9.1 */,
 			);
 		};
 /* End PBXProject section */
@@ -515,6 +940,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4482DE601B7BA8720067E9B8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4482DF1A1B7BA8A40067E9B8 /* sqratThread.cpp in Sources */,
+				4482DF031B7BA8A40067E9B8 /* sqratimport.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -522,6 +956,11 @@
 			isa = PBXTargetDependency;
 			target = 4446DBD61B7900640009F435 /* Squirrel3 */;
 			targetProxy = 4446DC681B7900B20009F435 /* PBXContainerItemProxy */;
+		};
+		4482DE691B7BA8920067E9B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4482DE631B7BA8720067E9B8 /* SQRat-0.9.1 */;
+			targetProxy = 4482DE681B7BA8920067E9B8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -649,6 +1088,28 @@
 			};
 			name = Release;
 		};
+		4482DE661B7BA8720067E9B8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4482DE671B7BA8720067E9B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -668,12 +1129,22 @@
 				4446DBD21B78FFF80009F435 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4446DBD81B7900640009F435 /* Build configuration list for PBXNativeTarget "Squirrel3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4446DBD91B7900640009F435 /* Debug */,
 				4446DBDA1B7900640009F435 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4482DE651B7BA8720067E9B8 /* Build configuration list for PBXNativeTarget "SQRat-0.9.1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4482DE661B7BA8720067E9B8 /* Debug */,
+				4482DE671B7BA8720067E9B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
