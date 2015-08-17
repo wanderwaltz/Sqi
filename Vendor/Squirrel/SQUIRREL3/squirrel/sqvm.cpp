@@ -1234,23 +1234,37 @@ bool SQVM::Get(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest,
 	return false;
 }
 
+
+SQTable *SQVM::GetDefaultDelefate(const SQObjectPtr &self)
+{
+    SQTable *ddel = NULL;
+    switch(type(self)) {
+        case OT_CLASS: ddel = _class_ddel; break;
+        case OT_TABLE: ddel = _table_ddel; break;
+        case OT_ARRAY: ddel = _array_ddel; break;
+        case OT_STRING: ddel = _string_ddel; break;
+        case OT_INSTANCE: ddel = _instance_ddel; break;
+        case OT_INTEGER:case OT_FLOAT:case OT_BOOL: ddel = _number_ddel; break;
+        case OT_GENERATOR: ddel = _generator_ddel; break;
+        case OT_CLOSURE: case OT_NATIVECLOSURE:	ddel = _closure_ddel; break;
+        case OT_THREAD: ddel = _thread_ddel; break;
+        case OT_WEAKREF: ddel = _weakref_ddel; break;
+        default: break;
+    }
+    return ddel;
+}
+
+
 bool SQVM::InvokeDefaultDelegate(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest)
 {
-	SQTable *ddel = NULL;
-	switch(type(self)) {
-		case OT_CLASS: ddel = _class_ddel; break;
-		case OT_TABLE: ddel = _table_ddel; break;
-		case OT_ARRAY: ddel = _array_ddel; break;
-		case OT_STRING: ddel = _string_ddel; break;
-		case OT_INSTANCE: ddel = _instance_ddel; break;
-		case OT_INTEGER:case OT_FLOAT:case OT_BOOL: ddel = _number_ddel; break;
-		case OT_GENERATOR: ddel = _generator_ddel; break;
-		case OT_CLOSURE: case OT_NATIVECLOSURE:	ddel = _closure_ddel; break;
-		case OT_THREAD: ddel = _thread_ddel; break;
-		case OT_WEAKREF: ddel = _weakref_ddel; break;
-		default: return false;
-	}
-	return  ddel->Get(key,dest);
+	SQTable *ddel = GetDefaultDelefate(self);
+    
+    if (ddel != NULL) {
+        return ddel->Get(key, dest);
+    }
+    else {
+        return false;
+    }
 }
 
 
