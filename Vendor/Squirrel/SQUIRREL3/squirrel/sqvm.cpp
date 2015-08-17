@@ -275,7 +275,69 @@ bool SQVM::CMP_OP(CmpOP op, const SQObjectPtr &o1,const SQObjectPtr &o2,SQObject
 	return false;
 }
 
+
 bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
+{
+    // check whether o has a delegate set and invoke its _tostring() methamethod if available
+    switch(type(o)) {
+        case OT_TABLE:
+        case OT_USERDATA:
+        case OT_INSTANCE:
+            if(_delegable(o)->_delegate) {
+                SQObjectPtr closure;
+                if(_delegable(o)->GetMetaMethod(this, MT_TOSTRING, closure)) {
+                    Push(o);
+                    if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
+                        if(type(res) == OT_STRING)
+                            return true;
+                    } 
+                    else {
+                        return false;
+                    }
+                }
+            }
+        default: break;
+    }
+    
+    // otherwise fallback to the default delegate's methamethod implementation
+    // @note this is new comparing to the default Squirrel implementation
+    SQTable *defaultDelegate = GetDefaultDelefate(o);
+    
+    SQObjectPtr closure;
+    if(defaultDelegate->Get((*_ss(this)->_metamethods)[MT_TOSTRING],closure)) {
+        
+        bool recursiveMetamethod = false;
+        
+        SQInteger index = _top;
+        while (index >= 0) {
+            SQObjectPtr callerClosure = GetAt(index);
+            SQObjectPtr callerParam = GetAt(index+1);
+            index--;
+            
+            if ((_rawval(callerClosure) == _rawval(closure)) &&
+                (_rawval(callerParam) == _rawval(o))) {
+                recursiveMetamethod = true;
+                break;
+            }
+        }
+        
+        if (recursiveMetamethod == false) {
+            Push(closure);
+            Push(o);
+            if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
+                if(type(res) == OT_STRING)
+                    return true;
+            }
+            Pop(); // closure
+        }
+    }
+    
+    // fallback to raw string conversion if no delegates found
+    return ToStringRaw(o, res);
+}
+
+
+bool SQVM::ToStringRaw(const SQObjectPtr &o,SQObjectPtr &res)
 {
 	switch(type(o)) {
 	case OT_STRING:
@@ -290,22 +352,6 @@ bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
 	case OT_BOOL:
 		scsprintf(_sp(rsl(6)),_integer(o)?_SC("true"):_SC("false"));
 		break;
-	case OT_TABLE:
-	case OT_USERDATA:
-	case OT_INSTANCE:
-		if(_delegable(o)->_delegate) {
-			SQObjectPtr closure;
-			if(_delegable(o)->GetMetaMethod(this, MT_TOSTRING, closure)) {
-				Push(o);
-				if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
-					if(type(res) == OT_STRING)
-						return true;
-				} 
-				else {
-					return false;
-				}
-			}
-		}
 	default:
 		scsprintf(_sp(rsl(sizeof(void*)+20)),_SC("(%s : 0x%p)"),GetTypeName(o),(void*)_rawval(o));
 	}
