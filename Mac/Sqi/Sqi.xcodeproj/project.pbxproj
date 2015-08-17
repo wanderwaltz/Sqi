@@ -397,7 +397,8 @@
 				4446DC151B7900810009F435 /* squirrel */,
 				4446DC341B7900810009F435 /* squirrel.dsw */,
 			);
-			path = SQUIRREL3;
+			name = SQUIRREL3;
+			path = Squirrel/SQUIRREL3;
 			sourceTree = "<group>";
 		};
 		4446DBE01B7900810009F435 /* doc */ = {
@@ -1147,6 +1148,7 @@
 				4482DE671B7BA8720067E9B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
