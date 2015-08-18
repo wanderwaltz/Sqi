@@ -499,6 +499,10 @@ void RefTable::Resize(SQUnsignedInteger size)
 
 RefTable::RefNode *RefTable::Add(SQHash mainpos,SQObject &obj)
 {
+    if (_freelist == nullptr) {
+        return nullptr;
+    }
+    
 	RefNode *t = _buckets[mainpos];
 	RefNode *newnode = _freelist;
 	newnode->obj = obj;
