@@ -224,7 +224,6 @@ const SQChar* SQFunctionProto::GetLocal(SQVM *vm,SQUnsignedInteger stackbase,SQU
 SQInteger SQFunctionProto::GetLine(SQInstruction *curr)
 {
 	SQInteger op = (SQInteger)(curr-_instructions);
-	SQInteger line=_lineinfos[0]._line;
 	SQInteger low = 0;
 	SQInteger high = _nlineinfos - 1;
 	SQInteger mid = 0;
@@ -248,8 +247,7 @@ SQInteger SQFunctionProto::GetLine(SQInstruction *curr)
 		}
 	}
 
-	line = _lineinfos[mid]._line;
-	return line;
+	return _lineinfos[mid]._line;
 }
 
 SQClosure::~SQClosure()
