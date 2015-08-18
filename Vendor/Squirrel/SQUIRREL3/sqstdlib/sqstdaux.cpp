@@ -24,7 +24,6 @@ void sqstd_printcallstack(HSQUIRRELVM v)
 			pf(v,_SC("*FUNCTION [%s()] %s line [%d]\n"),fn,src,si.line);
 			level++;
 		}
-		level=0;
 		pf(v,_SC("\nLOCALS\n"));
 
 		for(level=0;level<10;level++){
