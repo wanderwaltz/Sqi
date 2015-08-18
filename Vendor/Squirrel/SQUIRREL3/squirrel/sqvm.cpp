@@ -147,14 +147,14 @@ SQVM::~SQVM()
 
 bool SQVM::ArithMetaMethod(SQInteger op,const SQObjectPtr &o1,const SQObjectPtr &o2,SQObjectPtr &dest)
 {
-	SQMetaMethod mm;
+	SQMetaMethod mm = MT_ADD;
 	switch(op){
 		case _SC('+'): mm=MT_ADD; break;
 		case _SC('-'): mm=MT_SUB; break;
 		case _SC('/'): mm=MT_DIV; break;
 		case _SC('*'): mm=MT_MUL; break;
 		case _SC('%'): mm=MT_MODULO; break;
-		default: mm = MT_ADD; assert(0); break; //shutup compiler
+		default: assert(0); break;
 	}
 	if(is_delegable(o1) && _delegable(o1)->_delegate) {
 		
