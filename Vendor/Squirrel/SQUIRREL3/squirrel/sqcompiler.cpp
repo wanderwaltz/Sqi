@@ -575,14 +575,14 @@ public:
 	}
 	SQInteger ChooseCompArithCharByToken(SQInteger tok)
 	{
-		SQInteger oper;
+		SQInteger oper = 0;
 		switch(tok){
 		case TK_MINUSEQ: oper = '-'; break;
 		case TK_PLUSEQ: oper = '+'; break;
 		case TK_MULEQ: oper = '*'; break;
 		case TK_DIVEQ: oper = '/'; break;
 		case TK_MODEQ: oper = '%'; break;
-		default: oper = 0; //shut up compiler
+		default:
 			assert(0); break;
 		};
 		return oper;
