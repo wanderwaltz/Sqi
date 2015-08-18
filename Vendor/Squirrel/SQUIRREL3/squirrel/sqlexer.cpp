@@ -432,7 +432,7 @@ SQInteger SQLexer::ReadNumber()
 		}
 	}
 	else {
-		APPEND_CHAR((int)firstchar);
+		APPEND_CHAR((char)firstchar);
 		while (CUR_CHAR == _SC('.') || scisdigit(CUR_CHAR) || isexponent(CUR_CHAR)) {
             if(CUR_CHAR == _SC('.') || isexponent(CUR_CHAR)) type = TFLOAT;
 			if(isexponent(CUR_CHAR)) {

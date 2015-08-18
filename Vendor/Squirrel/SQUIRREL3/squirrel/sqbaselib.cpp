@@ -830,7 +830,7 @@ static SQInteger string_find(HSQUIRRELVM v)
 	SQInteger len=_string(str)->_len; \
 	const SQChar *sThis=_stringval(str); \
 	SQChar *sNew=(_ss(v)->GetScratchPad(rsl(len))); \
-	for(SQInteger i=0;i<len;i++) sNew[i]=func(sThis[i]); \
+	for(SQInteger i=0;i<len;i++) sNew[i]=(SQChar)func(sThis[i]); \
 	v->Push(SQString::Create(_ss(v),sNew,len)); \
 	return 1; \
 }
