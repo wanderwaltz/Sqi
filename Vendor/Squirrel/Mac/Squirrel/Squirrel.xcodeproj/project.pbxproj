@@ -52,7 +52,6 @@
 		448010AB1B82753F00DDF9E6 /* squtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 448010771B82753F00DDF9E6 /* squtils.h */; };
 		448010AC1B82753F00DDF9E6 /* sqvm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448010781B82753F00DDF9E6 /* sqvm.cpp */; };
 		448010AD1B82753F00DDF9E6 /* sqvm.h in Headers */ = {isa = PBXBuildFile; fileRef = 448010791B82753F00DDF9E6 /* sqvm.h */; };
-		448010AE1B82756E00DDF9E6 /* sq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4480104C1B82753F00DDF9E6 /* sq.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -421,7 +420,6 @@
 				448010871B82753F00DDF9E6 /* sqstdaux.cpp in Sources */,
 				448010901B82753F00DDF9E6 /* sqstdsystem.cpp in Sources */,
 				448010A11B82753F00DDF9E6 /* sqobject.cpp in Sources */,
-				448010AE1B82756E00DDF9E6 /* sq.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +538,7 @@
 				448010221B82752600DDF9E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
