@@ -322,15 +322,18 @@ bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
         }
         
         if (recursiveMetamethod == false) {
-            Push(closure);
+            Push(closure); // pushing this as a marker for recursive metamethod detection
             Push(o);
             if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
-                if(type(res) == OT_STRING)
+                Pop(); // closure
+                if(type(res) == OT_STRING) {
                     return true;
+                }
             }
             Pop(); // closure
         }
     }
+
     
     // fallback to raw string conversion if no delegates found
     return ToStringRaw(o, res);
