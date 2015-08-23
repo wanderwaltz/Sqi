@@ -37,6 +37,8 @@
 
 #include "sqratimport.h"
 
+#include "SqXtdLib.h"
+
 void printfunc(HSQUIRRELVM v,const SQChar *s,...)
 {
     va_list vl;
@@ -75,6 +77,8 @@ int main(int argc, const char * argv[]) {
     sqrat_register_importlib(v);
     
     sqstd_seterrorhandlers(v);
+    
+    sqxtd_register_getdefaultdelegate(v);
     
     sqstd_dofile(v, argv[1], SQFalse, SQTrue);
     

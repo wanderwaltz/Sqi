@@ -10,6 +10,7 @@
 		4446DBCD1B78FFF80009F435 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4446DBCC1B78FFF80009F435 /* main.m */; };
 		4446DC6C1B7901FA0009F435 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DC6B1B7901FA0009F435 /* libc++.dylib */; };
 		4446DC721B79059E0009F435 /* libc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DC711B79059E0009F435 /* libc.dylib */; };
+		445B2ED21B8A40A300ECC943 /* libSqXtdLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B2ED01B8A409500ECC943 /* libSqXtdLib.a */; };
 		448010B91B8275D800DDF9E6 /* libSquirrel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 448010B41B8275AB00DDF9E6 /* libSquirrel.a */; };
 		4482DE6A1B7BA8990067E9B8 /* libSQRat-0.9.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4482DE641B7BA8720067E9B8 /* libSQRat-0.9.1.a */; };
 		4482DED51B7BA8A40067E9B8 /* gtest-death-test.h in Headers */ = {isa = PBXBuildFile; fileRef = 4482DE741B7BA8A40067E9B8 /* gtest-death-test.h */; };
@@ -57,6 +58,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		445B2ECF1B8A409500ECC943 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 445B2EB11B8A3BD100ECC943;
+			remoteInfo = SqXtdLib;
+		};
 		448010B31B8275AB00DDF9E6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 448010AF1B8275AB00DDF9E6 /* Squirrel.xcodeproj */;
@@ -97,6 +105,7 @@
 		4446DBCC1B78FFF80009F435 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4446DC6B1B7901FA0009F435 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		4446DC711B79059E0009F435 /* libc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libc.dylib; path = usr/lib/libc.dylib; sourceTree = SDKROOT; };
+		445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SqXtdLib.xcodeproj; path = SqXtdLib/SqXtdLib/SqXtdLib.xcodeproj; sourceTree = "<group>"; };
 		448010AF1B8275AB00DDF9E6 /* Squirrel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Squirrel.xcodeproj; path = Squirrel/Mac/Squirrel/Squirrel.xcodeproj; sourceTree = "<group>"; };
 		4482DE641B7BA8720067E9B8 /* libSQRat-0.9.1.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSQRat-0.9.1.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4482DE6C1B7BA8A40067E9B8 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
@@ -198,6 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				445B2ED21B8A40A300ECC943 /* libSqXtdLib.a in Frameworks */,
 				448010B91B8275D800DDF9E6 /* libSquirrel.a in Frameworks */,
 				4482DE6A1B7BA8990067E9B8 /* libSQRat-0.9.1.a in Frameworks */,
 				4446DC721B79059E0009F435 /* libc.dylib in Frameworks */,
@@ -246,11 +256,20 @@
 		4446DBDC1B7900810009F435 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */,
 				448010AF1B8275AB00DDF9E6 /* Squirrel.xcodeproj */,
 				4482DE6B1B7BA8A40067E9B8 /* sqrat-0.9.1 */,
 			);
 			name = Vendor;
 			path = ../../Vendor;
+			sourceTree = "<group>";
+		};
+		445B2ECB1B8A409500ECC943 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				445B2ED01B8A409500ECC943 /* libSqXtdLib.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		448010B01B8275AB00DDF9E6 /* Products */ = {
@@ -585,6 +604,10 @@
 					ProductGroup = 448010B01B8275AB00DDF9E6 /* Products */;
 					ProjectRef = 448010AF1B8275AB00DDF9E6 /* Squirrel.xcodeproj */;
 				},
+				{
+					ProductGroup = 445B2ECB1B8A409500ECC943 /* Products */;
+					ProjectRef = 445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -595,6 +618,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		445B2ED01B8A409500ECC943 /* libSqXtdLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSqXtdLib.a;
+			remoteRef = 445B2ECF1B8A409500ECC943 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		448010B41B8275AB00DDF9E6 /* libSquirrel.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -677,7 +707,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../Vendor/Squirrel/SQUIRREL3/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../Vendor/Squirrel/SQUIRREL3/include $(SRCROOT)/../../Vendor/SqXtdLib/SqXtdLib/Headers";
 			};
 			name = Debug;
 		};
@@ -713,7 +743,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../Vendor/Squirrel/SQUIRREL3/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../Vendor/Squirrel/SQUIRREL3/include $(SRCROOT)/../../Vendor/SqXtdLib/SqXtdLib/Headers";
 			};
 			name = Release;
 		};
