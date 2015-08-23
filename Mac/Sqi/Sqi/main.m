@@ -79,6 +79,7 @@ int main(int argc, const char * argv[]) {
     sqstd_seterrorhandlers(v);
     
     sqxtd_register_getdefaultdelegate(v);
+    sqxtd_register_default_string_representations(v);
     
     sqstd_dofile(v, argv[1], SQFalse, SQTrue);
     
