@@ -33,7 +33,7 @@
 extern "C" {
 #endif
     
-void sqxtd_register_getdefaultdelegate(HSQUIRRELVM *vm);
+void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm);
     
 #ifdef __cplusplus
 } /*extern "C"*/
