@@ -301,7 +301,7 @@ bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
     
     // otherwise fallback to the default delegate's methamethod implementation
     // @note this is new comparing to the default Squirrel implementation
-    SQTable *defaultDelegate = GetDefaultDelefate(o);
+    SQTable *defaultDelegate = GetDefaultDelegate(o);
     
     SQObjectPtr closure;
     if(defaultDelegate->Get((*_ss(this)->_metamethods)[MT_TOSTRING],closure)) {
@@ -1281,7 +1281,7 @@ bool SQVM::Get(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest,
 }
 
 
-SQTable *SQVM::GetDefaultDelefate(const SQObjectPtr &self)
+SQTable *SQVM::GetDefaultDelegate(const SQObjectPtr &self)
 {
     SQTable *ddel = NULL;
     switch(type(self)) {
@@ -1303,7 +1303,7 @@ SQTable *SQVM::GetDefaultDelefate(const SQObjectPtr &self)
 
 bool SQVM::InvokeDefaultDelegate(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest)
 {
-	SQTable *ddel = GetDefaultDelefate(self);
+	SQTable *ddel = GetDefaultDelegate(self);
     
     if (ddel != NULL) {
         return ddel->Get(key, dest);
