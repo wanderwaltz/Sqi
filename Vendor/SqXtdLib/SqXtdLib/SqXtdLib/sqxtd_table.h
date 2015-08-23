@@ -1,9 +1,9 @@
 //
-//  SqXtdLib.h
+//  sqxtd_table.h
 //  SqXtdLib
 //
-//  Created by Egor Chiglintsev on 23.08.15.
-//  Copyright (c) 2015 Egor Chiglintsev
+//  Created by Egor Chiglintsev on 24.08.15.
+//  Copyright (c) 2015 Egor Chiglintsev. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +23,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+#ifndef __SqXtdLib__sqxtd_table__
+#define __SqXtdLib__sqxtd_table__
 
-#ifndef SqXtdLib_SqXtdLib_h
-#define SqXtdLib_SqXtdLib_h
-
-#include "squirrel.h"
+#include "SqXtdLib.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
-void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm);
-void sqxtd_register_default_string_representations(HSQUIRRELVM vm);
+
+SQRESULT sqxtd_native_table_tostring(HSQUIRRELVM vm);
     
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
 
-#endif
+#endif /* defined(__SqXtdLib__sqxtd_table__) */

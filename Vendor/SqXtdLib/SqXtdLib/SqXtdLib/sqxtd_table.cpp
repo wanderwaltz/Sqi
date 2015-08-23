@@ -1,9 +1,9 @@
 //
-//  SqXtdLib.h
+//  sqxtd_table.cpp
 //  SqXtdLib
 //
-//  Created by Egor Chiglintsev on 23.08.15.
-//  Copyright (c) 2015 Egor Chiglintsev
+//  Created by Egor Chiglintsev on 24.08.15.
+//  Copyright (c) 2015 Egor Chiglintsev. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +23,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+#include "sqxtd_table.h"
+#include "assert.h"
 
-#ifndef SqXtdLib_SqXtdLib_h
-#define SqXtdLib_SqXtdLib_h
+#include "sqxtd_string.h"
 
-#include "squirrel.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+SQRESULT sqxtd_native_table_tostring(HSQUIRRELVM vm) {
+    sqxtd::string result("{\n");
     
-void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm);
-void sqxtd_register_default_string_representations(HSQUIRRELVM vm);
+    sq_pushnull(vm);
     
-#ifdef __cplusplus
-} /*extern "C"*/
-#endif
-
-#endif
+    while(SQ_SUCCEEDED(sq_next(vm, -2)))
+    {
+        static const SQInteger key_index = -2;
+        static const SQInteger value_index = -1;
+        
+        auto key_value = sqxtd::format_key_value_at(vm, key_index, value_index);
+        
+        result += sqxtd::indent_string(key_value);
+        result += "\n";
+        
+        sq_pop(vm,2);
+    }
+    
+    result += "}";
+    
+    sq_pushstring(vm, result.c_str(), result.length());
+    return 1;
+}
