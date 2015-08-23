@@ -609,6 +609,7 @@ public:
 	//if 'pos' != -1 the previous variable is a local variable
 	void PrefixedExpr()
 	{
+		Factor();
 		for(;;) {
 			switch(_token) {
 			case _SC('.'):
@@ -618,7 +619,7 @@ public:
 				if(_es.etype==BASE) {
 					Emit2ArgsOP(_OP_GET);
 					_es.etype = EXPR;
-					_es.epos  = _fs->TopTarget();
+					_es.epos  = _fs->TopTarget();;
 				}
 				else {
 					if(NeedGet()) {
