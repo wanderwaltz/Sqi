@@ -297,6 +297,7 @@
 				445B2EB71B8A3BD100ECC943 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
