@@ -103,6 +103,8 @@ public:
 	static SQRegFunction _instance_default_delegate_funcz[];
 	SQObjectPtr _weakref_default_delegate;
 	static SQRegFunction _weakref_default_delegate_funcz[];
+    SQObjectPtr _null_default_delegate;
+    static SQRegFunction _null_default_delegate_funcz[];
 	
 	SQCOMPILERERROR _compilererrorhandler;
 	SQPRINTFUNCTION _printfunc;
@@ -127,6 +129,7 @@ private:
 #define _class_ddel		_table(_sharedstate->_class_default_delegate) 
 #define _instance_ddel	_table(_sharedstate->_instance_default_delegate) 
 #define _weakref_ddel	_table(_sharedstate->_weakref_default_delegate) 
+#define _null_ddel      _table(_sharedstate->_null_default_delegate)
 
 #ifdef SQUNICODE //rsl REAL STRING LEN
 #define rsl(l) ((l)<<1)
