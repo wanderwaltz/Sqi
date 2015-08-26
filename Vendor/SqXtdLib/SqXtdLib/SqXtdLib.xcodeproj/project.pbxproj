@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		445B2EBE1B8A3CD300ECC943 /* libSquirrel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B2EBD1B8A3CC900ECC943 /* libSquirrel.a */; };
 		445B2EC81B8A3D9400ECC943 /* sqxtd_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 445B2EC61B8A3D9400ECC943 /* sqxtd_utils.cpp */; };
 		445B2EDD1B8A4FCF00ECC943 /* sqxtd_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 445B2EDB1B8A4FCF00ECC943 /* sqxtd_table.cpp */; };
 		445B2EDE1B8A4FCF00ECC943 /* sqxtd_table.h in Headers */ = {isa = PBXBuildFile; fileRef = 445B2EDC1B8A4FCF00ECC943 /* sqxtd_table.h */; };
@@ -41,7 +40,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				445B2EBE1B8A3CD300ECC943 /* libSquirrel.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
