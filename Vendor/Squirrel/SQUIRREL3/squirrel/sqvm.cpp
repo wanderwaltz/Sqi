@@ -1301,43 +1301,20 @@ bool SQVM::Get(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest,
 }
 
 
-SQObjectPtr SQVM::GetDefaultDelegateObject(const SQObjectType type) const {
-    SQObjectPtr ddel;
-    ddel.Null();
-    
-    switch(type) {
-        case OT_CLASS: ddel = _sharedstate->_class_default_delegate; break;
-        case OT_TABLE: ddel = _sharedstate->_table_default_delegate; break;
-        case OT_ARRAY: ddel = _sharedstate->_array_default_delegate; break;
-        case OT_STRING: ddel = _sharedstate->_string_default_delegate; break;
-        case OT_INSTANCE: ddel = _sharedstate->_instance_default_delegate; break;
-            
-        case OT_INTEGER:
-        case OT_FLOAT:
-        case OT_BOOL: ddel = _sharedstate->_number_default_delegate; break;
-            
-        case OT_GENERATOR: ddel = _sharedstate->_generator_default_delegate; break;
-            
-        case OT_CLOSURE:
-        case OT_NATIVECLOSURE: ddel = _sharedstate->_closure_default_delegate; break;
-            
-        case OT_THREAD: ddel = _sharedstate->_thread_default_delegate; break;
-        case OT_WEAKREF: ddel = _sharedstate->_weakref_default_delegate; break;
-        case OT_NULL: ddel = _sharedstate->_null_default_delegate; break;
-        default: break;
-    }
-    
-    return ddel;
-}
-
-
 SQTable *SQVM::GetDefaultDelegate(const SQObjectPtr &self)
 {
-    SQObjectPtr object_ddel = GetDefaultDelegateObject(type(self));
     SQTable *ddel = NULL;
-    
-    switch(type(object_ddel)) {
-        case OT_TABLE: ddel = _table(object_ddel); break;
+    switch(type(self)) {
+        case OT_CLASS: ddel = _class_ddel; break;
+        case OT_TABLE: ddel = _table_ddel; break;
+        case OT_ARRAY: ddel = _array_ddel; break;
+        case OT_STRING: ddel = _string_ddel; break;
+        case OT_INSTANCE: ddel = _instance_ddel; break;
+        case OT_INTEGER:case OT_FLOAT:case OT_BOOL: ddel = _number_ddel; break;
+        case OT_GENERATOR: ddel = _generator_ddel; break;
+        case OT_CLOSURE: case OT_NATIVECLOSURE:	ddel = _closure_ddel; break;
+        case OT_THREAD: ddel = _thread_ddel; break;
+        case OT_WEAKREF: ddel = _weakref_ddel; break;
         default: break;
     }
     return ddel;
