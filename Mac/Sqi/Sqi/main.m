@@ -80,6 +80,7 @@ int main(int argc, const char * argv[]) {
     
     sqxtd_register_getdefaultdelegate(v);
     sqxtd_register_default_string_representations(v);
+    sqxtd_register_objectivec_null(v);
     
     sqstd_dofile(v, argv[1], SQFalse, SQTrue);
     
