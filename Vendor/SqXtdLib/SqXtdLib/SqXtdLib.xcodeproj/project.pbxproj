@@ -188,7 +188,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../Vendor/Squirrel/SQUIRREL3/include $(SRCROOT)/../Vendor/Squirrel/SQUIRREL3/squirrel";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../Squirrel/SQUIRREL3/include $(SRCROOT)/../../Squirrel/SQUIRREL3/squirrel";
 			};
 			name = Debug;
 		};
@@ -224,7 +224,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../Vendor/Squirrel/SQUIRREL3/include $(SRCROOT)/../Vendor/Squirrel/SQUIRREL3/squirrel";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../Squirrel/SQUIRREL3/include $(SRCROOT)/../../Squirrel/SQUIRREL3/squirrel";
 			};
 			name = Release;
 		};
