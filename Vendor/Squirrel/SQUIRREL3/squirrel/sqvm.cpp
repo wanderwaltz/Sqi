@@ -303,34 +303,36 @@ bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
     // @note this is new comparing to the default Squirrel implementation
     SQTable *defaultDelegate = GetDefaultDelegate(o);
     
-    SQObjectPtr closure;
-    if(defaultDelegate->Get((*_ss(this)->_metamethods)[MT_TOSTRING],closure)) {
-        
-        bool recursiveMetamethod = false;
-        
-        SQInteger index = _top;
-        while (index >= 0) {
-            SQObjectPtr callerClosure = GetAt(index);
-            SQObjectPtr callerParam = GetAt(index+1);
-            index--;
+    if (defaultDelegate != NULL) {
+        SQObjectPtr closure;
+        if(defaultDelegate->Get((*_ss(this)->_metamethods)[MT_TOSTRING],closure)) {
             
-            if ((_rawval(callerClosure) == _rawval(closure)) &&
-                (_rawval(callerParam) == _rawval(o))) {
-                recursiveMetamethod = true;
-                break;
-            }
-        }
-        
-        if (recursiveMetamethod == false) {
-            Push(closure); // pushing this as a marker for recursive metamethod detection
-            Push(o);
-            if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
-                Pop(); // closure
-                if(type(res) == OT_STRING) {
-                    return true;
+            bool recursiveMetamethod = false;
+            
+            SQInteger index = _top;
+            while (index >= 0) {
+                SQObjectPtr callerClosure = GetAt(index);
+                SQObjectPtr callerParam = GetAt(index+1);
+                index--;
+                
+                if ((_rawval(callerClosure) == _rawval(closure)) &&
+                    (_rawval(callerParam) == _rawval(o))) {
+                    recursiveMetamethod = true;
+                    break;
                 }
             }
-            Pop(); // closure
+            
+            if (recursiveMetamethod == false) {
+                Push(closure); // pushing this as a marker for recursive metamethod detection
+                Push(o);
+                if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
+                    Pop(); // closure
+                    if(type(res) == OT_STRING) {
+                        return true;
+                    }
+                }
+                Pop(); // closure
+            }
         }
     }
 
