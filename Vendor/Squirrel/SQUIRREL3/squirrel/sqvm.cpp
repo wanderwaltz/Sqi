@@ -838,6 +838,21 @@ exception_restore:
 						//SQ_THROW();
 					  }
 					default:
+                        SQTable *defaultDelegate = GetDefaultDelegate(clo);
+                            
+                        if (defaultDelegate != NULL) {
+                            SQObjectPtr closure;
+                            if(defaultDelegate->Get((*_ss(this)->_metamethods)[MT_CALL],closure)) {
+                                Push(clo);
+                                for (SQInteger i = 0; i < arg3; i++) Push(STK(arg2 + i));
+                                if(!CallMetaMethod(closure, MT_CALL, arg3+1, clo)) SQ_THROW();
+                                if(sarg0 != -1) {
+                                    STK(arg0) = clo;
+                                }
+                                break;
+                            }
+                        }
+                            
 						Raise_Error(_SC("attempt to call '%s'"), GetTypeName(clo));
 						SQ_THROW();
 					}
