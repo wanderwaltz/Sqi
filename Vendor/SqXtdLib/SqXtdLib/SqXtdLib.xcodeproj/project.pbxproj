@@ -14,19 +14,8 @@
 		445B2EE21B8A541400ECC943 /* sqxtd_string.h in Headers */ = {isa = PBXBuildFile; fileRef = 445B2EE01B8A541400ECC943 /* sqxtd_string.h */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		445B2EBC1B8A3CC900ECC943 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 445B2EB81B8A3CC900ECC943 /* Squirrel.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4480101C1B82752600DDF9E6;
-			remoteInfo = Squirrel;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		445B2EB11B8A3BD100ECC943 /* libSqXtdLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSqXtdLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		445B2EB81B8A3CC900ECC943 /* Squirrel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Squirrel.xcodeproj; path = ../Vendor/Squirrel/Mac/Squirrel/Squirrel.xcodeproj; sourceTree = "<group>"; };
 		445B2EC41B8A3D2000ECC943 /* SqXtdLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SqXtdLib.h; sourceTree = "<group>"; };
 		445B2EC61B8A3D9400ECC943 /* sqxtd_utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_utils.cpp; sourceTree = "<group>"; };
 		445B2EDB1B8A4FCF00ECC943 /* sqxtd_table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_table.cpp; sourceTree = "<group>"; };
@@ -51,7 +40,6 @@
 			children = (
 				445B2EC21B8A3D1500ECC943 /* Headers */,
 				445B2EC31B8A3D1500ECC943 /* SqXtdLib */,
-				445B2EBF1B8A3CDB00ECC943 /* Vendor */,
 				445B2EB21B8A3BD100ECC943 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,22 +50,6 @@
 				445B2EB11B8A3BD100ECC943 /* libSqXtdLib.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		445B2EB91B8A3CC900ECC943 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				445B2EBD1B8A3CC900ECC943 /* libSquirrel.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		445B2EBF1B8A3CDB00ECC943 /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				445B2EB81B8A3CC900ECC943 /* Squirrel.xcodeproj */,
-			);
-			name = Vendor;
 			sourceTree = "<group>";
 		};
 		445B2EC21B8A3D1500ECC943 /* Headers */ = {
@@ -156,28 +128,12 @@
 			mainGroup = 445B2EA81B8A3BD100ECC943;
 			productRefGroup = 445B2EB21B8A3BD100ECC943 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 445B2EB91B8A3CC900ECC943 /* Products */;
-					ProjectRef = 445B2EB81B8A3CC900ECC943 /* Squirrel.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				445B2EB01B8A3BD100ECC943 /* SqXtdLib */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		445B2EBD1B8A3CC900ECC943 /* libSquirrel.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSquirrel.a;
-			remoteRef = 445B2EBC1B8A3CC900ECC943 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		445B2EAD1B8A3BD100ECC943 /* Sources */ = {
