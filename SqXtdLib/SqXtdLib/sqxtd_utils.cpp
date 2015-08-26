@@ -23,19 +23,44 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#include "sqxtd_utils.h"
 #include "SqXtdLib.h"
 #include "string.h"
 
-static SQRESULT sqxtd_native_getdefaultdelegate(HSQUIRRELVM vm) {
-    sq_getdefaultdelegate(vm, sq_gettype(vm, -1));
-    return 1;
-}
+#include "sqxtd_table.h"
 
+static SQRESULT sqxtd_native_getdefaultdelegate(HSQUIRRELVM vm);
+
+static void sqxtd_set_default_delegate_native(HSQUIRRELVM vm, SQObjectType type, const SQChar *key, SQFUNCTION func);
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Public
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm) {
     const SQChar *name = "getdefaultdelegate";
     
     sq_pushstring(vm, name, strlen(name));
     sq_newclosure(vm, &sqxtd_native_getdefaultdelegate, 0);
+    sq_newslot(vm, -3, SQFalse);
+}
+
+
+void sqxtd_register_default_string_representations(HSQUIRRELVM vm) {
+    sqxtd_set_default_delegate_native(vm, OT_TABLE, "_tostring", sqxtd_native_table_tostring);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Private
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static SQRESULT sqxtd_native_getdefaultdelegate(HSQUIRRELVM vm) {
+    sq_getdefaultdelegate(vm, sq_gettype(vm, -1));
+    return 1;
+}
+
+static void sqxtd_set_default_delegate_native(HSQUIRRELVM vm, SQObjectType type, const SQChar *key, SQFUNCTION func) {
+    sq_getdefaultdelegate(vm, type);
+    sq_pushstring(vm, key, strlen(key));
+    sq_newclosure(vm, func, 0);
     sq_newslot(vm, -3, SQFalse);
 }
