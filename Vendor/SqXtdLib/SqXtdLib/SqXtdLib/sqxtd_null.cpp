@@ -1,8 +1,8 @@
 //
-//  sqxtd_utils.cpp
+//  sqxtd_null.cpp
 //  SqXtdLib
 //
-//  Created by Egor Chiglintsev on 23.08.15.
+//  Created by Egor Chiglintsev on 26.08.15.
 //  Copyright (c) 2015 Egor Chiglintsev. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,43 +24,24 @@
 //  SOFTWARE.
 
 #include "SqXtdLib.h"
-#include "string.h"
-
 #include "sqxtd_utils.h"
-#include "sqxtd_table.h"
 
-static SQRESULT sqxtd_native_getdefaultdelegate(HSQUIRRELVM vm);
-
+static SQRESULT sqxtd_native_null_default_metamethod(HSQUIRRELVM vm);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm) {
-    const SQChar *name = "getdefaultdelegate";
-    
-    sq_pushstring(vm, name, strlen(name));
-    sq_newclosure(vm, &sqxtd_native_getdefaultdelegate, 0);
-    sq_newslot(vm, -3, SQFalse);
-}
-
-
-void sqxtd_register_default_string_representations(HSQUIRRELVM vm) {
-    sqxtd_set_default_delegate_native(vm, OT_TABLE, "_tostring", sqxtd_native_table_tostring);
-}
-
-
-void sqxtd_set_default_delegate_native(HSQUIRRELVM vm, SQObjectType type, const SQChar *key, SQFUNCTION func) {
-    sq_getdefaultdelegate(vm, type);
-    sq_pushstring(vm, key, strlen(key));
-    sq_newclosure(vm, func, 0);
-    sq_newslot(vm, -3, SQFalse);
+void sqxtd_register_objectivec_null(HSQUIRRELVM vm) {
+    sqxtd_set_default_delegate_native(vm, OT_NULL, "_call", &sqxtd_native_null_default_metamethod);
+    sqxtd_set_default_delegate_native(vm, OT_NULL, "_get", &sqxtd_native_null_default_metamethod);
+    sqxtd_set_default_delegate_native(vm, OT_NULL, "_set", &sqxtd_native_null_default_metamethod);
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Private
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static SQRESULT sqxtd_native_getdefaultdelegate(HSQUIRRELVM vm) {
-    sq_getdefaultdelegate(vm, sq_gettype(vm, -1));
+static SQRESULT sqxtd_native_null_default_metamethod(HSQUIRRELVM vm) {
+    sq_pushnull(vm);
     return 1;
 }
