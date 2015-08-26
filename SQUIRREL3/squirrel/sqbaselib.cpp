@@ -1192,3 +1192,8 @@ SQRegFunction SQSharedState::_weakref_default_delegate_funcz[] = {
 	{0,0}
 };
 
+
+SQRegFunction SQSharedState::_null_default_delegate_funcz[] = {
+    {0,0}
+};
+

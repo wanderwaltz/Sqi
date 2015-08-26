@@ -1423,21 +1423,8 @@ SQRESULT sq_getweakrefval(HSQUIRRELVM v,SQInteger idx)
 
 SQRESULT sq_getdefaultdelegate(HSQUIRRELVM v,SQObjectType t)
 {
-	SQSharedState *ss = _ss(v);
-	switch(t) {
-	case OT_TABLE: v->Push(ss->_table_default_delegate); break;
-	case OT_ARRAY: v->Push(ss->_array_default_delegate); break;
-	case OT_STRING: v->Push(ss->_string_default_delegate); break;
-	case OT_INTEGER: case OT_FLOAT: v->Push(ss->_number_default_delegate); break;
-	case OT_GENERATOR: v->Push(ss->_generator_default_delegate); break;
-	case OT_CLOSURE: case OT_NATIVECLOSURE: v->Push(ss->_closure_default_delegate); break;
-	case OT_THREAD: v->Push(ss->_thread_default_delegate); break;
-	case OT_CLASS: v->Push(ss->_class_default_delegate); break;
-	case OT_INSTANCE: v->Push(ss->_instance_default_delegate); break;
-	case OT_WEAKREF: v->Push(ss->_weakref_default_delegate); break;
-	default: return sq_throwerror(v,_SC("the type doesn't have a default delegate"));
-	}
-	return SQ_OK;
+    v->Push(v->GetDefaultDelegateObject(t));
+    return SQ_OK;
 }
 
 SQRESULT sq_next(HSQUIRRELVM v,SQInteger idx)
