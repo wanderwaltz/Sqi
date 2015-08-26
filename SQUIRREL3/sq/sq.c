@@ -89,10 +89,7 @@ int getargs(HSQUIRRELVM v,int argc, char* argv[],SQInteger *retval)
 {
 	int i;
 	int compiles_only = 0;
-	static SQChar temp[500];
-	const SQChar *ret=NULL;
 	char * output = NULL;
-	int lineinfo=0;
 	*retval = 0;
 	if(argc>1)
 	{
@@ -309,7 +306,6 @@ int main(int argc, char* argv[])
 {
 	HSQUIRRELVM v;
 	SQInteger retval = 0;
-	const SQChar *filename=NULL;
 #if defined(_MSC_VER) && defined(_DEBUG)
 	_CrtSetAllocHook(MemAllocHook);
 #endif
@@ -347,6 +343,6 @@ int main(int argc, char* argv[])
 	_getch();
 	_CrtMemDumpAllObjectsSince( NULL );
 #endif
-	return retval;
+	return (int)retval;
 }
 

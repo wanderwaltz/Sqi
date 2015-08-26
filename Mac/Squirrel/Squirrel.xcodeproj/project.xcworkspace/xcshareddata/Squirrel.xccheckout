@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3D4A7527-3DD8-4A70-97B4-23DEA7C29086</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3BD9BCD1B1123148B23F5555E79C20C073CACA90</key>
+		<string>https://github.com/wanderwaltz/Sqi.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Vendor/Squirrel/Mac/Squirrel/Squirrel.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3BD9BCD1B1123148B23F5555E79C20C073CACA90</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/wanderwaltz/Sqi.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3BD9BCD1B1123148B23F5555E79C20C073CACA90</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3BD9BCD1B1123148B23F5555E79C20C073CACA90</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Sqi</string>
+		</dict>
+	</array>
+</dict>
+</plist>

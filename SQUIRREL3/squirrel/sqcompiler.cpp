@@ -575,14 +575,14 @@ public:
 	}
 	SQInteger ChooseCompArithCharByToken(SQInteger tok)
 	{
-		SQInteger oper;
+		SQInteger oper = 0;
 		switch(tok){
 		case TK_MINUSEQ: oper = '-'; break;
 		case TK_PLUSEQ: oper = '+'; break;
 		case TK_MULEQ: oper = '*'; break;
 		case TK_DIVEQ: oper = '/'; break;
 		case TK_MODEQ: oper = '%'; break;
-		default: oper = 0; //shut up compiler
+		default:
 			assert(0); break;
 		};
 		return oper;
@@ -609,19 +609,17 @@ public:
 	//if 'pos' != -1 the previous variable is a local variable
 	void PrefixedExpr()
 	{
-		SQInteger pos = Factor();
+		Factor();
 		for(;;) {
 			switch(_token) {
 			case _SC('.'):
-				pos = -1;
-				Lex(); 
+				Lex();
 
 				_fs->AddInstruction(_OP_LOAD, _fs->PushTarget(), _fs->GetConstant(Expect(TK_IDENTIFIER)));
 				if(_es.etype==BASE) {
 					Emit2ArgsOP(_OP_GET);
-					pos = _fs->TopTarget();
 					_es.etype = EXPR;
-					_es.epos   = pos;
+					_es.epos  = _fs->TopTarget();;
 				}
 				else {
 					if(NeedGet()) {
@@ -633,12 +631,10 @@ public:
 			case _SC('['):
 				if(_lex._prevtoken == _SC('\n')) Error(_SC("cannot brake deref/or comma needed after [exp]=exp slot declaration"));
 				Lex(); Expression(); Expect(_SC(']')); 
-				pos = -1;
 				if(_es.etype==BASE) {
 					Emit2ArgsOP(_OP_GET);
-					pos = _fs->TopTarget();
 					_es.etype = EXPR;
-					_es.epos   = pos;
+					_es.epos  = _fs->TopTarget();
 				}
 				else {
 					if(NeedGet()) {

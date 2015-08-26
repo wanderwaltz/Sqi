@@ -147,14 +147,14 @@ SQVM::~SQVM()
 
 bool SQVM::ArithMetaMethod(SQInteger op,const SQObjectPtr &o1,const SQObjectPtr &o2,SQObjectPtr &dest)
 {
-	SQMetaMethod mm;
+	SQMetaMethod mm = MT_ADD;
 	switch(op){
 		case _SC('+'): mm=MT_ADD; break;
 		case _SC('-'): mm=MT_SUB; break;
 		case _SC('/'): mm=MT_DIV; break;
 		case _SC('*'): mm=MT_MUL; break;
 		case _SC('%'): mm=MT_MODULO; break;
-		default: mm = MT_ADD; assert(0); break; //shutup compiler
+		default: assert(0); break;
 	}
 	if(is_delegable(o1) && _delegable(o1)->_delegate) {
 		
@@ -275,7 +275,72 @@ bool SQVM::CMP_OP(CmpOP op, const SQObjectPtr &o1,const SQObjectPtr &o2,SQObject
 	return false;
 }
 
+
 bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
+{
+    // check whether o has a delegate set and invoke its _tostring() methamethod if available
+    switch(type(o)) {
+        case OT_TABLE:
+        case OT_USERDATA:
+        case OT_INSTANCE:
+            if(_delegable(o)->_delegate) {
+                SQObjectPtr closure;
+                if(_delegable(o)->GetMetaMethod(this, MT_TOSTRING, closure)) {
+                    Push(o);
+                    if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
+                        if(type(res) == OT_STRING)
+                            return true;
+                    } 
+                    else {
+                        return false;
+                    }
+                }
+            }
+        default: break;
+    }
+    
+    // otherwise fallback to the default delegate's methamethod implementation
+    // @note this is new comparing to the default Squirrel implementation
+    SQTable *defaultDelegate = GetDefaultDelegate(o);
+    
+    SQObjectPtr closure;
+    if(defaultDelegate->Get((*_ss(this)->_metamethods)[MT_TOSTRING],closure)) {
+        
+        bool recursiveMetamethod = false;
+        
+        SQInteger index = _top;
+        while (index >= 0) {
+            SQObjectPtr callerClosure = GetAt(index);
+            SQObjectPtr callerParam = GetAt(index+1);
+            index--;
+            
+            if ((_rawval(callerClosure) == _rawval(closure)) &&
+                (_rawval(callerParam) == _rawval(o))) {
+                recursiveMetamethod = true;
+                break;
+            }
+        }
+        
+        if (recursiveMetamethod == false) {
+            Push(closure); // pushing this as a marker for recursive metamethod detection
+            Push(o);
+            if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
+                Pop(); // closure
+                if(type(res) == OT_STRING) {
+                    return true;
+                }
+            }
+            Pop(); // closure
+        }
+    }
+
+    
+    // fallback to raw string conversion if no delegates found
+    return ToStringRaw(o, res);
+}
+
+
+bool SQVM::ToStringRaw(const SQObjectPtr &o,SQObjectPtr &res)
 {
 	switch(type(o)) {
 	case OT_STRING:
@@ -290,22 +355,6 @@ bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
 	case OT_BOOL:
 		scsprintf(_sp(rsl(6)),_integer(o)?_SC("true"):_SC("false"));
 		break;
-	case OT_TABLE:
-	case OT_USERDATA:
-	case OT_INSTANCE:
-		if(_delegable(o)->_delegate) {
-			SQObjectPtr closure;
-			if(_delegable(o)->GetMetaMethod(this, MT_TOSTRING, closure)) {
-				Push(o);
-				if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
-					if(type(res) == OT_STRING)
-						return true;
-				} 
-				else {
-					return false;
-				}
-			}
-		}
 	default:
 		scsprintf(_sp(rsl(sizeof(void*)+20)),_SC("(%s : 0x%p)"),GetTypeName(o),(void*)_rawval(o));
 	}
@@ -1019,7 +1068,7 @@ exception_restore:
 				}
 							  }
 				continue;
-			case _OP_THROW:	Raise_Error(TARGET); SQ_THROW(); continue;
+			case _OP_THROW:	Raise_Error(TARGET); SQ_THROW();
 			case _OP_NEWSLOTA:
 				_GUARD(NewSlotA(STK(arg1),STK(arg2),STK(arg3),(arg0&NEW_SLOT_ATTRIBUTES_FLAG) ? STK(arg2-1) : SQObjectPtr(),(arg0&NEW_SLOT_STATIC_FLAG)?true:false,false));
 				continue;
@@ -1234,23 +1283,37 @@ bool SQVM::Get(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest,
 	return false;
 }
 
+
+SQTable *SQVM::GetDefaultDelegate(const SQObjectPtr &self)
+{
+    SQTable *ddel = NULL;
+    switch(type(self)) {
+        case OT_CLASS: ddel = _class_ddel; break;
+        case OT_TABLE: ddel = _table_ddel; break;
+        case OT_ARRAY: ddel = _array_ddel; break;
+        case OT_STRING: ddel = _string_ddel; break;
+        case OT_INSTANCE: ddel = _instance_ddel; break;
+        case OT_INTEGER:case OT_FLOAT:case OT_BOOL: ddel = _number_ddel; break;
+        case OT_GENERATOR: ddel = _generator_ddel; break;
+        case OT_CLOSURE: case OT_NATIVECLOSURE:	ddel = _closure_ddel; break;
+        case OT_THREAD: ddel = _thread_ddel; break;
+        case OT_WEAKREF: ddel = _weakref_ddel; break;
+        default: break;
+    }
+    return ddel;
+}
+
+
 bool SQVM::InvokeDefaultDelegate(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest)
 {
-	SQTable *ddel = NULL;
-	switch(type(self)) {
-		case OT_CLASS: ddel = _class_ddel; break;
-		case OT_TABLE: ddel = _table_ddel; break;
-		case OT_ARRAY: ddel = _array_ddel; break;
-		case OT_STRING: ddel = _string_ddel; break;
-		case OT_INSTANCE: ddel = _instance_ddel; break;
-		case OT_INTEGER:case OT_FLOAT:case OT_BOOL: ddel = _number_ddel; break;
-		case OT_GENERATOR: ddel = _generator_ddel; break;
-		case OT_CLOSURE: case OT_NATIVECLOSURE:	ddel = _closure_ddel; break;
-		case OT_THREAD: ddel = _thread_ddel; break;
-		case OT_WEAKREF: ddel = _weakref_ddel; break;
-		default: return false;
-	}
-	return  ddel->Get(key,dest);
+	SQTable *ddel = GetDefaultDelegate(self);
+    
+    if (ddel != NULL) {
+        return ddel->Get(key, dest);
+    }
+    else {
+        return false;
+    }
 }
 
 

@@ -68,6 +68,7 @@ public:
 	void CallErrorHandler(SQObjectPtr &e);
 	bool Get(const SQObjectPtr &self, const SQObjectPtr &key, SQObjectPtr &dest, bool raw, SQInteger selfidx);
 	SQInteger FallBackGet(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest);
+    SQTable *GetDefaultDelegate(const SQObjectPtr &self);
 	bool InvokeDefaultDelegate(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest);
 	bool Set(const SQObjectPtr &self, const SQObjectPtr &key, const SQObjectPtr &val, SQInteger selfidx);
 	SQInteger FallBackSet(const SQObjectPtr &self,const SQObjectPtr &key,const SQObjectPtr &val);
@@ -79,6 +80,7 @@ public:
 	bool StringCat(const SQObjectPtr &str, const SQObjectPtr &obj, SQObjectPtr &dest);
 	static bool IsEqual(const SQObjectPtr &o1,const SQObjectPtr &o2,bool &res);
 	bool ToString(const SQObjectPtr &o,SQObjectPtr &res);
+    bool ToStringRaw(const SQObjectPtr &o,SQObjectPtr &res);
 	SQString *PrintObjVal(const SQObjectPtr &o);
 
  

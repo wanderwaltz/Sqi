@@ -126,8 +126,6 @@ bool SQTable::NewSlot(const SQObjectPtr &key,const SQObjectPtr &val)
 		return false;
 	}
 	_HashNode *mp = &_nodes[h];
-	n = mp;
-
 
 	//key not found I'll insert it
 	//main pos is not free
