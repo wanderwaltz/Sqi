@@ -1252,51 +1252,81 @@ bool SQVM::CallNative(SQNativeClosure *nclosure, SQInteger nargs, SQInteger newb
 #define FALLBACK_NO_MATCH	1
 #define FALLBACK_ERROR		2
 
-bool SQVM::Get(const SQObjectPtr &self,const SQObjectPtr &key,SQObjectPtr &dest,bool raw, SQInteger selfidx)
+bool SQVM::Get(const SQObjectPtr &self, const SQObjectPtr &key, SQObjectPtr &dest, bool raw, SQInteger selfidx)
 {
-	switch(type(self)){
-	case OT_TABLE:
-		if(_table(self)->Get(key,dest))return true;
-		break;
-	case OT_ARRAY:
-		if(sq_isnumeric(key)) { if(_array(self)->Get(tointeger(key),dest)) { return true; } if(selfidx != EXISTS_FALL_BACK) Raise_IdxError(key); return false; }
-		break;
-	case OT_INSTANCE:
-		if(_instance(self)->Get(key,dest)) return true;
-		break;
-	case OT_CLASS: 
-		if(_class(self)->Get(key,dest)) return true;
-		break;
-	case OT_STRING:
-		if(sq_isnumeric(key)){
-			SQInteger n = tointeger(key);
-			if(abs((int)n) < _string(self)->_len) {
-				if(n < 0) n = _string(self)->_len - n;
-				dest = SQInteger(_stringval(self)[n]);
-				return true;
-			}
-			if(selfidx != EXISTS_FALL_BACK) Raise_IdxError(key);
-			return false;
-		}
-		break;
-	default:break; //shut up compiler
+	switch(type(self))
+    {
+        case OT_TABLE: {
+            if (_table(self)->Get(key,dest)) {
+                return true;
+            }
+        } break;
+            
+        case OT_ARRAY: {
+            if (sq_isnumeric(key)) {
+                if (_array(self)->Get(tointeger(key), dest)) {
+                    return true;
+                }
+                
+                if (selfidx != EXISTS_FALL_BACK) {
+                    Raise_IdxError(key);
+                }
+                return false;
+            }
+        } break;
+            
+        case OT_INSTANCE: {
+            if (_instance(self)->Get(key,dest)) {
+                return true;
+            }
+        } break;
+            
+        case OT_CLASS: {
+            if (_class(self)->Get(key,dest)) {
+                return true;
+            }
+        } break;
+            
+        case OT_STRING: {
+            if (sq_isnumeric(key)) {
+                SQInteger n = tointeger(key);
+                if (abs((int)n) < _string(self)->_len) {
+                    if(n < 0) n = _string(self)->_len - n;
+                    dest = SQInteger(_stringval(self)[n]);
+                    return true;
+                }
+                
+                if (selfidx != EXISTS_FALL_BACK) {
+                    Raise_IdxError(key);
+                }
+                return false;
+            }
+        } break;
+        default: break;
 	}
-	if(!raw) {
-		switch(FallBackGet(self,key,dest)) {
+    
+	if (!raw) {
+		switch (FallBackGet(self, key, dest)) {
 			case FALLBACK_OK: return true; //okie
 			case FALLBACK_NO_MATCH: break; //keep falling back
 			case FALLBACK_ERROR: return false; // the metamethod failed
 		}
-		if(InvokeDefaultDelegate(self,key,dest)) {
+        
+		if (InvokeDefaultDelegate(self,key,dest)) {
 			return true;
 		}
 	}
-//#ifdef ROOT_FALLBACK
-	if(selfidx == 0) {
-		if(_table(_roottable)->Get(key,dest)) return true;
+
+    if (selfidx == 0) {
+        if (_table(_roottable)->Get(key,dest)) {
+            return true;
+        }
 	}
-//#endif
-	if(selfidx != EXISTS_FALL_BACK) Raise_IdxError(key);
+
+    if (selfidx != EXISTS_FALL_BACK) {
+        Raise_IdxError(key);
+    }
+    
 	return false;
 }
 
