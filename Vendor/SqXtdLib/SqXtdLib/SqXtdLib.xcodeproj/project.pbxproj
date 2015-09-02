@@ -115,7 +115,7 @@
 		445B2EA91B8A3BD100ECC943 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Egor Chiglintsev";
 				TargetAttributes = {
 					445B2EB01B8A3BD100ECC943 = {
@@ -237,6 +237,7 @@
 		445B2EB61B8A3BD100ECC943 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -245,6 +246,7 @@
 		445B2EB71B8A3BD100ECC943 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
