@@ -155,8 +155,6 @@ struct SQObjectPtr;
 #define _stringval(obj) (obj)._unVal.pString->_val
 #define _userdataval(obj) ((SQUserPointer)sq_aligning((obj)._unVal.pUserData + 1))
 
-#define tofloat(num) ((type(num)==OT_INTEGER)?(SQFloat)_integer(num):_float(num))
-#define tointeger(num) ((type(num)==OT_FLOAT)?(SQInteger)_float(num):_integer(num))
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 #if defined(SQUSEDOUBLE) && !defined(_SQ64) || !defined(SQUSEDOUBLE) && defined(_SQ64)
@@ -350,5 +348,26 @@ const SQChar *GetTypeName(const SQObjectPtr &obj1);
 const SQChar *IdType2Name(SQObjectType type);
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Utility functions
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline SQFloat tofloat(const SQObjectPtr &value) {
+    if (type(value) == OT_INTEGER) {
+        return (SQFloat)_integer(value);
+    }
+    else {
+        return _float(value);
+    }
+}
+
+
+inline SQInteger tointeger(const SQObjectPtr &value) {
+    if (type(value) == OT_FLOAT) {
+        return (SQInteger)_float(value);
+    }
+    else {
+        return _integer(value);
+    }
+}
 
 #endif //_SQOBJECT_H_
