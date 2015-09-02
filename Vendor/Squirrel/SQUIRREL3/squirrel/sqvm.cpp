@@ -1349,7 +1349,24 @@ bool SQVM::InvokeDefaultDelegate(const SQObjectPtr &self,const SQObjectPtr &key,
 	SQTable *ddel = GetDefaultDelegate(self);
     
     if (ddel != NULL) {
-        return ddel->Get(key, dest);
+        if (ddel->Get(key, dest)) {
+            return true;
+        }
+        
+        // Invoke _get metamethod on default delegate
+        SQObjectPtr closure;
+        if (ddel->Get((*_ss(this)->_metamethods)[MT_GET],closure)) {
+            Push(self);
+            Push(key);
+            _nmetamethodscall++;
+            AutoDec ad(&_nmetamethodscall);
+            if (Call(closure, 2, _top - 2, dest, SQFalse)) {
+                Pop(2);
+                return true;
+            }
+        }
+        
+        return false;
     }
     else {
         return false;
