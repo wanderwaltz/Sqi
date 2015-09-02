@@ -26,6 +26,11 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string>
+
+extern int errno;
 
 #include "squirrel.h"
 #include "sqstdblob.h"
@@ -36,6 +41,7 @@
 #include "sqstdaux.h"
 
 #include "sqratimport.h"
+#include "sqratimport_pathutils.hpp"
 
 #include "SqXtdLib.h"
 
@@ -55,11 +61,17 @@ void errorfunc(HSQUIRRELVM v,const SQChar *s,...)
     va_end(vl);
 }
 
+
 int main(int argc, const char * argv[]) {
     if (argc != 2) {
         printf("usage: sqi filename.nut\n");
         return 0;
     }
+    
+    std::string filename(argv[1]);
+    std::string path = SqratImport::getPath(filename);
+    
+    chdir(path.c_str());
     
     HSQUIRRELVM v;
     
@@ -78,9 +90,11 @@ int main(int argc, const char * argv[]) {
     
     sqstd_seterrorhandlers(v);
     
+    
     sqxtd_register_getdefaultdelegate(v);
     sqxtd_register_default_string_representations(v);
     sqxtd_register_objectivec_null(v);
+    
     
     sqstd_dofile(v, argv[1], SQFalse, SQTrue);
     

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4446DBCD1B78FFF80009F435 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4446DBCC1B78FFF80009F435 /* main.m */; };
+		4446DBCD1B78FFF80009F435 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4446DBCC1B78FFF80009F435 /* main.mm */; };
 		4446DC6C1B7901FA0009F435 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DC6B1B7901FA0009F435 /* libc++.dylib */; };
 		4446DC721B79059E0009F435 /* libc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DC711B79059E0009F435 /* libc.dylib */; };
 		445B2ED21B8A40A300ECC943 /* libSqXtdLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B2ED01B8A409500ECC943 /* libSqXtdLib.a */; };
@@ -102,10 +102,11 @@
 
 /* Begin PBXFileReference section */
 		4446DBC91B78FFF80009F435 /* sqi */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sqi; sourceTree = BUILT_PRODUCTS_DIR; };
-		4446DBCC1B78FFF80009F435 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4446DBCC1B78FFF80009F435 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		4446DC6B1B7901FA0009F435 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		4446DC711B79059E0009F435 /* libc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libc.dylib; path = usr/lib/libc.dylib; sourceTree = SDKROOT; };
 		445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SqXtdLib.xcodeproj; path = SqXtdLib/SqXtdLib/SqXtdLib.xcodeproj; sourceTree = "<group>"; };
+		4479EFF51B978BD9007E35E1 /* sqratimport_pathutils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sqratimport_pathutils.hpp; sourceTree = "<group>"; };
 		448010AF1B8275AB00DDF9E6 /* Squirrel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Squirrel.xcodeproj; path = Squirrel/Mac/Squirrel/Squirrel.xcodeproj; sourceTree = "<group>"; };
 		4482DE641B7BA8720067E9B8 /* libSQRat-0.9.1.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSQRat-0.9.1.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4482DE6C1B7BA8A40067E9B8 /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
@@ -248,7 +249,7 @@
 		4446DBCB1B78FFF80009F435 /* Sqi */ = {
 			isa = PBXGroup;
 			children = (
-				4446DBCC1B78FFF80009F435 /* main.m */,
+				4446DBCC1B78FFF80009F435 /* main.mm */,
 			);
 			path = Sqi;
 			sourceTree = "<group>";
@@ -425,6 +426,7 @@
 		4482DEB01B7BA8A40067E9B8 /* sqimport */ = {
 			isa = PBXGroup;
 			children = (
+				4479EFF51B978BD9007E35E1 /* sqratimport_pathutils.hpp */,
 				4482DEB11B7BA8A40067E9B8 /* sqratimport.cpp */,
 				4482DEB21B7BA8A40067E9B8 /* sqratimport.vcproj */,
 			);
@@ -639,7 +641,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4446DBCD1B78FFF80009F435 /* main.m in Sources */,
+				4446DBCD1B78FFF80009F435 /* main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

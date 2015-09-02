@@ -27,6 +27,7 @@
 
 #include "sqratimport.h"
 #include "sqmodule.h"
+#include "sqratimport_pathutils.hpp"
 
 //#include "sqratlib/sqratBase.h"
 #include "sqstdio.h"
@@ -36,9 +37,10 @@
 
 #include <windows.h>
 
-#elif defined(__unix)
+#elif defined(__unix) || defined(__APPLE__)
 
 #include <dlfcn.h>
+#include <unistd.h>
 
 #endif
 
@@ -193,15 +195,26 @@ static HSQAPI sqrat_newapi() {
 
 
 static SQRESULT sqrat_importscript(HSQUIRRELVM v, const SQChar* moduleName) {
-    std::basic_string<SQChar> filename(moduleName);
+    std::basic_string<SQChar> filename(SqratImport::getFileName(moduleName));
+    std::basic_string<SQChar> path(SqratImport::getPath(moduleName));
+    
+    std::basic_string<SQChar> currentdir(getcwd(NULL, 0));
+    if (chdir(path.c_str()) != 0) {
+        printf("failed to change path from '%s' to '%s'", currentdir.c_str(), path.c_str());
+        return SQ_ERROR;
+    }
+    
     filename += _SC(".nut");
     if(SQ_FAILED(sqstd_loadfile(v, moduleName, true))) {
         if(SQ_FAILED(sqstd_loadfile(v, filename.c_str(), true))) {
+            chdir(currentdir.c_str());
             return SQ_ERROR;
         }
     }
     sq_push(v, -2);
     sq_call(v, 1, false, true);
+    chdir(currentdir.c_str());
+
     return SQ_OK;
 }
 
@@ -265,9 +278,12 @@ SQRESULT sqrat_import(HSQUIRRELVM v) {
     sq_settop(v, 0); // Clear Stack
     sq_pushobject(v, table); // Push the target table onto the stack
 
-    if(SQ_FAILED(sqrat_importscript(v, moduleName))) {
-        res = sqrat_importbin(v, moduleName);
-    }
+    // binary import is not working under Mac OS X currently; disable it for now
+    //    if(SQ_FAILED(sqrat_importscript(v, moduleName))) {
+    //        res = sqrat_importbin(v, moduleName);
+    //    }
+    
+    res = sqrat_importscript(v, moduleName);
 
     sq_settop(v, 0); // Clean up the stack (just in case the module load leaves it messy)
     sq_pushobject(v, table); // return the target table
