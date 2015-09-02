@@ -1428,9 +1428,7 @@ bool SQVM::Set(const SQObjectPtr &self,const SQObjectPtr &key,const SQObjectPtr 
 			return false;
 		}
 		return true;
-	default:
-		Raise_Error(_SC("trying to set '%s'"),GetTypeName(self));
-		return false;
+    default: break;
 	}
 
 	switch(FallBackSet(self,key,val)) {
@@ -1442,7 +1440,18 @@ bool SQVM::Set(const SQObjectPtr &self,const SQObjectPtr &key,const SQObjectPtr 
 		if(_table(_roottable)->Set(key,val))
 			return true;
 	}
-	Raise_IdxError(key);
+    
+    switch(type(self)){
+        case OT_TABLE:
+        case OT_INSTANCE:
+        case OT_ARRAY:
+            Raise_IdxError(key);
+            break;
+        default:
+            Raise_Error(_SC("trying to set '%s'"),GetTypeName(self));
+            break;
+    }
+	
 	return false;
 }
 
@@ -1478,6 +1487,26 @@ SQInteger SQVM::FallBackSet(const SQObjectPtr &self,const SQObjectPtr &key,const
 		break;
 		default: break;//shutup GCC 4.x
 	}
+    
+    
+    SQTable *ddel = GetDefaultDelegate(self);
+    
+    if (ddel != NULL) {
+        // Invoke _set metamethod on default delegate
+        SQObjectPtr closure;
+        SQObjectPtr dest;
+        if (ddel->Get((*_ss(this)->_metamethods)[MT_SET],closure)) {
+            Push(key);
+            Push(val);
+            _nmetamethodscall++;
+            AutoDec ad(&_nmetamethodscall);
+            if (Call(closure, 2, _top - 2, dest, SQFalse)) {
+                Pop(2);
+                return FALLBACK_OK;
+            }
+        }
+    }
+    
 	// no metamethod or no fallback type
 	return FALLBACK_NO_MATCH;
 }
