@@ -54,6 +54,7 @@ void sqxtd_set_default_delegate_native(HSQUIRRELVM vm, SQObjectType type, const 
     sq_pushstring(vm, key, strlen(key));
     sq_newclosure(vm, func, 0);
     sq_newslot(vm, -3, SQFalse);
+    sq_pop(vm, 1);
 }
 
 
