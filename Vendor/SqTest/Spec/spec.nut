@@ -24,37 +24,35 @@
 //  SOFTWARE.
 
 
-registered_specs <- {
-
-}
+registered_specs <- {}
 
 
 function new_spec(what) {
-  local spec = new_context(what, this);
-  registered_specs[what] <- spec;
+    local spec = new_context(what, this);
+    registered_specs[what] <- spec;
 
-  return spec;
+    return spec;
 }
 
 
 function enumerate_registered_examples(func) {
-  enumerate_registered_contexts(function(id, context) {
-    enumerate_examples(id, context, func);
+    enumerate_registered_contexts(function(id, context) {
+        enumerate_examples(id, context, func);
     });
 }
 
 
 function enumerate_registered_contexts(func) {
-  enumerate_registered_specs(function(spec_id, spec) {
-    enumerate_child_contexts(spec_id, spec, function(child_id, context) {
-      func(child_id, context);
-      });
+    enumerate_registered_specs(function(spec_id, spec) {
+        enumerate_child_contexts(spec_id, spec, function(child_id, context) {
+            func(child_id, context);
+        });
     });
 }
 
 
 function enumerate_registered_specs(func) {
-  foreach (spec_id, spec in registered_specs) {
-    func(spec_id, spec);
-  }
+    foreach (spec_id, spec in registered_specs) {
+        func(spec_id, spec);
+    }
 }

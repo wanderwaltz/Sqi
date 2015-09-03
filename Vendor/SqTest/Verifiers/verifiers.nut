@@ -27,7 +27,7 @@ Verifiers <- {}
 Verifiers.setdelegate(this);
 
 Verifiers.to <- function() {
-  local verifier = new_should_verifier(value);
-  this.verifier = verifier;
-  return verifier;
+    local verifier = new_should_verifier(value);
+    this.verifier = verifier;
+    return verifier;
 }

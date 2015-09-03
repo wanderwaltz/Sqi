@@ -24,17 +24,17 @@
 //  SOFTWARE.
 
 class Matchers.Equal extends Matchers.Base {
-  expectedValue = null
+    expectedValue = null
 
-  constructor(what) {
-    expectedValue = what
-  }
+    constructor(what) {
+        expectedValue = what
+    }
 
-  function match(value) {
-    return base.match(value) || (expectedValue == actualValue);
-  }
+    function match(value) {
+        return base.match(value) || (expectedValue == actualValue);
+    }
 
-  function description() {
-    return actualValue + " == " + expectedValue;
-  }
+    function description() {
+        return actualValue + " == " + expectedValue;
+    }
 }

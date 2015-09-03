@@ -27,22 +27,22 @@ Matchers <- {}
 Matchers.setdelegate(this);
 
 Matchers.equal <- function(expected_value) {
-  this.matcher = Equal(expected_value);
+    this.matcher = Equal(expected_value);
 }
 
 Matchers.beNegative <- function() {
-  this.matcher = BeNegative();
+    this.matcher = BeNegative();
 }
 
 Matchers.Base <- class {
-  actualValue = null
+    actualValue = null
 
-  function match(value) {
-    actualValue = value;
-    return false;
-  }
+    function match(value) {
+        actualValue = value;
+        return false;
+    }
 
-  function description() {
-    return "matcher implmenentation";
-  }
+    function description() {
+        return "matcher implmenentation";
+    }
 }

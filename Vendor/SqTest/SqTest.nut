@@ -34,54 +34,51 @@
 
 
 function run() {
-  local result = {
-    failed_expectations = 0
-    total_expectations = 0
-  };
+    local result = {
+        failed_expectations = 0
+        total_expectations = 0
+    };
 
-  enumerate_registered_examples(function(id, example) {
-    print(id + " ");
-    foreach (expectation in example.expectations) {
-      result.total_expectations += 1;
-      local valid = expectation.verifier.verify();
-      if (valid == false) {
-        result.failed_expectations += 1;
-        print("FAILED: " + expectation.verifier.result());
-      }
-    }
-    print("\n");
+    enumerate_registered_examples(function(id, example) {
+        print(id + " ");
+        foreach (expectation in example.expectations) {
+            result.total_expectations += 1;
+            local valid = expectation.verifier.verify();
+            if (valid == false) {
+                result.failed_expectations += 1;
+                print("FAILED: " + expectation.verifier.result());
+            }
+        }
+        print("\n");
     });
 
-  print("\n");
-  print("Total expectations: " + result.total_expectations + "\n");
-  print("Failed expectations: " + result.failed_expectations + "\n");
+    print("\n");
+    print("Total expectations: " + result.total_expectations + "\n");
+    print("Failed expectations: " + result.failed_expectations + "\n");
 }
 
 
 function spec(what, how) {
-  assert(what in registered_specs == false);
+    assert(what in registered_specs == false);
 
-  local spec = new_spec(what);
-  how.bindenv(spec)();
+    local spec = new_spec(what);
+    how.bindenv(spec)();
 }
 
 
 function describe(what, how) {
-  local context = new_context(what, this);
+    local context = new_context(what, this);
 
-  contexts.push(context);
-  how.bindenv(context)();
+    contexts.push(context);
+    how.bindenv(context)();
 }
 
 context <- describe;
 
 
 function it(what, how) {
-  local example = new_example(what, this);
+    local example = new_example(what, this);
 
-  examples.push(example);
-  how.bindenv(example)();
+    examples.push(example);
+    how.bindenv(example)();
 }
-
-
-
