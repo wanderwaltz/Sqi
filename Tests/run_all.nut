@@ -28,5 +28,6 @@ SqTest <- {};
 ::import("../Vendor/SqTest/SqTest", SqTest);
 
 ::import("integer_spec");
+::import("getters_setters_spec");
 
 SqTest.run();
