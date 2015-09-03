@@ -28,6 +28,7 @@
 ::import("Spec/spec", this);
 ::import("Verifiers/verifiers", this);
 ::import("Verifiers/should_verifier", this);
+::import("Verifiers/should_not_verifier", this);
 ::import("Matchers/matchers", this);
 ::import("Matchers/equal_matcher", this);
 ::import("Matchers/be_negative_matcher", this);

@@ -1,8 +1,8 @@
 //
-//  verifiers.nut
+//  should_not_verifier.nut
 //  SqTest
 //
-//  Created by Egor Chiglintsev on 13.08.15.
+//  Created by Egor Chiglintsev on 04.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-Verifiers <- {}
-Verifiers.setdelegate(this);
+function new_should_not_verifier(subject) {
+    local verifier = {};
+    verifier.subject <- subject;
+    verifier.matcher <- null;
+    verifier.valid <- false;
 
-Verifiers.to <- function() {
-    local verifier = new_should_verifier(value);
-    this.verifier = verifier;
-    return verifier;
-}
+    verifier.verify <- function() {
+        valid = matcher.match(subject);
+        return !valid;
+    };
 
+    verifier.result <- function() {
+        if (!valid) {
+            return "OK";
+        }
+        else {
+            return "expected (" + matcher.description() + ") to be false";
+        }
+    }
 
-Verifiers.notTo <- function() {
-    local verifier = new_should_not_verifier(value);
-    this.verifier = verifier;
+    verifier.setdelegate(Matchers);
     return verifier;
 }
