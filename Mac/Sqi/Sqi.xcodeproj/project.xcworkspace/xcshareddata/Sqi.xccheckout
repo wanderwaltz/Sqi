@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>F4AE6092-91CB-4D41-8F08-E00894C50B35</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Sqi</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>3BD9BCD1B1123148B23F5555E79C20C073CACA90</key>
 		<string>https://github.com/wanderwaltz/Sqi.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Mac/Sqi/Sqi.xcodeproj/project.xcworkspace</string>
+	<string>Mac/Sqi/Sqi.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3BD9BCD1B1123148B23F5555E79C20C073CACA90</key>
