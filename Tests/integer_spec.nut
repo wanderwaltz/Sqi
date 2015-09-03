@@ -24,36 +24,36 @@
 //  SOFTWARE.
 
 SqTest.spec("integers", function(){
-  describe("zero", function(){
-    it("should not change the sum when added to any number", @() expect(0+5).to().equal(5));
-    it("should set any multiplication result to zero", @() expect(0*5).to().equal(0));
+    describe("zero", function(){
+        it("should not change the sum when added to any number", @() expect(0+5).to().equal(5));
+        it("should set any multiplication result to zero", @() expect(0*5).to().equal(0));
     });
 
-  describe("multiplication", function(){
-    context("when multiplying a positive and a negative number", function(){
-      it("should result in a negative number", function(){
-        expect(-2 * 5).to().beNegative();
-        });
+    describe("multiplication", function(){
+        context("when multiplying a positive and a negative number", function(){
+            it("should result in a negative number", function(){
+                expect(-2 * 5).to().beNegative();
+            });
 
-      it("absolute value should equal to multiplication of absolute values", function(){
-        expect(abs(-2 * 5)).to().equal(abs(-2)*abs(5));
+            it("absolute value should equal to multiplication of absolute values", function(){
+                expect(abs(-2 * 5)).to().equal(abs(-2)*abs(5));
+            });
         });
-      });
     });
 
-  describe("division", function(){
-    context("when dividing by another integer", function(){
-        context("when remainder is zero", function(){
-          it("should result in an integer value", @() expect(6/3).to().equal(2));
+    describe("division", function(){
+        context("when dividing by another integer", function(){
+            context("when remainder is zero", function(){
+                it("should result in an integer value", @() expect(6/3).to().equal(2));
+            });
+
+            context("when remainder is nonzero", function(){
+                it("should result in an integer value rounded down", @() expect(5/2).to().equal(2));
+            });
         });
 
-        context("when remainder is nonzero", function(){
-          it("should result in an integer value rounded down", @() expect(5/2).to().equal(2));
+        context("when dividing by a float", function(){
+            it("should result in a float value", @() expect(5/2.0).to().equal(2.5));
         });
-      });
     });
-
-    context("when dividing by a float", function(){
-        it("should result in a float value", @() expect(5/2.0).to().equal(2.5));
-      });
-  });
+});
