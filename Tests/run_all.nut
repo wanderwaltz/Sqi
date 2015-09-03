@@ -29,5 +29,6 @@ SqTest <- {};
 
 ::import("integer_spec");
 ::import("getters_setters_spec");
+::import("tostring_spec");
 
 SqTest.run();
