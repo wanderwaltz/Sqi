@@ -37,6 +37,11 @@ SqTest.spec("getters/setters", function(){
     });
 
     describe("null", function(){
+        // The spec for `null` is not true for vanilla Squirrel3, these properties
+        // have been added by SqXtdLib and are possible with  changes to the
+        // Squirrel language introduced in https://github.com/wanderwaltz/Squirrel
+        // fork of the Squirrel language source.
+
         context("when indexing", function(){
             it("should allow getting a null value for any literal key",
                 @() expect(null.someKey).to().equal(null));
