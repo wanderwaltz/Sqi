@@ -80,8 +80,7 @@ public:
 	bool ObjCmp(const SQObjectPtr &o1, const SQObjectPtr &o2,SQInteger &res);
 	bool StringCat(const SQObjectPtr &str, const SQObjectPtr &obj, SQObjectPtr &dest);
 	static bool IsEqual(const SQObjectPtr &o1,const SQObjectPtr &o2,bool &res);
-	bool ToString(const SQObjectPtr &o,SQObjectPtr &res);
-    bool ToStringRaw(const SQObjectPtr &o,SQObjectPtr &res);
+	
 	SQString *PrintObjVal(const SQObjectPtr &o);
 
  
@@ -177,7 +176,20 @@ public:
 	SQBool _suspended_root;
 	SQInteger _suspended_target;
 	SQInteger _suspended_traps;
+    
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - ToString
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public:
+    bool ToString(const SQObjectPtr &o,SQObjectPtr &res);
+    
+private:
+    bool ToStringUsingDelegate(const SQObjectPtr &o, SQObjectPtr &res);
+    bool ToStringUsingDefaultDelegate(const SQObjectPtr &o, SQObjectPtr &res);
+    bool ToStringRaw(const SQObjectPtr &o,SQObjectPtr &res);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };
+
 
 struct AutoDec{
 	AutoDec(SQInteger *n) { _n = n; }

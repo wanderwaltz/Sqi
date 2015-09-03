@@ -276,37 +276,53 @@ bool SQVM::CMP_OP(CmpOP op, const SQObjectPtr &o1,const SQObjectPtr &o2,SQObject
 }
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - ToString
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
 {
-    // check whether o has a delegate set and invoke its _tostring() methamethod if available
+    return ToStringUsingDelegate(o, res) ||
+           ToStringUsingDefaultDelegate(o, res) ||
+           ToStringRaw(o, res);
+}
+
+
+bool SQVM::ToStringUsingDelegate(const SQObjectPtr &o, SQObjectPtr &res) {
     switch(type(o)) {
         case OT_TABLE:
         case OT_USERDATA:
-        case OT_INSTANCE:
+        case OT_INSTANCE: {
             if(_delegable(o)->_delegate) {
                 SQObjectPtr closure;
-                if(_delegable(o)->GetMetaMethod(this, MT_TOSTRING, closure)) {
+                
+                if (_delegable(o)->GetMetaMethod(this, MT_TOSTRING, closure)) {
                     Push(o);
-                    if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
-                        if(type(res) == OT_STRING)
+                    if (CallMetaMethod(closure, MT_TOSTRING, 1, res)) {
+                        if (type(res) == OT_STRING) {
                             return true;
-                    } 
+                        }
+                    }
                     else {
                         return false;
                     }
                 }
             }
+        } break;
+            
         default: break;
     }
     
-    // otherwise fallback to the default delegate's methamethod implementation
-    // @note this is new comparing to the default Squirrel implementation
+    return false;
+}
+
+
+bool SQVM::ToStringUsingDefaultDelegate(const SQObjectPtr &o, SQObjectPtr &res) {
     SQTable *defaultDelegate = GetDefaultDelegate(o);
     
     if (defaultDelegate != NULL) {
         SQObjectPtr closure;
-        if(defaultDelegate->Get((*_ss(this)->_metamethods)[MT_TOSTRING],closure)) {
-            
+        
+        if (defaultDelegate->Get((*_ss(this)->_metamethods)[MT_TOSTRING], closure)) {
             bool recursiveMetamethod = false;
             
             SQInteger index = _top;
@@ -325,9 +341,9 @@ bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
             if (recursiveMetamethod == false) {
                 Push(closure); // pushing this as a marker for recursive metamethod detection
                 Push(o);
-                if(CallMetaMethod(closure,MT_TOSTRING,1,res)) {;
+                if (CallMetaMethod(closure,MT_TOSTRING,1,res)) {
                     Pop(); // closure
-                    if(type(res) == OT_STRING) {
+                    if (type(res) == OT_STRING) {
                         return true;
                     }
                 }
@@ -335,34 +351,39 @@ bool SQVM::ToString(const SQObjectPtr &o,SQObjectPtr &res)
             }
         }
     }
-
     
-    // fallback to raw string conversion if no delegates found
-    return ToStringRaw(o, res);
+    return false;
 }
 
 
-bool SQVM::ToStringRaw(const SQObjectPtr &o,SQObjectPtr &res)
-{
+bool SQVM::ToStringRaw(const SQObjectPtr &o,SQObjectPtr &res) {
 	switch(type(o)) {
-	case OT_STRING:
-		res = o;
-		return true;
-	case OT_FLOAT:
-		scsprintf(_sp(rsl(NUMBER_MAX_CHAR+1)),_SC("%g"),_float(o));
-		break;
-	case OT_INTEGER:
-		scsprintf(_sp(rsl(NUMBER_MAX_CHAR+1)),_PRINT_INT_FMT,_integer(o));
-		break;
-	case OT_BOOL:
-		scsprintf(_sp(rsl(6)),_integer(o)?_SC("true"):_SC("false"));
-		break;
-	default:
-		scsprintf(_sp(rsl(sizeof(void*)+20)),_SC("(%s : 0x%p)"),GetTypeName(o),(void*)_rawval(o));
+        case OT_STRING: {
+            res = o;
+            return true;
+        }
+            
+        case OT_FLOAT: {
+            scsprintf(_sp(rsl(NUMBER_MAX_CHAR+1)),_SC("%g"),_float(o));
+        } break;
+            
+        case OT_INTEGER: {
+            scsprintf(_sp(rsl(NUMBER_MAX_CHAR+1)),_PRINT_INT_FMT,_integer(o));
+        } break;
+            
+        case OT_BOOL: {
+            scsprintf(_sp(rsl(6)),_integer(o)?_SC("true"):_SC("false"));
+        } break;
+            
+        default: {
+            scsprintf(_sp(rsl(sizeof(void*)+20)),_SC("(%s : 0x%p)"),GetTypeName(o),(void*)_rawval(o));
+        }
 	}
-	res = SQString::Create(_ss(this),_spval);
+	
+    res = SQString::Create(_ss(this),_spval);
 	return true;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 bool SQVM::StringCat(const SQObjectPtr &str,const SQObjectPtr &obj,SQObjectPtr &dest)
