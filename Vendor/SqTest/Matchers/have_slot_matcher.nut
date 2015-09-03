@@ -1,8 +1,8 @@
 //
-//  matchers.nut
+//  have_slot_matcher.nut
 //  SqTest
 //
-//  Created by Egor Chiglintsev on 13.08.15.
+//  Created by Egor Chiglintsev on 04.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,30 +23,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-Matchers <- {}
-Matchers.setdelegate(this);
+class Matchers.HaveSlot extends Matchers.Base {
+    expectedKey = null
 
-Matchers.equal <- function(expected_value) {
-    this.matcher = Equal(expected_value);
-}
+    constructor(key) {
+        expectedKey = key
+    }
 
-Matchers.beNegative <- function() {
-    this.matcher = BeNegative();
-}
-
-Matchers.haveSlot <- function(expected_key) {
-    this.matcher = HaveSlot(expected_key);
-}
-
-Matchers.Base <- class {
-    actualValue = null
-
-    function match(value) {
-        actualValue = value;
-        return false;
+    function match(table) {
+        return base.match(table) || (expectedKey in table);
     }
 
     function description() {
-        return "matcher implmenentation";
+        return expectedKey + " in " + actualValue;
     }
 }

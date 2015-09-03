@@ -32,6 +32,7 @@
 ::import("Matchers/matchers", this);
 ::import("Matchers/equal_matcher", this);
 ::import("Matchers/be_negative_matcher", this);
+::import("Matchers/have_slot_matcher", this);
 
 
 function run() {
