@@ -28,6 +28,7 @@
 
 #include "sqxtd_utils.h"
 #include "sqxtd_table.h"
+#include "sqxtd_array.h"
 
 namespace sqxtd {
     namespace util {
@@ -60,6 +61,7 @@ void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm) {
 
 void sqxtd_register_default_string_representations(HSQUIRRELVM vm) {
     sqxtd::set_default_delegate_native(vm, OT_TABLE, "_tostring", sqxtd::native::table::tostring);
+    sqxtd::set_default_delegate_native(vm, OT_ARRAY, "_tostring", sqxtd::native::array::tostring);
 }
 
 

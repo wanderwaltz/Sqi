@@ -14,6 +14,8 @@
 		445B2EE21B8A541400ECC943 /* sqxtd_string.h in Headers */ = {isa = PBXBuildFile; fileRef = 445B2EE01B8A541400ECC943 /* sqxtd_string.h */; };
 		44A35EE11B8DDE7F003DB382 /* sqxtd_null.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A35EE01B8DDE7F003DB382 /* sqxtd_null.cpp */; };
 		44C35A391B99B08B006486CD /* sqxtd_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44C35A371B99B08B006486CD /* sqxtd_map.cpp */; };
+		44C35A421B9A22D1006486CD /* sqxtd_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44C35A401B9A22D1006486CD /* sqxtd_array.cpp */; };
+		44C35A431B9A22D1006486CD /* sqxtd_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C35A411B9A22D1006486CD /* sqxtd_array.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		44A35EE01B8DDE7F003DB382 /* sqxtd_null.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_null.cpp; sourceTree = "<group>"; };
 		44A35EE21B8DDE90003DB382 /* sqxtd_utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sqxtd_utils.h; sourceTree = "<group>"; };
 		44C35A371B99B08B006486CD /* sqxtd_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_map.cpp; sourceTree = "<group>"; };
+		44C35A401B9A22D1006486CD /* sqxtd_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_array.cpp; sourceTree = "<group>"; };
+		44C35A411B9A22D1006486CD /* sqxtd_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqxtd_array.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,10 +72,12 @@
 		445B2EC31B8A3D1500ECC943 /* SqXtdLib */ = {
 			isa = PBXGroup;
 			children = (
+				44C35A411B9A22D1006486CD /* sqxtd_array.h */,
 				445B2EDC1B8A4FCF00ECC943 /* sqxtd_table.h */,
 				445B2EE01B8A541400ECC943 /* sqxtd_string.h */,
 				44A35EE21B8DDE90003DB382 /* sqxtd_utils.h */,
 				445B2EC61B8A3D9400ECC943 /* sqxtd_utils.cpp */,
+				44C35A401B9A22D1006486CD /* sqxtd_array.cpp */,
 				445B2EDB1B8A4FCF00ECC943 /* sqxtd_table.cpp */,
 				445B2EDF1B8A541400ECC943 /* sqxtd_string.cpp */,
 				44A35EE01B8DDE7F003DB382 /* sqxtd_null.cpp */,
@@ -89,6 +95,7 @@
 			files = (
 				445B2EE21B8A541400ECC943 /* sqxtd_string.h in Headers */,
 				445B2EDE1B8A4FCF00ECC943 /* sqxtd_table.h in Headers */,
+				44C35A431B9A22D1006486CD /* sqxtd_array.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44C35A421B9A22D1006486CD /* sqxtd_array.cpp in Sources */,
 				445B2EC81B8A3D9400ECC943 /* sqxtd_utils.cpp in Sources */,
 				44A35EE11B8DDE7F003DB382 /* sqxtd_null.cpp in Sources */,
 				44C35A391B99B08B006486CD /* sqxtd_map.cpp in Sources */,
