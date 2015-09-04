@@ -24,6 +24,23 @@
 //  SOFTWARE.
 
 SqTest.spec("tosring", function(){
+    describe("arrays", function(){
+        context("when converted to string", function(){
+            // The spec for arrays tostring conversion is not true for vanilla Squirrel3,
+            // this functionality have been added by SqXtdLib and are possible with
+            // changes to the Squirrel language introduced in
+            // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
+
+            it("should list all array's elements", function(){
+                expect([1,2,3].tostring()).to().equal("[1, 2, 3]");
+            });
+
+            it("should put strings inside the array into double quotes", function(){
+                expect(["qwerty", "asdfg"].tostring()).to().equal("[\"qwerty\", \"asdfg\"]");
+            });
+        });
+    });
+
     describe("tables", function(){
         context("when converted to string", function(){
             // The spec for tables tostring conversion is not true for vanilla Squirrel3,
