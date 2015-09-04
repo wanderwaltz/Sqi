@@ -29,7 +29,21 @@
 #include "sqxtd_utils.h"
 #include "sqxtd_table.h"
 
-static SQRESULT sqxtd_native_getdefaultdelegate(HSQUIRRELVM vm);
+namespace sqxtd {
+    namespace util {
+        template<typename Handler>
+        static void enumerate_all_types(Handler lambda);
+        
+        template<typename Handler>
+        static void enumerate_default_delegable_types(Handler lambda, SQUnsignedInteger typemask = DefaultDelegable::All);
+        
+        static void set_default_delegate_native_impl(HSQUIRRELVM vm, SQObjectType type, const SQChar *key, SQFUNCTION func);
+    }
+    
+    namespace native {
+        static SQRESULT getdefaultdelegate(HSQUIRRELVM vm);
+    }
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,29 +53,76 @@ void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm) {
     const SQChar *name = "getdefaultdelegate";
     
     sq_pushstring(vm, name, strlen(name));
-    sq_newclosure(vm, &sqxtd_native_getdefaultdelegate, 0);
+    sq_newclosure(vm, &sqxtd::native::getdefaultdelegate, 0);
     sq_newslot(vm, -3, SQFalse);
 }
 
 
 void sqxtd_register_default_string_representations(HSQUIRRELVM vm) {
-    sqxtd_set_default_delegate_native(vm, OT_TABLE, "_tostring", sqxtd_native_table_tostring);
+    sqxtd::set_default_delegate_native(vm, OT_TABLE, "_tostring", sqxtd::native::table::tostring);
 }
 
 
-void sqxtd_set_default_delegate_native(HSQUIRRELVM vm, SQObjectType type, const SQChar *key, SQFUNCTION func) {
-    sq_getdefaultdelegate(vm, type);
-    sq_pushstring(vm, key, strlen(key));
-    sq_newclosure(vm, func, 0);
-    sq_newslot(vm, -3, SQFalse);
-    sq_pop(vm, 1);
-}
+namespace sqxtd {
+    void set_default_delegate_native(HSQUIRRELVM vm, SQUnsignedInteger typemask, const SQChar *key, SQFUNCTION func) {
+        sqxtd::util::enumerate_default_delegable_types([=](SQObjectType type) {
+            sqxtd::util::set_default_delegate_native_impl(vm, type, key, func);
+        }, typemask);
+    }
+};
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Private
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-static SQRESULT sqxtd_native_getdefaultdelegate(HSQUIRRELVM vm) {
-    sq_getdefaultdelegate(vm, sq_gettype(vm, -1));
-    return 1;
+namespace sqxtd {
+    namespace util {
+        template<typename Handler>
+        static void enumerate_all_types(Handler lambda) {
+            lambda(OT_NULL);
+            lambda(OT_INTEGER);
+            lambda(OT_FLOAT);
+            lambda(OT_BOOL);
+            lambda(OT_STRING);
+            lambda(OT_TABLE);
+            lambda(OT_ARRAY);
+            lambda(OT_USERDATA);
+            lambda(OT_CLOSURE);
+            lambda(OT_NATIVECLOSURE);
+            lambda(OT_GENERATOR);
+            lambda(OT_USERPOINTER);
+            lambda(OT_THREAD);
+            lambda(OT_FUNCPROTO);
+            lambda(OT_CLASS);
+            lambda(OT_INSTANCE);
+            lambda(OT_WEAKREF);
+            lambda(OT_OUTER);
+        }
+        
+        
+        template<typename Handler>
+        static void enumerate_default_delegable_types(Handler lambda, SQUnsignedInteger typemask) {
+            enumerate_all_types([=](SQObjectType type){
+                if (type & DefaultDelegable::All & typemask & _RT_MASK) {
+                    lambda(type);
+                }
+            });
+        }
+        
+        
+        static void set_default_delegate_native_impl(HSQUIRRELVM vm, SQObjectType type, const SQChar *key, SQFUNCTION func) {
+            sq_getdefaultdelegate(vm, type);
+            sq_pushstring(vm, key, strlen(key));
+            sq_newclosure(vm, func, 0);
+            sq_newslot(vm, -3, SQFalse);
+            sq_pop(vm, 1);
+        }
+    };
+    
+    namespace native {
+        static SQRESULT getdefaultdelegate(HSQUIRRELVM vm) {
+            sq_getdefaultdelegate(vm, sq_gettype(vm, -1));
+            return 1;
+        }
+    }
 }

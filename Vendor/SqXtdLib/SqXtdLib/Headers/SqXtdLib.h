@@ -42,6 +42,15 @@ void sqxtd_register_default_string_representations(HSQUIRRELVM vm);
  */
 void sqxtd_register_objectivec_null(HSQUIRRELVM vm);
     
+
+/** Adds `map` function to default delegates of all types.
+ *  
+ *  Usage: `x = y.map(function(y) { return ...; });`
+ *
+ *  Mapping a `null` value always yields `null`.
+ */
+void sqxtd_register_map(HSQUIRRELVM vm);
+    
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

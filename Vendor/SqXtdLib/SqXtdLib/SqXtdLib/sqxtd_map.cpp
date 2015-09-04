@@ -1,8 +1,8 @@
 //
-//  sqxtd_null.cpp
+//  sqxtd_map.cpp
 //  SqXtdLib
 //
-//  Created by Egor Chiglintsev on 26.08.15.
+//  Created by Egor Chiglintsev on 04.09.15.
 //  Copyright (c) 2015 Egor Chiglintsev. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,28 +25,58 @@
 
 #include "SqXtdLib.h"
 #include "sqxtd_utils.h"
+#include "assert.h"
+#include "string.h"
+#include <new>
 
-namespace sqxtd { namespace native { namespace null {
-    static SQRESULT default_metamethod(HSQUIRRELVM vm);
+#include "sqvm.h"
+#include "sqobject.h"
+#include "sqstate.h"
+#include "sqarray.h"
+
+namespace sqxtd { namespace native { namespace common {
+    static SQRESULT map_null(HSQUIRRELVM vm);
+    static SQRESULT map_single(HSQUIRRELVM vm);
 }}}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void sqxtd_register_objectivec_null(HSQUIRRELVM vm) {
-    sqxtd::set_default_delegate_native(vm, OT_NULL, "_call", &sqxtd::native::null::default_metamethod);
-    sqxtd::set_default_delegate_native(vm, OT_NULL, "_get", &sqxtd::native::null::default_metamethod);
-    sqxtd::set_default_delegate_native(vm, OT_NULL, "_set", &sqxtd::native::null::default_metamethod);
+void sqxtd_register_map(HSQUIRRELVM vm) {
+    sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Null,   "map", &sqxtd::native::common::map_null);
+    sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Scalar, "map", &sqxtd::native::common::map_single);
+    sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Object, "map", &sqxtd::native::common::map_single);
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Private
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-namespace sqxtd { namespace native { namespace null {
-    static SQRESULT default_metamethod(HSQUIRRELVM vm) {
+namespace sqxtd { namespace native { namespace common {
+    static SQRESULT map_null(HSQUIRRELVM vm) {
         sq_pushnull(vm);
+        return 1;
+    }
+    
+    
+    static SQRESULT map_single(HSQUIRRELVM vm) {
+        SQObjectPtr closure = vm->GetAt(vm->_top-1);
+        
+        if ((type(closure) != OT_CLOSURE) && (type(closure) != OT_NATIVECLOSURE)) {
+            vm->Raise_ParamTypeError(1, OT_CLOSURE | OT_NATIVECLOSURE, type(closure));
+            return 0;
+        }
+        
+        SQObjectPtr result;
+        result.Null();
+        
+        sq_push(vm, -2); // push self as implicit `this`
+        sq_push(vm, -3); // push self as parameter
+        vm->Call(closure, 2, vm->_top-2, result, SQTrue);
+        sq_pop(vm, 1); // pop self x2
+        
+        vm->Push(result);
+        
         return 1;
     }
 }}}

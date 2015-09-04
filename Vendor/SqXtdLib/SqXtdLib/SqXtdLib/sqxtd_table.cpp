@@ -28,26 +28,28 @@
 
 #include "sqxtd_string.h"
 
-SQRESULT sqxtd_native_table_tostring(HSQUIRRELVM vm) {
-    sqxtd::string result("{\n");
-    
-    sq_pushnull(vm);
-    
-    while(SQ_SUCCEEDED(sq_next(vm, -2)))
-    {
-        static const SQInteger key_index = -2;
-        static const SQInteger value_index = -1;
+namespace sqxtd { namespace native { namespace table {
+    SQRESULT tostring(HSQUIRRELVM vm) {
+        sqxtd::string result("{\n");
         
-        auto key_value = sqxtd::format_key_value_at(vm, key_index, value_index);
+        sq_pushnull(vm);
         
-        result += sqxtd::indent_string(key_value);
-        result += "\n";
+        while(SQ_SUCCEEDED(sq_next(vm, -2)))
+        {
+            static const SQInteger key_index = -2;
+            static const SQInteger value_index = -1;
+            
+            auto key_value = sqxtd::format_key_value_at(vm, key_index, value_index);
+            
+            result += sqxtd::indent_string(key_value);
+            result += "\n";
+            
+            sq_pop(vm,2);
+        }
         
-        sq_pop(vm,2);
+        result += "}";
+        
+        sq_pushstring(vm, result.c_str(), result.length());
+        return 1;
     }
-    
-    result += "}";
-    
-    sq_pushstring(vm, result.c_str(), result.length());
-    return 1;
-}
+}}}

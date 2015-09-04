@@ -29,14 +29,6 @@
 #include "SqXtdLib.h"
 
 #ifdef __cplusplus
-extern "C" {
-#endif
-    
-#ifdef __cplusplus
-} /*extern "C"*/
-#endif
-
-#ifdef __cplusplus
 #include <string>
 
 namespace sqxtd {
@@ -66,7 +58,6 @@ namespace sqxtd {
     const string format_key_value_at(HSQUIRRELVM vm, SQInteger keyIdx, SQInteger valueIdx);
 
 }
-#endif
 
-
-#endif /* defined(__SqXtdLib__sqxtd_string__) */
+#endif // #ifdef __cplusplus
+#endif // #ifndef __SqXtdLib__sqxtd_string__

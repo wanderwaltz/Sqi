@@ -29,14 +29,21 @@
 #include "SqXtdLib.h"
 
 #ifdef __cplusplus
-extern "C" {
-#endif
-    
-void sqxtd_set_default_delegate_native(HSQUIRRELVM vm, SQObjectType type, const SQChar *key, SQFUNCTION func);
-    
-#ifdef __cplusplus
-} /*extern "C"*/
-#endif
 
+namespace sqxtd {
+    namespace DefaultDelegable {
+        const SQUnsignedInteger Null   = OT_NULL;
+        const SQUnsignedInteger Scalar = OT_INTEGER | OT_FLOAT | OT_BOOL | OT_STRING;
+        const SQUnsignedInteger Array  = OT_ARRAY;
+        const SQUnsignedInteger Object = OT_CLASS | OT_TABLE | OT_INSTANCE | OT_GENERATOR |
+                                         OT_CLOSURE | OT_NATIVECLOSURE | OT_THREAD | OT_WEAKREF;
+        
+        const SQUnsignedInteger All          = Null | Scalar | Object | Array;
+        const SQUnsignedInteger NonContainer = All & !Array;
+    };
+    
+    void set_default_delegate_native(HSQUIRRELVM vm, SQUnsignedInteger typemask, const SQChar *key, SQFUNCTION func);
+}
 
-#endif
+#endif // #ifdef __cplusplus
+#endif // #ifndef SqXtdLib_sqxtd_utils_h

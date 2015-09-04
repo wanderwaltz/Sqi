@@ -29,13 +29,10 @@
 #include "SqXtdLib.h"
 
 #ifdef __cplusplus
-extern "C" {
-#endif
 
-SQRESULT sqxtd_native_table_tostring(HSQUIRRELVM vm);
-    
-#ifdef __cplusplus
-} /*extern "C"*/
-#endif
+namespace sqxtd { namespace native { namespace table {
+    SQRESULT tostring(HSQUIRRELVM vm);
+}}}
 
-#endif /* defined(__SqXtdLib__sqxtd_table__) */
+#endif // #ifdef __cplusplus
+#endif // #ifndef __SqXtdLib__sqxtd_table__
