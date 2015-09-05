@@ -32,5 +32,6 @@ SqTest <- {};
 ::import("tostring_spec");
 ::import("getdefaultdelegate_spec");
 ::import("map_spec");
+::import("string_spec");
 
 SqTest.run();
