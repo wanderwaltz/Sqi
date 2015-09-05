@@ -43,13 +43,18 @@ namespace sqxtd {
     
     /** Returns the string representation of an object at the given position in the stack.
      */
-    const string tostring_at(HSQUIRRELVM vm, SQInteger idx);
+    const string tostring(HSQUIRRELVM vm, SQInteger idx);
+    
+    
+    /** Returns the string representation of the given object
+     */
+    const string tostring(HSQUIRRELVM vm, const SQObjectPtr &object);
     
     
     /** Returns the given object value as sqxtd::string; throws StringError::InvalidSQObjectType if
      *  the parameter is not an OT_STRING.
      */
-    const string as_string(const SQObjectPtr &object);
+    const string tostring(const SQObjectPtr &object);
     
     
     /** Indents each line of the given std::string with a number of whitespace characters specified

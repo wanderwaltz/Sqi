@@ -45,7 +45,7 @@ namespace sqxtd { namespace native { namespace array {
                 result += "\"";
             }
             
-            result += sqxtd::tostring_at(vm, value_index);
+            result += sqxtd::tostring(vm, value_index);
             
             if (isString) {
                 result += "\"";

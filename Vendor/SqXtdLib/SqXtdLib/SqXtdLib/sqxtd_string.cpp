@@ -58,17 +58,23 @@ void sqxtd_register_string(HSQUIRRELVM vm) {
 
 
 namespace sqxtd {
-    const string tostring_at(HSQUIRRELVM vm, SQInteger idx) {
+    const string tostring(HSQUIRRELVM vm, SQInteger idx) {
         SQObjectPtr object = stack_get(vm, idx);
+        return tostring(vm, object);
+    }
+    
+    
+    const string tostring(HSQUIRRELVM vm, const SQObjectPtr &object) {
         SQObjectPtr string;
         
         vm->ToString(object, string);
+        assert(type(string) == OT_STRING);
         
         return sqxtd::string(string._unVal.pString->_val);
     }
     
     
-    const string as_string(const SQObjectPtr &object) {
+    const string tostring(const SQObjectPtr &object) {
         if (type(object) != OT_STRING) {
             throw StringError::InvalidSQObjectType;
         }
@@ -105,8 +111,8 @@ namespace sqxtd {
     
     
     const string format_key_value_at(HSQUIRRELVM vm, SQInteger keyIdx, SQInteger valueIdx) {
-        auto key(tostring_at(vm, keyIdx));
-        auto value(tostring_at(vm, valueIdx));
+        auto key(tostring(vm, keyIdx));
+        auto value(tostring(vm, valueIdx));
         
         return format_key_value(key, value).c_str();
     }
@@ -164,7 +170,7 @@ namespace sqxtd {
             
             SQArray *array = SQArray::Create(vm->_sharedstate, 0);
             
-            auto components = split(as_string(selfObject), as_string(separatorObject));
+            auto components = split(tostring(selfObject), tostring(separatorObject));
             
             for (auto &string : components) {
                 SQObjectPtr component = SQString::Create(vm->_sharedstate, string.c_str());
