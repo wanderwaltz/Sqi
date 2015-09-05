@@ -1,8 +1,8 @@
 //
-//  matchers.nut
+//  throw_error_matcher.nut
 //  SqTest
 //
-//  Created by Egor Chiglintsev on 13.08.15.
+//  Created by Egor Chiglintsev on 06.08.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,34 +23,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-Matchers <- {}
-Matchers.setdelegate(this);
+class Matchers.ThrowError extends Matchers.Base {
+    catched = null;
 
-Matchers.equal <- function(expected_value) {
-    this.matcher = Equal(expected_value);
-}
+    function match(closure) {
+        local matches = base.match(closure);
 
-Matchers.beNegative <- function() {
-    this.matcher = BeNegative();
-}
+        if (matches) {
+            return true;
+        }
 
-Matchers.haveSlot <- function(expected_key) {
-    this.matcher = HaveSlot(expected_key);
-}
+        try {
+            closure();
+        }
+        catch(something) {
+            catched = something;
+        }
 
-Matchers.throwError <- function() {
-    this.matcher = ThrowError();
-}
-
-Matchers.Base <- class {
-    actualValue = null
-
-    function match(value) {
-        actualValue = value;
-        return false;
+        return (catched != null);
     }
 
     function description() {
-        return "matcher implmenentation";
+        return "closure throws an error";
     }
 }
