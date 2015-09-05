@@ -16,6 +16,7 @@
 		44C35A391B99B08B006486CD /* sqxtd_map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44C35A371B99B08B006486CD /* sqxtd_map.cpp */; };
 		44C35A421B9A22D1006486CD /* sqxtd_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44C35A401B9A22D1006486CD /* sqxtd_array.cpp */; };
 		44C35A431B9A22D1006486CD /* sqxtd_array.h in Headers */ = {isa = PBXBuildFile; fileRef = 44C35A411B9A22D1006486CD /* sqxtd_array.h */; };
+		44C35A451B9B58C6006486CD /* sqxtd_is_equal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44C35A441B9B58C6006486CD /* sqxtd_is_equal.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		44C35A371B99B08B006486CD /* sqxtd_map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_map.cpp; sourceTree = "<group>"; };
 		44C35A401B9A22D1006486CD /* sqxtd_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_array.cpp; sourceTree = "<group>"; };
 		44C35A411B9A22D1006486CD /* sqxtd_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqxtd_array.h; sourceTree = "<group>"; };
+		44C35A441B9B58C6006486CD /* sqxtd_is_equal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_is_equal.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				445B2EDF1B8A541400ECC943 /* sqxtd_string.cpp */,
 				44A35EE01B8DDE7F003DB382 /* sqxtd_null.cpp */,
 				44C35A371B99B08B006486CD /* sqxtd_map.cpp */,
+				44C35A441B9B58C6006486CD /* sqxtd_is_equal.cpp */,
 			);
 			path = SqXtdLib;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44C35A451B9B58C6006486CD /* sqxtd_is_equal.cpp in Sources */,
 				44C35A421B9A22D1006486CD /* sqxtd_array.cpp in Sources */,
 				445B2EC81B8A3D9400ECC943 /* sqxtd_utils.cpp in Sources */,
 				44A35EE11B8DDE7F003DB382 /* sqxtd_null.cpp in Sources */,

@@ -51,6 +51,13 @@ void sqxtd_register_objectivec_null(HSQUIRRELVM vm);
  */
 void sqxtd_register_map(HSQUIRRELVM vm);
     
+    
+/** Adds `isEqual` function to default delegates of all types.
+ *
+ *  isEqual checks equality of most objects using ==, except for
+ *  tables and arrays it checks that they contain the same elements.
+ */
+void sqxtd_register_is_equal(HSQUIRRELVM vm);
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
