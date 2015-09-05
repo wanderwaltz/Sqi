@@ -46,6 +46,8 @@ void sqxtd_register_map(HSQUIRRELVM vm) {
     sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Null,   "map", &sqxtd::native::common::map_null);
     sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Scalar, "map", &sqxtd::native::common::map_single);
     sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Object, "map", &sqxtd::native::common::map_single);
+    sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Table,  "map", &sqxtd::native::common::map_single);
+    // not including 'Array' here since arrays have a built-in element-wise mapping function already
 }
 
 

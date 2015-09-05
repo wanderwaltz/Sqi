@@ -35,10 +35,11 @@ namespace sqxtd {
         const SQUnsignedInteger Null   = OT_NULL;
         const SQUnsignedInteger Scalar = OT_INTEGER | OT_FLOAT | OT_BOOL | OT_STRING;
         const SQUnsignedInteger Array  = OT_ARRAY;
-        const SQUnsignedInteger Object = OT_CLASS | OT_TABLE | OT_INSTANCE | OT_GENERATOR |
+        const SQUnsignedInteger Table  = OT_TABLE;
+        const SQUnsignedInteger Object = OT_CLASS | OT_INSTANCE | OT_GENERATOR |
                                          OT_CLOSURE | OT_NATIVECLOSURE | OT_THREAD | OT_WEAKREF;
         
-        const SQUnsignedInteger All          = Null | Scalar | Object | Array;
+        const SQUnsignedInteger All          = Null | Scalar | Object | Array | Table;
         const SQUnsignedInteger NonContainer = All & !Array;
     };
     
