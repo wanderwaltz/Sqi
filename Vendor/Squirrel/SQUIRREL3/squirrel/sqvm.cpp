@@ -579,64 +579,105 @@ SQRESULT SQVM::Suspend()
 
 
 #define _FINISH(howmuchtojump) {jump = howmuchtojump; return true; }
-bool SQVM::FOREACH_OP(SQObjectPtr &o1,SQObjectPtr &o2,SQObjectPtr 
-&o3,SQObjectPtr &o4,SQInteger arg_2,int exitpos,int &jump)
+bool SQVM::FOREACH_OP(SQObjectPtr &o1,
+                      SQObjectPtr &o2,
+                      SQObjectPtr &o3,
+                      SQObjectPtr &o4,
+                      SQInteger arg_2,
+                      int exitpos,
+                      int &jump)
 {
 	SQInteger nrefidx;
+    
 	switch(type(o1)) {
-	case OT_TABLE:
-		if((nrefidx = _table(o1)->Next(false,o4, o2, o3)) == -1) _FINISH(exitpos);
-		o4 = (SQInteger)nrefidx; _FINISH(1);
-	case OT_ARRAY:
-		if((nrefidx = _array(o1)->Next(o4, o2, o3)) == -1) _FINISH(exitpos);
-		o4 = (SQInteger) nrefidx; _FINISH(1);
-	case OT_STRING:
-		if((nrefidx = _string(o1)->Next(o4, o2, o3)) == -1)_FINISH(exitpos);
-		o4 = (SQInteger)nrefidx; _FINISH(1);
-	case OT_CLASS:
-		if((nrefidx = _class(o1)->Next(o4, o2, o3)) == -1)_FINISH(exitpos);
-		o4 = (SQInteger)nrefidx; _FINISH(1);
-	case OT_USERDATA:
-	case OT_INSTANCE:
-		if(_delegable(o1)->_delegate) {
-			SQObjectPtr itr;
-			SQObjectPtr closure;
-			if(_delegable(o1)->GetMetaMethod(this, MT_NEXTI, closure)) {
-				Push(o1);
-				Push(o4);
-				if(CallMetaMethod(closure, MT_NEXTI, 2, itr)) {
-					o4 = o2 = itr;
-					if(type(itr) == OT_NULL) _FINISH(exitpos);
-					if(!Get(o1, itr, o3, false, DONT_FALL_BACK)) {
-						Raise_Error(_SC("_nexti returned an invalid idx")); // cloud be changed
-						return false;
-					}
-					_FINISH(1);
-				}
-				else {
-					return false;
-				}
-			}
-			Raise_Error(_SC("_nexti failed"));
-			return false;
-		}
-		break;
-	case OT_GENERATOR:
-		if(_generator(o1)->_state == SQGenerator::eDead) _FINISH(exitpos);
-		if(_generator(o1)->_state == SQGenerator::eSuspended) {
-			SQInteger idx = 0;
-			if(type(o4) == OT_INTEGER) {
-				idx = _integer(o4) + 1;
-			}
-			o2 = idx;
-			o4 = idx;
-			_generator(o1)->Resume(this, o3);
-			_FINISH(0);
-		}
-	default: 
-		Raise_Error(_SC("cannot iterate %s"), GetTypeName(o1));
+        case OT_TABLE: {
+            if ((nrefidx = _table(o1)->Next(false,o4, o2, o3)) == -1) {
+                _FINISH(exitpos);
+            }
+            
+            o4 = (SQInteger)nrefidx;
+            _FINISH(1);
+        } break;
+        
+        case OT_ARRAY: {
+            if ((nrefidx = _array(o1)->Next(o4, o2, o3)) == -1) {
+                _FINISH(exitpos);
+            }
+            
+            o4 = (SQInteger) nrefidx;
+            _FINISH(1);
+        } break;
+            
+        case OT_STRING: {
+            if ((nrefidx = _string(o1)->Next(o4, o2, o3)) == -1) {
+                _FINISH(exitpos);
+            }
+            
+            o4 = (SQInteger)nrefidx;
+            _FINISH(1);
+        } break;
+            
+        case OT_CLASS: {
+            if ((nrefidx = _class(o1)->Next(o4, o2, o3)) == -1) {
+                _FINISH(exitpos);
+            }
+            
+            o4 = (SQInteger)nrefidx;
+            _FINISH(1);
+        } break;
+            
+        case OT_USERDATA:
+        case OT_INSTANCE: {
+            if (_delegable(o1)->_delegate) {
+                SQObjectPtr itr;
+                SQObjectPtr closure;
+                if (_delegable(o1)->GetMetaMethod(this, MT_NEXTI, closure)) {
+                    Push(o1);
+                    Push(o4);
+                    if (CallMetaMethod(closure, MT_NEXTI, 2, itr)) {
+                        o4 = o2 = itr;
+                        if (type(itr) == OT_NULL) {
+                            _FINISH(exitpos);
+                        }
+                        
+                        if (!Get(o1, itr, o3, false, DONT_FALL_BACK)) {
+                            Raise_Error(_SC("_nexti returned an invalid idx")); // cloud be changed
+                            return false;
+                        }
+                        _FINISH(1);
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                Raise_Error(_SC("_nexti failed"));
+                return false;
+            }
+        } break;
+            
+        case OT_GENERATOR: {
+            if (_generator(o1)->_state == SQGenerator::eDead) {
+                _FINISH(exitpos);
+            }
+            
+            if (_generator(o1)->_state == SQGenerator::eSuspended) {
+                SQInteger idx = 0;
+                if (type(o4) == OT_INTEGER) {
+                    idx = _integer(o4) + 1;
+                }
+                o2 = idx;
+                o4 = idx;
+                _generator(o1)->Resume(this, o3);
+                _FINISH(0);
+            }
+        } break;
+            
+        default: {
+            Raise_Error(_SC("cannot iterate %s"), GetTypeName(o1));
+        } break;
 	}
-	return false; //cannot be hit(just to avoid warnings)
+    
+	return false;
 }
 
 #define COND_LITERAL (arg3!=0?ci->_literals[arg1]:STK(arg1))
