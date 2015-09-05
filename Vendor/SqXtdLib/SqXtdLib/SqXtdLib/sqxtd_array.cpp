@@ -56,7 +56,11 @@ namespace sqxtd { namespace native { namespace array {
             sq_pop(vm,2);
         }
         
-        result.erase(result.length()-2, result.length());
+        // no commas to delete for empty array
+        if (result.length() > 1) {
+            result.erase(result.length()-2, result.length());
+        }
+        
         result += "]";
         
         sq_pushstring(vm, result.c_str(), result.length());
