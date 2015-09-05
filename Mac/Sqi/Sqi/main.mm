@@ -95,6 +95,8 @@ int main(int argc, const char * argv[]) {
     sqxtd_register_default_string_representations(v);
     sqxtd_register_objectivec_null(v);
     sqxtd_register_map(v);
+    sqxtd_register_string(v);
+    sqxtd_register_is_equal(v);
     
     
     sqstd_dofile(v, argv[1], SQFalse, SQTrue);
