@@ -58,6 +58,13 @@ void sqxtd_register_map(HSQUIRRELVM vm);
  *  tables and arrays it checks that they contain the same elements.
  */
 void sqxtd_register_is_equal(HSQUIRRELVM vm);
+    
+
+/** Adds various utility methods to the string default delegate.
+ */
+void sqxtd_register_string(HSQUIRRELVM vm);
+    
+    
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
