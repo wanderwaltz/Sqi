@@ -47,7 +47,7 @@ namespace sqxtd { namespace native { namespace table {
         
         result += "}";
         
-        sq_pushstring(vm, result.c_str(), result.length());
+        push_string(vm, result);
         return 1;
     }
 }}}

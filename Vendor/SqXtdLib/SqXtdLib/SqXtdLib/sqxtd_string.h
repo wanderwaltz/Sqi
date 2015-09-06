@@ -57,6 +57,11 @@ namespace sqxtd {
     const string tostring(const SQObjectPtr &object);
     
     
+    /** Pushes the given sqxtd::string as a Squirrel string
+     */
+    void push_string(HSQUIRRELVM vm, const string &s);
+    
+    
     /** Indents each line of the given std::string with a number of whitespace characters specified
      *  in the second parameter. Useful when printing tostring() representations of objects which
      *  contain other objects (tables, arrays, etc.)

@@ -73,6 +73,11 @@ namespace sqxtd {
     }
     
     
+    void push_string(HSQUIRRELVM vm, const string &s) {
+        sq_pushstring(vm, s.c_str(), s.length());
+    }
+    
+    
     const string indent_string(const string &string, const SQChar *with) {
         std::string result;
         
