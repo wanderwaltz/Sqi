@@ -132,10 +132,6 @@ struct SQObjectPtr;
 #define is_delegable(t) (type(t)&SQOBJECT_DELEGABLE)
 #define raw_type(obj) _RAW_TYPE((obj)._type)
 
-#define _integer(obj) ((obj)._unVal.nInteger)
-#define _float(obj) ((obj)._unVal.fFloat)
-#define _weakref(obj) ((obj)._unVal.pWeakRef)
-
 #define _stringval(obj) (obj)._unVal.pString->_val
 #define _userdataval(obj) ((SQUserPointer)sq_aligning((obj)._unVal.pUserData + 1))
 
@@ -335,6 +331,11 @@ const SQChar *IdType2Name(SQObjectType type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MARK: - Utility functions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#define _integer(obj) ((obj)._unVal.nInteger)
+#define _float(obj) ((obj)._unVal.fFloat)
+#define _weakref(obj) ((obj)._unVal.pWeakRef)
+
+
 inline SQString *_string(const SQObjectPtr &value) {
     return value._unVal.pString;
 }
