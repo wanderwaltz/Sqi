@@ -150,7 +150,6 @@ struct SQObjectPtr;
 #define _weakref(obj) ((obj)._unVal.pWeakRef)
 #define _outer(obj) ((obj)._unVal.pOuter)
 #define _refcounted(obj) ((obj)._unVal.pRefCounted)
-#define _rawval(obj) ((obj)._unVal.raw)
 
 #define _stringval(obj) (obj)._unVal.pString->_val
 #define _userdataval(obj) ((SQUserPointer)sq_aligning((obj)._unVal.pUserData + 1))
@@ -351,6 +350,11 @@ const SQChar *IdType2Name(SQObjectType type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MARK: - Utility functions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline const SQRawObjectVal &_rawval(const SQObjectPtr &value) {
+    return value._unVal.raw;
+}
+
+
 inline SQFloat tofloat(const SQObjectPtr &value) {
     if (type(value) == OT_INTEGER) {
         return (SQFloat)_integer(value);
