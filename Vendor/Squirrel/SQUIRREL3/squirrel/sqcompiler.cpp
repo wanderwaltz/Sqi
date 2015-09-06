@@ -1466,9 +1466,15 @@ public:
 				
 		SQFuncState *currchunk = _fs;
 		_fs = funcstate;
-		if(lambda) { 
-			Expression(); 
-			_fs->AddInstruction(_OP_RETURN, 1, _fs->PopTarget());}
+		if(lambda) {
+            if (_token == _SC('{')) {
+                Statement(false);
+            }
+            else {
+                Expression();
+                _fs->AddInstruction(_OP_RETURN, 1, _fs->PopTarget());
+            }
+        }
 		else { 
 			Statement(false); 
 		}
