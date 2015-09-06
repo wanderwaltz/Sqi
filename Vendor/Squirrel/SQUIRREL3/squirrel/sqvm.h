@@ -18,10 +18,16 @@ enum FallbackFlag : SQInteger {
 //base lib
 void sq_base_register(HSQUIRRELVM v);
 
-struct SQExceptionTrap{
-	SQExceptionTrap() {}
-	SQExceptionTrap(SQInteger ss, SQInteger stackbase,SQInstruction *ip, SQInteger ex_target){ _stacksize = ss; _stackbase = stackbase; _ip = ip; _extarget = ex_target;}
-	SQExceptionTrap(const SQExceptionTrap &et) { (*this) = et;	}
+struct SQExceptionTrap {
+    SQExceptionTrap(SQInteger stacksize, SQInteger stackbase,
+                    SQInstruction *ip, SQInteger ex_target) :
+                        _stacksize(stacksize), _stackbase(stackbase),
+                        _ip(ip), _extarget(ex_target) {}
+    
+	SQExceptionTrap(const SQExceptionTrap &et) {
+        (*this) = et;
+    }
+    
 	SQInteger _stackbase;
 	SQInteger _stacksize;
 	SQInstruction *_ip;
@@ -37,7 +43,7 @@ typedef sqvector<SQExceptionTrap> ExceptionsTraps;
 
 struct SQVM : public CHAINABLE_OBJ
 {
-	struct CallInfo{
+	struct CallInfo {
 		//CallInfo() { _generator = NULL;}
 		SQInstruction *_ip;
 		SQObjectPtr *_literals;
@@ -51,20 +57,33 @@ struct SQVM : public CHAINABLE_OBJ
 		SQBool _root;
 	};
 	
-typedef sqvector<CallInfo> CallInfoVec;
+    typedef sqvector<CallInfo> CallInfoVec;
+    
 public:
 	void DebugHookProxy(SQInteger type, const SQChar * sourcename, SQInteger line, const SQChar * funcname);
 	static void _DebugHookProxy(HSQUIRRELVM v, SQInteger type, const SQChar * sourcename, SQInteger line, const SQChar * funcname);
-	enum ExecutionType { ET_CALL, ET_RESUME_GENERATOR, ET_RESUME_VM,ET_RESUME_THROW_VM };
+	
+    enum ExecutionType {
+        ET_CALL,
+        ET_RESUME_GENERATOR,
+        ET_RESUME_VM,
+        ET_RESUME_THROW_VM
+    };
+    
 	SQVM(SQSharedState *ss);
 	~SQVM();
+    
 	bool Init(SQVM *friendvm, SQInteger stacksize);
+    
 	bool Execute(SQObjectPtr &func, SQInteger nargs, SQInteger stackbase, SQObjectPtr &outres, SQBool raiseerror, ExecutionType et = ET_CALL);
+    
 	//starts a native call return when the NATIVE closure returns
 	bool CallNative(SQNativeClosure *nclosure, SQInteger nargs, SQInteger newbase, SQObjectPtr &retval,bool &suspend);
+    
 	//starts a SQUIRREL call in the same "Execution loop"
 	bool StartCall(SQClosure *closure, SQInteger target, SQInteger nargs, SQInteger stackbase, bool tailcall);
 	bool CreateClassInstance(SQClass *theclass, SQObjectPtr &inst, SQObjectPtr &constructor);
+    
 	//call a generic closure pure SQUIRREL or NATIVE
 	bool Call(SQObjectPtr &closure, SQInteger nparams, SQInteger stackbase, SQObjectPtr &outres,SQBool raiseerror);
 	SQRESULT Suspend();
@@ -196,13 +215,26 @@ private:
 };
 
 
-struct AutoDec{
-	AutoDec(SQInteger *n) { _n = n; }
-	~AutoDec() { (*_n)--; }
+struct AutoDec {
+	AutoDec(SQInteger *n) {
+        _n = n;
+    }
+    
+	~AutoDec() {
+        (*_n)--;
+    }
+    
 	SQInteger *_n;
 };
 
-inline SQObjectPtr &stack_get(HSQUIRRELVM v,SQInteger idx){return ((idx>=0)?(v->GetAt(idx+v->_stackbase-1)):(v->GetUp(idx)));}
+inline SQObjectPtr &stack_get(HSQUIRRELVM v,SQInteger idx) {
+    if (idx >= 0) {
+        return v->GetAt(idx+v->_stackbase-1);
+    }
+    else {
+        return v->GetUp(idx);
+    }
+}
 
 #define _ss(_vm_) (_vm_)->_sharedstate
 
