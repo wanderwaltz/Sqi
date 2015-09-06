@@ -139,7 +139,6 @@ struct SQObjectPtr;
 #define _array(obj) ((obj)._unVal.pArray)
 #define _closure(obj) ((obj)._unVal.pClosure)
 #define _generator(obj) ((obj)._unVal.pGenerator)
-#define _nativeclosure(obj) ((obj)._unVal.pNativeClosure)
 #define _weakref(obj) ((obj)._unVal.pWeakRef)
 
 #define _stringval(obj) (obj)._unVal.pString->_val
@@ -341,6 +340,11 @@ const SQChar *IdType2Name(SQObjectType type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MARK: - Utility functions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline SQNativeClosure *_nativeclosure(const SQObjectPtr &value) {
+    return value._unVal.pNativeClosure;
+}
+
+
 inline SQUserData *_userdata(const SQObjectPtr &value) {
     return value._unVal.pUserData;
 }
