@@ -148,7 +148,6 @@ struct SQObjectPtr;
 #define _instance(obj) ((obj)._unVal.pInstance)
 #define _delegable(obj) ((SQDelegable *)(obj)._unVal.pDelegable)
 #define _weakref(obj) ((obj)._unVal.pWeakRef)
-#define _refcounted(obj) ((obj)._unVal.pRefCounted)
 
 #define _stringval(obj) (obj)._unVal.pString->_val
 #define _userdataval(obj) ((SQUserPointer)sq_aligning((obj)._unVal.pUserData + 1))
@@ -349,6 +348,11 @@ const SQChar *IdType2Name(SQObjectType type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MARK: - Utility functions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline SQRefCounted *_refcounted(const SQObjectPtr &value) {
+    return value._unVal.pRefCounted;
+}
+
+
 inline SQOuter *_outer(const SQObjectPtr &value) {
     return value._unVal.pOuter;
 }
