@@ -1588,13 +1588,17 @@ SQInteger SQVM::FallBackSet(const SQObjectPtr &self,const SQObjectPtr &key,const
         SQObjectPtr closure;
         SQObjectPtr dest;
         if (ddel->Get((*_ss(this)->_metamethods)[MT_SET],closure)) {
+            Push(self);
             Push(key);
             Push(val);
             _nmetamethodscall++;
             AutoDec ad(&_nmetamethodscall);
-            if (Call(closure, 2, _top - 2, dest, SQFalse)) {
-                Pop(2);
+            if (Call(closure, 3, _top - 3, dest, SQFalse)) {
+                Pop(3);
                 return FALLBACK_OK;
+            }
+            else {
+                Pop(3);
             }
         }
     }
