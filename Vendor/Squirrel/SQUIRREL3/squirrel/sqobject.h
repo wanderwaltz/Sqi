@@ -142,7 +142,6 @@ struct SQObjectPtr;
 #define _nativeclosure(obj) ((obj)._unVal.pNativeClosure)
 #define _userdata(obj) ((obj)._unVal.pUserData)
 #define _userpointer(obj) ((obj)._unVal.pUserPointer)
-#define _thread(obj) ((obj)._unVal.pThread)
 #define _weakref(obj) ((obj)._unVal.pWeakRef)
 
 #define _stringval(obj) (obj)._unVal.pString->_val
@@ -344,6 +343,11 @@ const SQChar *IdType2Name(SQObjectType type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MARK: - Utility functions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline SQVM *_thread(const SQObjectPtr &value) {
+    return value._unVal.pThread;
+}
+
+
 inline SQFunctionProto *_funcproto(const SQObjectPtr &value) {
     return value._unVal.pFunctionProto;
 }
