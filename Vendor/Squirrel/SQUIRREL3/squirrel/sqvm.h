@@ -4,12 +4,17 @@
 
 #include "sqopcodes.h"
 #include "sqobject.h"
-#define MAX_NATIVE_CALLS 100
-#define MIN_STACK_OVERHEAD 15
 
-#define SQ_SUSPEND_FLAG -666
-#define DONT_FALL_BACK 666
-#define EXISTS_FALL_BACK -1
+const SQInteger MAX_NATIVE_CALLS = 100;
+const SQInteger MIN_STACK_OVERHEAD = 15;
+
+const SQInteger SQ_SUSPEND_FLAG = -666;
+
+enum FallbackFlag : SQInteger {
+    EXISTS_FALL_BACK = -1,
+    DONT_FALL_BACK   = 666
+};
+
 //base lib
 void sq_base_register(HSQUIRRELVM v);
 
