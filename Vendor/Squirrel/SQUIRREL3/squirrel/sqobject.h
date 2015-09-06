@@ -135,7 +135,6 @@ struct SQObjectPtr;
 #define _integer(obj) ((obj)._unVal.nInteger)
 #define _float(obj) ((obj)._unVal.fFloat)
 #define _string(obj) ((obj)._unVal.pString)
-#define _table(obj) ((obj)._unVal.pTable)
 #define _weakref(obj) ((obj)._unVal.pWeakRef)
 
 #define _stringval(obj) (obj)._unVal.pString->_val
@@ -337,6 +336,11 @@ const SQChar *IdType2Name(SQObjectType type);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MARK: - Utility functions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline SQTable *_table(const SQObjectPtr &value) {
+    return value._unVal.pTable;
+}
+
+
 inline SQArray *_array(const SQObjectPtr &value) {
     return value._unVal.pArray;
 }
