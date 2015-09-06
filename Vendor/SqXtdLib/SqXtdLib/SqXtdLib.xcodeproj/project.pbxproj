@@ -33,6 +33,7 @@
 		44C35A401B9A22D1006486CD /* sqxtd_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_array.cpp; sourceTree = "<group>"; };
 		44C35A411B9A22D1006486CD /* sqxtd_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqxtd_array.h; sourceTree = "<group>"; };
 		44C35A441B9B58C6006486CD /* sqxtd_is_equal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqxtd_is_equal.cpp; sourceTree = "<group>"; };
+		44C35A491B9C5309006486CD /* sqxtd_prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sqxtd_prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +75,7 @@
 		445B2EC31B8A3D1500ECC943 /* SqXtdLib */ = {
 			isa = PBXGroup;
 			children = (
+				44C35A491B9C5309006486CD /* sqxtd_prefix.pch */,
 				44C35A411B9A22D1006486CD /* sqxtd_array.h */,
 				445B2EDC1B8A4FCF00ECC943 /* sqxtd_table.h */,
 				445B2EE01B8A541400ECC943 /* sqxtd_string.h */,
@@ -255,6 +257,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREFIX_HEADER = SqXtdLib/sqxtd_prefix.pch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -264,6 +267,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREFIX_HEADER = SqXtdLib/sqxtd_prefix.pch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

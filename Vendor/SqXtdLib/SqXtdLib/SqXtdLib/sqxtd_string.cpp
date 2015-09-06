@@ -24,17 +24,6 @@
 //  SOFTWARE.
 
 #include "sqxtd_string.h"
-#include <string>
-#include <vector>
-#include <sstream>
-#include "assert.h"
-
-#include "sqvm.h"
-#include "sqobject.h"
-#include "sqstring.h"
-#include "sqstate.h"
-#include "sqarray.h"
-
 #include "sqxtd_utils.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

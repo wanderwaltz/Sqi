@@ -24,8 +24,6 @@
 //  SOFTWARE.
 
 #include "sqxtd_table.h"
-#include "assert.h"
-
 #include "sqxtd_string.h"
 
 namespace sqxtd { namespace native { namespace table {

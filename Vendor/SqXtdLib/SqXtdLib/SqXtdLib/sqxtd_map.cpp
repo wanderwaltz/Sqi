@@ -25,14 +25,6 @@
 
 #include "SqXtdLib.h"
 #include "sqxtd_utils.h"
-#include "assert.h"
-#include "string.h"
-#include <new>
-
-#include "sqvm.h"
-#include "sqobject.h"
-#include "sqstate.h"
-#include "sqarray.h"
 
 namespace sqxtd { namespace native { namespace common {
     static SQRESULT map_null(HSQUIRRELVM vm);

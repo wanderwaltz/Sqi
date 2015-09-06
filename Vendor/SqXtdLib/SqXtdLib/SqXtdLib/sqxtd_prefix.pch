@@ -1,8 +1,8 @@
 //
-//  sqxtd_array.cpp
+//  sqxtd_prefix.pch
 //  SqXtdLib
 //
-//  Created by Egor Chiglintsev on 05.09.15.
+//  Created by Egor Chiglintsev on 06.09.15.
 //  Copyright (c) 2015 Egor Chiglintsev. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,45 +23,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#include "sqxtd_array.h"
-#include "sqxtd_string.h"
+#ifndef SqXtdLib_sqxtd_prefix_pch
+#define SqXtdLib_sqxtd_prefix_pch
 
-namespace sqxtd { namespace native { namespace array {
-    SQRESULT tostring(HSQUIRRELVM vm) {
-        sqxtd::string result("[");
-        
-        sq_pushnull(vm);
-        
-        while(SQ_SUCCEEDED(sq_next(vm, -2)))
-        {
-            __unused static const SQInteger key_index = -2;
-            static const SQInteger value_index = -1;
-            
-            bool isString = (sq_gettype(vm, value_index) == OT_STRING);
-            
-            if (isString) {
-                result += "\"";
-            }
-            
-            result += sqxtd::tostring(vm, value_index);
-            
-            if (isString) {
-                result += "\"";
-            }
-            
-            result += ", ";
-            
-            sq_pop(vm,2);
-        }
-        
-        // no commas to delete for empty array
-        if (result.length() > 1) {
-            result.erase(result.length()-2, result.length());
-        }
-        
-        result += "]";
-        
-        sq_pushstring(vm, result.c_str(), result.length());
-        return 1;
-    }
-}}}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <new>
+
+#include "squirrel.h"
+#include "sqvm.h"
+#include "sqobject.h"
+#include "sqstate.h"
+#include "sqstring.h"
+#include "sqarray.h"
+
+#endif
