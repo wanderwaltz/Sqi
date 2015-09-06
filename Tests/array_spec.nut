@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  array_spec.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 06.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,15 +23,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
+SqTest.spec("array", function(){
+    // The spec for array utility functions conversion is not true for vanilla Squirrel3,
+    // this functionality have been added by SqXtdLib and is possible with
+    // changes to the Squirrel language introduced in
+    // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
-::import("integer_spec");
-::import("getters_setters_spec");
-::import("tostring_spec");
-::import("getdefaultdelegate_spec");
-::import("map_spec");
-::import("string_spec");
-::import("array_spec");
+    describe("componentsJoinedByString", function(){
+        it("should return a string", function(){
+            expect(typeof([1,2,3].componentsJoinedByString(","))).to().equal(typeof(""));
+        });
 
-SqTest.run();
+
+        it("should join string representations of array elements with the given string", function(){
+            expect([1,2,3].componentsJoinedByString(", ")).to().equal("1, 2, 3");
+        });
+
+
+        it("should return an empty string for an empty array", function(){
+            expect([].componentsJoinedByString(",")).to().equal("");
+        });
+
+
+        it("should throw if the parameter is not a string", function(){
+            expect(@()[1,2,3].componentsJoinedByString(1)).to().throwError();
+        });
+    });
+});
