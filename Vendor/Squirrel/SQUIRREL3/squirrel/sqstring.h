@@ -2,8 +2,7 @@
 #ifndef _SQSTRING_H_
 #define _SQSTRING_H_
 
-inline SQHash _hashstr (const SQChar *s, size_t l)
-{
+inline SQHash _hashstr (const SQChar *s, size_t l) {
 		SQHash h = (SQHash)l;  /* seed */
 		size_t step = (l>>5)|1;  /* if string is too long, don't hash all its chars */
 		for (; l>=step; l-=step)
@@ -11,8 +10,7 @@ inline SQHash _hashstr (const SQChar *s, size_t l)
 		return h;
 }
 
-struct SQString : public SQRefCounted
-{
+struct SQString : public SQRefCounted {
 	SQString(){}
 	~SQString(){}
 public:

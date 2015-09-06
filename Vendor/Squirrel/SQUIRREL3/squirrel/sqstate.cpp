@@ -592,15 +592,18 @@ void SQStringTable::AllocNodes(SQInteger size)
 	memset(_strings,0,sizeof(SQString*)*_numofslots);
 }
 
-SQString *SQStringTable::Add(const SQChar *news,SQInteger len)
-{
-	if(len<0)
+SQString *SQStringTable::Add(const SQChar *news,SQInteger len) {
+    
+    if (len < 0) {
 		len = (SQInteger)scstrlen(news);
+    }
+    
 	SQHash newhash = ::_hashstr(news,len);
 	SQHash h = newhash&(_numofslots-1);
-	SQString *s;
-	for (s = _strings[h]; s; s = s->_next){
-		if(s->_len == len && (!memcmp(news,s->_val,rsl(len))))
+	SQString *s = NULL;
+    
+	for (s = _strings[h]; s; s = s->_next) {
+		if (s->_len == len && (!memcmp(news, s->_val, rsl(len))))
 			return s; //found
 	}
 
@@ -614,8 +617,9 @@ SQString *SQStringTable::Add(const SQChar *news,SQInteger len)
 	t->_next = _strings[h];
 	_strings[h] = t;
 	_slotused++;
-	if (_slotused > _numofslots)  /* too crowded? */
+    if (_slotused > _numofslots) {  /* too crowded? */
 		Resize(_numofslots*2);
+    }
 	return t;
 }
 

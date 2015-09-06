@@ -9,8 +9,7 @@ struct SQTable;
 //max number of character for a printed number
 #define NUMBER_MAX_CHAR 50
 
-struct SQStringTable
-{
+struct SQStringTable {
 	SQStringTable(SQSharedState*ss);
 	~SQStringTable();
 	SQString *Add(const SQChar *,SQInteger len);
