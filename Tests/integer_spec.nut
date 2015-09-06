@@ -24,6 +24,11 @@
 //  SOFTWARE.
 
 SqTest.spec("integers", @{
+    describe("bool", @{
+        it("should cast `true` to 1", @() expect(true.tointeger()).to().equal(1));
+        it("should cast `false` to 0", @() expect(false.tointeger()).to().equal(0));
+    });
+
     describe("zero", @{
         it("should not change the sum when added to any number", @() expect(0+5).to().equal(5));
         it("should set any multiplication result to zero", @() expect(0*5).to().equal(0));
