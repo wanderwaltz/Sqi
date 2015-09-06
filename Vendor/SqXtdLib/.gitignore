@@ -4,10 +4,6 @@
 *.obj
 *.elf
 
-# Precompiled Headers
-*.gch
-*.pch
-
 # Libraries
 *.lib
 *.a
