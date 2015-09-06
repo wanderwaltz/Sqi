@@ -25,6 +25,25 @@
 
 #include "sqxtd_array.h"
 #include "sqxtd_string.h"
+#include "sqxtd_utils.h"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Private forwards and constants
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static const SQChar * const kKeyComponentsJoinedByString = _SC("componentsJoinedByString");
+
+namespace sqxtd { namespace native { namespace array {
+    static SQRESULT components_joined_by_string(HSQUIRRELVM vm);
+}}}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Public
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void sqxtd_register_array(HSQUIRRELVM vm) {
+    sqxtd::set_default_delegate_native(vm, OT_ARRAY, kKeyComponentsJoinedByString,
+        &sqxtd::native::array::components_joined_by_string);
+}
 
 namespace sqxtd { namespace native { namespace array {
     SQRESULT tostring(HSQUIRRELVM vm) {
@@ -61,7 +80,48 @@ namespace sqxtd { namespace native { namespace array {
         
         result += "]";
         
-        sq_pushstring(vm, result.c_str(), result.length());
+        push_string(vm, result);
+        return 1;
+    }
+}}}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Private
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+namespace sqxtd { namespace native { namespace array {
+    static SQRESULT components_joined_by_string(HSQUIRRELVM vm) {
+        SQObjectPtr selfObject  = vm->GetAt(vm->_top-2);
+        SQObjectPtr otherObject = vm->GetAt(vm->_top-1);
+        
+        assert((type(selfObject) == OT_ARRAY) && "componentsJoinedByString is expected to be used with array receiver");
+        if (type(selfObject) != OT_ARRAY) {
+            vm->Raise_Error(_SC("%s expected `this` of array type"), kKeyComponentsJoinedByString);
+            return SQ_ERROR;
+        }
+        
+        if (type(otherObject) != OT_STRING) {
+            vm->Raise_Error(_SC("%s expected parameter of string type"), kKeyComponentsJoinedByString);
+            return SQ_ERROR;
+        }
+        
+        SQArray *self = _array(selfObject);
+        auto separator = sqxtd::tostring(otherObject);
+        auto result(string(""));
+        
+        for (SQInteger i = 0; i < self->Size(); ++i) {
+            SQObjectPtr selfElement;
+            self->Get(i, selfElement);
+        
+            auto elementString = sqxtd::tostring(vm, selfElement);
+            result += elementString;
+            
+            if (i+1 < self->Size()) {
+                result += separator;
+            }
+        }
+        
+        push_string(vm, result);
         return 1;
     }
 }}}

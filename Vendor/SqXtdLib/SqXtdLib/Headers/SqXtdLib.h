@@ -65,6 +65,12 @@ void sqxtd_register_is_equal(HSQUIRRELVM vm);
 void sqxtd_register_string(HSQUIRRELVM vm);
     
     
+/** Adds various utility methods to the array default delegate.
+ */
+void sqxtd_register_array(HSQUIRRELVM vm);
+
+    
+    
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
