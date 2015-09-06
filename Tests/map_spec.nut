@@ -23,13 +23,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("map", function(){
+SqTest.spec("map", @(){
     // The spec for map function is not true for vanilla Squirrel3,
     // it has been added by SqXtdLib
 
-    describe("integer", function(){
-        context("when mapped", function(){
-            it("should receive itself as an implicit `this` parameter to map function", function(){
+    describe("integer", @(){
+        context("when mapped", @(){
+            it("should receive itself as an implicit `this` parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -40,7 +40,7 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should receive itself as an explicit parameter to map function", function(){
+            it("should receive itself as an explicit parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -51,16 +51,16 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should return the new value", function(){
+            it("should return the new value", @(){
                 expect((2).map(@(x)this+5)).to().equal(7);
             });
         });
     });
 
 
-    describe("float", function(){
-        context("when mapped", function(){
-            it("should receive itself as an implicit `this` parameter to map function", function(){
+    describe("float", @(){
+        context("when mapped", @(){
+            it("should receive itself as an implicit `this` parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -71,7 +71,7 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should receive itself as an explicit parameter to map function", function(){
+            it("should receive itself as an explicit parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -82,16 +82,16 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should return the new value", function(){
+            it("should return the new value", @(){
                 expect((2.5).map(@(x)this+5.5)).to().equal(8);
             });
         });
     });
 
 
-    describe("string", function(){
-        context("when mapped", function(){
-            it("should receive itself as an implicit `this` parameter to map function", function(){
+    describe("string", @(){
+        context("when mapped", @(){
+            it("should receive itself as an implicit `this` parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -102,7 +102,7 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should receive itself as an explicit parameter to map function", function(){
+            it("should receive itself as an explicit parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -113,16 +113,16 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should return the new value", function(){
+            it("should return the new value", @(){
                 expect(("qwerty").map(@(x)this.len())).to().equal(6);
             });
         });
     });
 
 
-    describe("bool", function(){
-        context("when mapped", function(){
-            it("should receive itself as an implicit `this` parameter to map function", function(){
+    describe("bool", @(){
+        context("when mapped", @(){
+            it("should receive itself as an implicit `this` parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -133,7 +133,7 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should receive itself as an explicit parameter to map function", function(){
+            it("should receive itself as an explicit parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -144,16 +144,16 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should return the new value", function(){
+            it("should return the new value", @(){
                 expect((true).map(@(x)this || false)).to().equal(true);
             });
         });
     });
 
 
-    describe("table", function(){
-        context("when mapped", function(){
-            it("should receive itself as an implicit `this` parameter to map function", function(){
+    describe("table", @(){
+        context("when mapped", @(){
+            it("should receive itself as an implicit `this` parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -168,7 +168,7 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should receive itself as an explicit parameter to map function", function(){
+            it("should receive itself as an explicit parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -183,19 +183,19 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should return the new value", function(){
+            it("should return the new value", @(){
                 expect(({}).map(@(x)this.len())).to().equal(0);
             });
         });
     });
 
 
-    describe("array", function(){
+    describe("array", @(){
         // note that Squirrel3 provides a default map implementation for array type;
         // SqXtdLib does not replace this implementation
 
-        context("when mapped", function(){
-            it("should receive itself as an implicit `this` parameter to map function", function(){
+        context("when mapped", @(){
+            it("should receive itself as an implicit `this` parameter to map function", @(){
                 local actual = {
                     parameter = null
                 };
@@ -208,7 +208,7 @@ SqTest.spec("map", function(){
             });
 
 
-            it("should return a new array with mapped elements", function(){
+            it("should return a new array with mapped elements", @(){
                 local initial_array = [1,2,3];
                 local expected_array = [2,4,6];
                 local mapped_array = initial_array.map(@(x)x*2);
@@ -221,9 +221,9 @@ SqTest.spec("map", function(){
     });
 
 
-    describe("null", function(){
-        context("when mapped", function(){
-            it("should return null regardless of the function", function(){
+    describe("null", @(){
+        context("when mapped", @(){
+            it("should return null regardless of the function", @(){
                 expect(null.map(@(x)"qwerty")).to().equal(null);
             });
         });

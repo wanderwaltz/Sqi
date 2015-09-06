@@ -23,19 +23,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("string", function(){
+SqTest.spec("string", @(){
     // The spec for string utility functions conversion is not true for vanilla Squirrel3,
     // this functionality have been added by SqXtdLib and is possible with
     // changes to the Squirrel language introduced in
     // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
-    describe("componentsSeparatedByString", function(){
-        it("should return an array", function(){
+    describe("componentsSeparatedByString", @(){
+        it("should return an array", @(){
             expect(typeof("a,b,c".componentsSeparatedByString(","))).to().equal(typeof([]));
         });
 
 
-        it("should return an array of strings", function(){
+        it("should return an array of strings", @(){
             local array = "a,b,c".componentsSeparatedByString(",");
 
             foreach (i, s in array) {
@@ -44,27 +44,27 @@ SqTest.spec("string", function(){
         });
 
 
-        it("should return substrings separated by the given string", function(){
+        it("should return substrings separated by the given string", @(){
             expect("a,b,c".componentsSeparatedByString(",")).to().equal(["a","b","c"]);
         });
 
 
-        it("should support multi-char separators", function(){
+        it("should support multi-char separators", @(){
             expect("a---b---c".componentsSeparatedByString("---")).to().equal(["a","b","c"]);
         });
 
 
-        it("should return a single component if separator is not present in string", function(){
+        it("should return a single component if separator is not present in string", @(){
             expect("abc".componentsSeparatedByString(",")).to().equal(["abc"]);
         });
 
 
-        it("should keep empty components", function(){
+        it("should keep empty components", @(){
             expect("a,,b,c".componentsSeparatedByString(",")).to().equal(["a","","b","c"]);
         });
 
 
-        it("should throw if called with a non-string parameter", function(){
+        it("should throw if called with a non-string parameter", @(){
             expect(@()"a,b,c".componentsSeparatedByString(1)).to().throwError();
         });
     });

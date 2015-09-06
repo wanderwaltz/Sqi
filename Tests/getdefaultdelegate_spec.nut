@@ -23,27 +23,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("getdefaultdelegate", function(){
+SqTest.spec("getdefaultdelegate", @(){
     // The spec for getdefaultdelegate function is not true for vanilla Squirrel3,
     // it has been added by SqXtdLib
 
-    context("by default", function(){
-        it("should exist in root table", function(){
+    context("by default", @(){
+        it("should exist in root table", @(){
             expect(getroottable()).to().haveSlot("getdefaultdelegate");
         });
 
 
-        it("should be a function", function(){
+        it("should be a function", @(){
             expect(typeof(::getdefaultdelegate)).to().equal(typeof(function(){}));
         });
 
 
-        it("should return a table for any object", function(){
+        it("should return a table for any object", @(){
             expect(typeof(::getdefaultdelegate(1))).to().equal(typeof({}));
         });
 
 
-        it("should return the same table for any object of a given type", function(){
+        it("should return the same table for any object of a given type", @(){
             local oneDelegate = ::getdefaultdelegate(1);
             local twoDelegate = ::getdefaultdelegate(2);
 
@@ -51,7 +51,7 @@ SqTest.spec("getdefaultdelegate", function(){
         });
 
 
-        it("should return different tables for objects of different types", function(){
+        it("should return different tables for objects of different types", @(){
             local numberDelegate = ::getdefaultdelegate(1);
             local stringDelegate = ::getdefaultdelegate("qwerty");
 
@@ -60,38 +60,38 @@ SqTest.spec("getdefaultdelegate", function(){
     });
 
 
-    context("when asked to", function(){
-        it("should provide a default delegate for number type", function(){
+    context("when asked to", @(){
+        it("should provide a default delegate for number type", @(){
             expect(::getdefaultdelegate(1)).notTo().equal(null);
         });
 
 
-        it("should provide a default delegate for string type", function(){
+        it("should provide a default delegate for string type", @(){
             expect(::getdefaultdelegate("qwerty")).notTo().equal(null);
         });
 
 
-        it("should provide a default delegate for table type", function(){
+        it("should provide a default delegate for table type", @(){
             expect(::getdefaultdelegate({})).notTo().equal(null);
         });
 
 
-        it("should provide a default delegate for array type", function(){
+        it("should provide a default delegate for array type", @(){
             expect(::getdefaultdelegate([])).notTo().equal(null);
         });
 
 
-        it("should provide a default delegate for null type", function(){
+        it("should provide a default delegate for null type", @(){
             expect(::getdefaultdelegate(null)).notTo().equal(null);
         });
 
 
-        it("should provide a default delegate for class type", function(){
+        it("should provide a default delegate for class type", @(){
             expect(::getdefaultdelegate(class{})).notTo().equal(null);
         });
 
 
-        it("should provide a default delegate for instance type", function(){
+        it("should provide a default delegate for instance type", @(){
             local theClass = class{};
             local instance = theClass();
             expect(::getdefaultdelegate(instance)).notTo().equal(null);
