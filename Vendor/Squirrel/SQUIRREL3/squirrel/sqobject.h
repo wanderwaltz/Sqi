@@ -332,76 +332,92 @@ const SQChar *IdType2Name(SQObjectType type);
 
 
 inline SQString *_string(const SQObjectPtr &value) {
+    assert(type(value) == OT_STRING);
     return value._unVal.pString;
 }
 
 
 inline SQTable *_table(const SQObjectPtr &value) {
+    assert(type(value) == OT_TABLE);
     return value._unVal.pTable;
 }
 
 
 inline SQArray *_array(const SQObjectPtr &value) {
+    assert(type(value) == OT_ARRAY);
     return value._unVal.pArray;
 }
 
 
 inline SQClosure *_closure(const SQObjectPtr &value) {
+    assert(type(value) == OT_CLOSURE);
     return value._unVal.pClosure;
 }
 
 
 inline SQGenerator *_generator(const SQObjectPtr &value) {
+    assert(type(value) == OT_GENERATOR);
     return value._unVal.pGenerator;
 }
 
 
 inline SQNativeClosure *_nativeclosure(const SQObjectPtr &value) {
+    assert(type(value) == OT_NATIVECLOSURE);
     return value._unVal.pNativeClosure;
 }
 
 
 inline SQUserData *_userdata(const SQObjectPtr &value) {
+    assert(type(value) == OT_USERDATA);
     return value._unVal.pUserData;
 }
 
 
 inline SQUserPointer _userpointer(const SQObjectPtr &value) {
+    // see SQVM::ObjCmp, it uses this type of cast as a default fallback,
+    // assert(type(value) == OT_USERPOINTER);
     return value._unVal.pUserPointer;
 }
 
 
 inline SQVM *_thread(const SQObjectPtr &value) {
+    assert(type(value) == OT_THREAD);
     return value._unVal.pThread;
 }
 
 
 inline SQFunctionProto *_funcproto(const SQObjectPtr &value) {
+    assert(type(value) == OT_FUNCPROTO);
     return value._unVal.pFunctionProto;
 }
 
 
 inline SQClass *_class(const SQObjectPtr &value) {
+    assert(type(value) == OT_CLASS);
     return value._unVal.pClass;
 }
 
 
 inline SQInstance *_instance(const SQObjectPtr &value) {
+    assert(type(value) == OT_INSTANCE);
     return value._unVal.pInstance;
 }
 
 
 inline SQDelegable *_delegable(const SQObjectPtr &value) {
+    assert(type(value) & SQOBJECT_DELEGABLE);
     return value._unVal.pDelegable;
 }
 
 
 inline SQRefCounted *_refcounted(const SQObjectPtr &value) {
+    assert(type(value) & SQOBJECT_REF_COUNTED);
     return value._unVal.pRefCounted;
 }
 
 
 inline SQOuter *_outer(const SQObjectPtr &value) {
+    assert(type(value) == OT_OUTER);
     return value._unVal.pOuter;
 }
 
@@ -412,6 +428,8 @@ inline const SQRawObjectVal &_rawval(const SQObjectPtr &value) {
 
 
 inline SQFloat tofloat(const SQObjectPtr &value) {
+    assert((type(value) == OT_INTEGER) || (type(value) == OT_FLOAT));
+    
     if (type(value) == OT_INTEGER) {
         return (SQFloat)_integer(value);
     }
@@ -422,6 +440,8 @@ inline SQFloat tofloat(const SQObjectPtr &value) {
 
 
 inline SQInteger tointeger(const SQObjectPtr &value) {
+    assert((type(value) == OT_INTEGER) || (type(value) == OT_FLOAT));
+    
     if (type(value) == OT_FLOAT) {
         return (SQInteger)_float(value);
     }
