@@ -1358,7 +1358,10 @@ public:
 	}
 	void FunctionExp(SQInteger ftype,bool lambda = false)
 	{
-		Lex(); Expect(_SC('('));
+		Lex();
+        if (_token == _SC('(')) {
+            Lex();
+        }
 		SQObjectPtr dummy;
 		CreateFunction(dummy,lambda);
 		_fs->AddInstruction(_OP_CLOSURE, _fs->PushTarget(), _fs->_functions.size() - 1, ftype == TK_FUNCTION?0:1);
@@ -1433,36 +1436,39 @@ public:
 		SQObject paramname;
 		funcstate->AddParameter(_fs->CreateString(_SC("this")));
 		funcstate->_sourcename = _sourcename;
-		SQInteger defparams = 0;
-		while(_token!=_SC(')')) {
-			if(_token == TK_VARPARAMS) {
-				if(defparams > 0) Error(_SC("function with default parameters cannot have variable number of parameters"));
-				funcstate->AddParameter(_fs->CreateString(_SC("vargv")));
-				funcstate->_varparams = true;
-				Lex();
-				if(_token != _SC(')')) Error(_SC("expected ')'"));
-				break;
-			}
-			else {
-				paramname = Expect(TK_IDENTIFIER);
-				funcstate->AddParameter(paramname);
-				if(_token == _SC('=')) { 
-					Lex();
-					Expression();
-					funcstate->AddDefaultParam(_fs->TopTarget());
-					defparams++;
-				}
-				else {
-					if(defparams > 0) Error(_SC("expected '='"));
-				}
-				if(_token == _SC(',')) Lex();
-				else if(_token != _SC(')')) Error(_SC("expected ')' or ','"));
-			}
-		}
-		Expect(_SC(')'));
-		for(SQInteger n = 0; n < defparams; n++) {
-			_fs->PopTarget();
-		}
+        
+        if (_token != _SC('{')) {
+            SQInteger defparams = 0;
+            while(_token!=_SC(')')) {
+                if(_token == TK_VARPARAMS) {
+                    if(defparams > 0) Error(_SC("function with default parameters cannot have variable number of parameters"));
+                    funcstate->AddParameter(_fs->CreateString(_SC("vargv")));
+                    funcstate->_varparams = true;
+                    Lex();
+                    if(_token != _SC(')')) Error(_SC("expected ')'"));
+                    break;
+                }
+                else {
+                    paramname = Expect(TK_IDENTIFIER);
+                    funcstate->AddParameter(paramname);
+                    if(_token == _SC('=')) { 
+                        Lex();
+                        Expression();
+                        funcstate->AddDefaultParam(_fs->TopTarget());
+                        defparams++;
+                    }
+                    else {
+                        if(defparams > 0) Error(_SC("expected '='"));
+                    }
+                    if(_token == _SC(',')) Lex();
+                    else if(_token != _SC(')')) Error(_SC("expected ')' or ','"));
+                }
+            }
+            Expect(_SC(')'));
+            for(SQInteger n = 0; n < defparams; n++) {
+                _fs->PopTarget();
+            }
+        }
 				
 		SQFuncState *currchunk = _fs;
 		_fs = funcstate;
