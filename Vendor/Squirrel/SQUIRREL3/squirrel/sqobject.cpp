@@ -82,15 +82,17 @@ SQUnsignedInteger TranslateIndex(const SQObjectPtr &idx)
 	return 0;
 }
 
+
 SQWeakRef *SQRefCounted::GetWeakRef(SQObjectType type)
 {
-	if(!_weakref) {
-		sq_new(_weakref,SQWeakRef);
+	if (!_weakref) {
+		sq_new(_weakref, SQWeakRef);
 		_weakref->_obj._type = type;
 		_weakref->_obj._unVal.pRefCounted = this;
 	}
 	return _weakref;
 }
+
 
 SQRefCounted::~SQRefCounted()
 {

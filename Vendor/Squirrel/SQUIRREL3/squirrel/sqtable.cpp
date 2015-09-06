@@ -105,7 +105,7 @@ SQTable *SQTable::Clone()
 	return nt;
 }
 
-bool SQTable::Get(const SQObjectPtr &key,SQObjectPtr &val)
+bool SQTable::Get(const SQObjectPtr &key,SQObjectPtr &val) const
 {
 	if(type(key) == OT_NULL)
 		return false;
@@ -171,7 +171,7 @@ bool SQTable::NewSlot(const SQObjectPtr &key,const SQObjectPtr &val)
 	return NewSlot(key, val);
 }
 
-SQInteger SQTable::Next(bool getweakrefs,const SQObjectPtr &refpos, SQObjectPtr &outkey, SQObjectPtr &outval)
+SQInteger SQTable::Next(bool getweakrefs,const SQObjectPtr &refpos, SQObjectPtr &outkey, SQObjectPtr &outval) const
 {
 	SQInteger idx = (SQInteger)TranslateIndex(refpos);
 	while (idx < _numofnodes) {

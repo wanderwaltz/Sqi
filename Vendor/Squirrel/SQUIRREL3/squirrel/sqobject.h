@@ -84,19 +84,17 @@ enum SQMetaMethod{
 
 #define MINPOWER2 4
 
-struct SQRefCounted
-{
+struct SQRefCounted {
 	SQUnsignedInteger _uiRef;
 	struct SQWeakRef *_weakref;
-	SQRefCounted() { _uiRef = 0; _weakref = NULL; }
+    
+    SQRefCounted() : _uiRef(0), _weakref(NULL) {}
 	virtual ~SQRefCounted();
 	SQWeakRef *GetWeakRef(SQObjectType type);
-	virtual void Release()=0;
-	
+	virtual void Release() = 0;
 };
 
-struct SQWeakRef : SQRefCounted
-{
+struct SQWeakRef : SQRefCounted {
 	void Release();
 	SQObject _obj;
 };
@@ -181,22 +179,21 @@ struct SQObjectPtr;
 		_unVal.sym = x; \
 		return *this; \
 	}
-struct SQObjectPtr : public SQObject
-{
-	SQObjectPtr()
-	{
+
+struct SQObjectPtr : public SQObject {
+	SQObjectPtr() {
 		SQ_OBJECT_RAWINIT()
 		_type=OT_NULL;
 		_unVal.pUserPointer=NULL;
 	}
-	SQObjectPtr(const SQObjectPtr &o)
-	{
+    
+	SQObjectPtr(const SQObjectPtr &o) {
 		_type = o._type;
 		_unVal = o._unVal;
 		__AddRef(_type,_unVal);
 	}
-	SQObjectPtr(const SQObject &o)
-	{
+    
+	SQObjectPtr(const SQObject &o) {
 		_type = o._type;
 		_unVal = o._unVal;
 		__AddRef(_type,_unVal);
@@ -219,14 +216,13 @@ struct SQObjectPtr : public SQObject
 	_SCALAR_TYPE_DECL(OT_FLOAT,SQFloat,fFloat)
 	_SCALAR_TYPE_DECL(OT_USERPOINTER,SQUserPointer,pUserPointer)
 
-	SQObjectPtr(bool bBool)
-	{
+	SQObjectPtr(bool bBool) {
 		SQ_OBJECT_RAWINIT()
 		_type = OT_BOOL;
 		_unVal.nInteger = bBool?1:0;
 	}
-	inline SQObjectPtr& operator=(bool b)
-	{ 
+    
+	inline SQObjectPtr& operator=(bool b) {
 		__Release(_type,_unVal);
 		SQ_OBJECT_RAWINIT()
 		_type = OT_BOOL;
@@ -234,13 +230,11 @@ struct SQObjectPtr : public SQObject
 		return *this;
 	}
 
-	~SQObjectPtr()
-	{
+	~SQObjectPtr() {
 		__Release(_type,_unVal);
 	}
 			
-	inline SQObjectPtr& operator=(const SQObjectPtr& obj)
-	{ 
+	inline SQObjectPtr& operator=(const SQObjectPtr& obj) {
 		SQObjectType tOldType;
 		SQObjectValue unOldVal;
 		tOldType=_type;
@@ -251,8 +245,8 @@ struct SQObjectPtr : public SQObject
 		__Release(tOldType,unOldVal);
 		return *this;
 	}
-	inline SQObjectPtr& operator=(const SQObject& obj)
-	{ 
+    
+	inline SQObjectPtr& operator=(const SQObject& obj) {
 		SQObjectType tOldType;
 		SQObjectValue unOldVal;
 		tOldType=_type;
@@ -263,20 +257,21 @@ struct SQObjectPtr : public SQObject
 		__Release(tOldType,unOldVal);
 		return *this;
 	}
-	inline void Null()
-	{
+    
+	inline void Null() {
 		SQObjectType tOldType = _type;
 		SQObjectValue unOldVal = _unVal;
 		_type = OT_NULL;
 		_unVal.raw = (SQRawObjectVal)NULL;
 		__Release(tOldType ,unOldVal);
 	}
+    
 	private:
 		SQObjectPtr(const SQChar *){} //safety
 };
 
 
-inline void _Swap(SQObject &a,SQObject &b)
+inline void _Swap(SQObject &a, SQObject &b)
 {
 	SQObjectType tOldType = a._type;
 	SQObjectValue unOldVal = a._unVal;

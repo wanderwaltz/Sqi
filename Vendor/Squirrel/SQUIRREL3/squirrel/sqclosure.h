@@ -10,9 +10,17 @@ struct SQClass;
 struct SQClosure : public CHAINABLE_OBJ
 {
 private:
-	SQClosure(SQSharedState *ss,SQFunctionProto *func){_function = func; __ObjAddRef(_function); _base = NULL; INIT_CHAIN();ADD_TO_CHAIN(&_ss(this)->_gc_chain,this); _env = NULL;}
+	SQClosure(SQSharedState *ss,SQFunctionProto *func) {
+        _function = func;
+        __ObjAddRef(_function);
+        _base = NULL;
+        INIT_CHAIN();
+        ADD_TO_CHAIN(&_ss(this)->_gc_chain,this);
+        _env = NULL;
+    }
+    
 public:
-	static SQClosure *Create(SQSharedState *ss,SQFunctionProto *func){
+	static SQClosure *Create(SQSharedState *ss,SQFunctionProto *func) {
 		SQInteger size = _CALC_CLOSURE_SIZE(func);
 		SQClosure *nc=(SQClosure*)SQ_MALLOC(size);
 		new (nc) SQClosure(ss,func);
@@ -22,7 +30,8 @@ public:
 		_CONSTRUCT_VECTOR(SQObjectPtr,func->_ndefaultparams,nc->_defaultparams);
 		return nc;
 	}
-	void Release(){
+    
+	void Release() {
 		SQFunctionProto *f = _function;
 		SQInteger size = _CALC_CLOSURE_SIZE(f);
 		_DESTRUCT_VECTOR(SQObjectPtr,f->_noutervalues,_outervalues);
@@ -32,8 +41,7 @@ public:
 		sq_vm_free(this,size);
 	}
 	
-	SQClosure *Clone()
-	{
+	SQClosure *Clone() const {
 		SQFunctionProto *f = _function;
 		SQClosure * ret = SQClosure::Create(_opt_ss(this),f);
 		ret->_env = _env;
@@ -42,19 +50,26 @@ public:
 		_COPY_VECTOR(ret->_defaultparams,_defaultparams,f->_ndefaultparams);
 		return ret;
 	}
+    
 	~SQClosure();
 	
-	bool Save(SQVM *v,SQUserPointer up,SQWRITEFUNC write);
-	static bool Load(SQVM *v,SQUserPointer up,SQREADFUNC read,SQObjectPtr &ret);
+	bool Save(SQVM *v, SQUserPointer up, SQWRITEFUNC write);
+	static bool Load(SQVM *v, SQUserPointer up, SQREADFUNC read, SQObjectPtr &ret);
+    
 #ifndef NO_GARBAGE_COLLECTOR
 	void Mark(SQCollectable **chain);
-	void Finalize(){
+    
+	void Finalize() {
 		SQFunctionProto *f = _function;
 		_NULL_SQOBJECT_VECTOR(_outervalues,f->_noutervalues);
 		_NULL_SQOBJECT_VECTOR(_defaultparams,f->_ndefaultparams);
 	}
-	SQObjectType GetType() {return OT_CLOSURE;}
+    
+	SQObjectType GetType() {
+        return OT_CLOSURE;
+    }
 #endif
+    
 	SQWeakRef *_env;
 	SQClass *_base;
 	SQFunctionProto *_function;
