@@ -23,29 +23,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("array", @(){
+SqTest.spec("array", @{
     // The spec for array utility functions conversion is not true for vanilla Squirrel3,
     // this functionality have been added by SqXtdLib and is possible with
     // changes to the Squirrel language introduced in
     // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
-    describe("componentsJoinedByString", @(){
-        it("should return a string", @(){
+    describe("componentsJoinedByString", @{
+        it("should return a string", @{
             expect(typeof([1,2,3].componentsJoinedByString(","))).to().equal(typeof(""));
         });
 
 
-        it("should join string representations of array elements with the given string", @(){
+        it("should join string representations of array elements with the given string", @{
             expect([1,2,3].componentsJoinedByString(", ")).to().equal("1, 2, 3");
         });
 
 
-        it("should return an empty string for an empty array", @(){
+        it("should return an empty string for an empty array", @{
             expect([].componentsJoinedByString(",")).to().equal("");
         });
 
 
-        it("should throw if the parameter is not a string", @(){
+        it("should throw if the parameter is not a string", @{
             expect(@()[1,2,3].componentsJoinedByString(1)).to().throwError();
         });
     });

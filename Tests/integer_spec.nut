@@ -23,36 +23,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("integers", @(){
-    describe("zero", @(){
+SqTest.spec("integers", @{
+    describe("zero", @{
         it("should not change the sum when added to any number", @() expect(0+5).to().equal(5));
         it("should set any multiplication result to zero", @() expect(0*5).to().equal(0));
     });
 
-    describe("multiplication", @(){
-        context("when multiplying a positive and a negative number", @(){
-            it("should result in a negative number", @(){
+    describe("multiplication", @{
+        context("when multiplying a positive and a negative number", @{
+            it("should result in a negative number", @{
                 expect(-2 * 5).to().beNegative();
             });
 
-            it("absolute value should equal to multiplication of absolute values", @(){
+            it("absolute value should equal to multiplication of absolute values", @{
                 expect(abs(-2 * 5)).to().equal(abs(-2)*abs(5));
             });
         });
     });
 
-    describe("division", @(){
-        context("when dividing by another integer", @(){
-            context("when remainder is zero", @(){
+    describe("division", @{
+        context("when dividing by another integer", @{
+            context("when remainder is zero", @{
                 it("should result in an integer value", @()expect(6/3).to().equal(2));
             });
 
-            context("when remainder is nonzero", @(){
+            context("when remainder is nonzero", @{
                 it("should result in an integer value rounded down", @() expect(5/2).to().equal(2));
             });
         });
 
-        context("when dividing by a float", @(){
+        context("when dividing by a float", @{
             it("should result in a float value", @() expect(5/2.0).to().equal(2.5));
         });
     });

@@ -23,32 +23,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("tosring", @(){
-    describe("arrays", @(){
-        context("when converted to string", @(){
+SqTest.spec("tosring", @{
+    describe("arrays", @{
+        context("when converted to string", @{
             // The spec for arrays tostring conversion is not true for vanilla Squirrel3,
             // this functionality have been added by SqXtdLib and are possible with
             // changes to the Squirrel language introduced in
             // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
-            it("should list all array's elements", @(){
+            it("should list all array's elements", @{
                 expect([1,2,3].tostring()).to().equal("[1, 2, 3]");
             });
 
-            it("should put strings inside the array into double quotes", @(){
+            it("should put strings inside the array into double quotes", @{
                 expect(["qwerty", "asdfg"].tostring()).to().equal("[\"qwerty\", \"asdfg\"]");
             });
         });
     });
 
-    describe("tables", @(){
-        context("when converted to string", @(){
+    describe("tables", @{
+        context("when converted to string", @{
             // The spec for tables tostring conversion is not true for vanilla Squirrel3,
             // this functionality have been added by SqXtdLib and are possible with
             // changes to the Squirrel language introduced in
             // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
-            it("should list all table slots", @(){
+            it("should list all table slots", @{
                 local table = {
                     name = "John Appleseed",
                     age  = 27
@@ -61,7 +61,7 @@ SqTest.spec("tosring", @(){
                 // }
             });
 
-            it("should indent nested tables with tabs", @(){
+            it("should indent nested tables with tabs", @{
                 local table = {
                     key = "value"
                     nestedTable = {
@@ -80,8 +80,8 @@ SqTest.spec("tosring", @(){
         });
 
 
-        context("when having a _tostring() metamethod in the default delegate", @(){
-            it("should return the default delegate's _tostring() value", @(){
+        context("when having a _tostring() metamethod in the default delegate", @{
+            it("should return the default delegate's _tostring() value", @{
                 local default_delegate = getdefaultdelegate({});
                 local original_implementation = default_delegate._tostring;
 
@@ -96,8 +96,8 @@ SqTest.spec("tosring", @(){
         });
 
 
-        context("when having a delegate", @(){
-            it("should return the _tostring() metamethod value if present", @(){
+        context("when having a delegate", @{
+            it("should return the _tostring() metamethod value if present", @{
                 local delegate = {
                     _tostring = function(){
                         return "expected_value";
@@ -111,7 +111,7 @@ SqTest.spec("tosring", @(){
             });
 
 
-            it("should override the default delegate _tostring() metamethod value if present", @(){
+            it("should override the default delegate _tostring() metamethod value if present", @{
                 local default_delegate = getdefaultdelegate({});
                 local original_implementation = default_delegate._tostring;
 

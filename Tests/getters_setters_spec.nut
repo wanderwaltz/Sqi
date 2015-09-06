@@ -23,26 +23,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("getters/setters", @(){
-    describe("tables", @(){
-        it("should allow reading a value using the literal key it was created with", @(){
+SqTest.spec("getters/setters", @{
+    describe("tables", @{
+        it("should allow reading a value using the literal key it was created with", @{
             local table = { key = "value" };
             expect(table.key).to().equal("value");
         });
 
-        it("should allow reading a value using the string key it was created with", @(){
+        it("should allow reading a value using the string key it was created with", @{
             local table = { key = "value" };
             expect(table["key"]).to().equal("value");
         });
     });
 
-    describe("null", @(){
+    describe("null", @{
         // The spec for `null` is not true for vanilla Squirrel3, these properties
         // have been added by SqXtdLib and are possible with  changes to the
         // Squirrel language introduced in https://github.com/wanderwaltz/Squirrel
         // fork of the Squirrel language source.
 
-        context("when indexing", @(){
+        context("when indexing", @{
             it("should allow getting a null value for any literal key",
                 @() expect(null.someKey).to().equal(null));
 
@@ -53,7 +53,7 @@ SqTest.spec("getters/setters", @(){
                 @() expect(null[123]).to().equal(null));
         });
 
-        context("when setting values", @(){
+        context("when setting values", @{
             it("should allow setting a value for any key",
                 // the return value of (a = b) expression is b
                 @() expect((null.key = "value")).to().equal("value"));
