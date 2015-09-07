@@ -24,6 +24,7 @@
 //  SOFTWARE.
 
 SqTest.spec("getdefaultdelegate", @{
+    requires("SQXTD_GET_DEFAULT_DELEGATE_EXTENSION_VERSION", "0.0.1");
     // The spec for getdefaultdelegate function is not true for vanilla Squirrel3,
     // it has been added by SqXtdLib
 

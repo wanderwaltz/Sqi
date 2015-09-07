@@ -37,6 +37,7 @@ SqTest.spec("getters/setters", @{
     });
 
     describe("null", @{
+        requires("SQXTD_NULL_EXTENSION_VERSION", "0.0.1");
         // The spec for `null` is not true for vanilla Squirrel3, these properties
         // have been added by SqXtdLib and are possible with  changes to the
         // Squirrel language introduced in https://github.com/wanderwaltz/Squirrel

@@ -24,6 +24,7 @@
 //  SOFTWARE.
 
 SqTest.spec("string", @{
+    requires("SQXTD_STRING_EXTENSION_VERSION", "0.0.1");
     // The spec for string utility functions conversion is not true for vanilla Squirrel3,
     // this functionality have been added by SqXtdLib and is possible with
     // changes to the Squirrel language introduced in

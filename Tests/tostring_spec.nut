@@ -26,6 +26,7 @@
 SqTest.spec("tosring", @{
     describe("arrays", @{
         context("when converted to string", @{
+            requires("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION", "0.0.1");
             // The spec for arrays tostring conversion is not true for vanilla Squirrel3,
             // this functionality have been added by SqXtdLib and are possible with
             // changes to the Squirrel language introduced in
@@ -43,6 +44,7 @@ SqTest.spec("tosring", @{
 
     describe("tables", @{
         context("when converted to string", @{
+            requires("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION", "0.0.1");
             // The spec for tables tostring conversion is not true for vanilla Squirrel3,
             // this functionality have been added by SqXtdLib and are possible with
             // changes to the Squirrel language introduced in
@@ -81,6 +83,9 @@ SqTest.spec("tosring", @{
 
 
         context("when having a _tostring() metamethod in the default delegate", @{
+            requires("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION", "0.0.1");
+            requires("SQXTD_GET_DEFAULT_DELEGATE_EXTENSION_VERSION", "0.0.1");
+
             it("should return the default delegate's _tostring() value", @{
                 local default_delegate = getdefaultdelegate({});
                 local original_implementation = default_delegate._tostring;
@@ -110,6 +115,8 @@ SqTest.spec("tosring", @{
                 expect(table.tostring()).to().equal("expected_value");
             });
 
+            requires("SQXTD_GET_DEFAULT_DELEGATE_EXTENSION_VERSION", "0.0.1");
+            requires("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION", "0.0.1");
 
             it("should override the default delegate _tostring() metamethod value if present", @{
                 local default_delegate = getdefaultdelegate({});

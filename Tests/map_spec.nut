@@ -25,9 +25,11 @@
 
 SqTest.spec("map", @{
     // The spec for map function is not true for vanilla Squirrel3,
-    // it has been added by SqXtdLib
+    // it has been added by SqXtdLib (except the map function for array type,
+    // which is present in vanilla Squirrel3)
 
     describe("integer", @{
+        requires("SQXTD_MAP_EXTENSION_VERSION", "0.0.1");
         context("when mapped", @{
             it("should receive itself as an implicit `this` parameter to map function", @{
                 local actual = {
@@ -59,6 +61,7 @@ SqTest.spec("map", @{
 
 
     describe("float", @{
+        requires("SQXTD_MAP_EXTENSION_VERSION", "0.0.1");
         context("when mapped", @{
             it("should receive itself as an implicit `this` parameter to map function", @{
                 local actual = {
@@ -90,6 +93,7 @@ SqTest.spec("map", @{
 
 
     describe("string", @{
+        requires("SQXTD_MAP_EXTENSION_VERSION", "0.0.1");
         context("when mapped", @{
             it("should receive itself as an implicit `this` parameter to map function", @{
                 local actual = {
@@ -121,6 +125,7 @@ SqTest.spec("map", @{
 
 
     describe("bool", @{
+        requires("SQXTD_MAP_EXTENSION_VERSION", "0.0.1");
         context("when mapped", @{
             it("should receive itself as an implicit `this` parameter to map function", @{
                 local actual = {
@@ -152,6 +157,7 @@ SqTest.spec("map", @{
 
 
     describe("table", @{
+        requires("SQXTD_MAP_EXTENSION_VERSION", "0.0.1");
         context("when mapped", @{
             it("should receive itself as an implicit `this` parameter to map function", @{
                 local actual = {
@@ -222,6 +228,7 @@ SqTest.spec("map", @{
 
 
     describe("null", @{
+        requires("SQXTD_MAP_EXTENSION_VERSION", "0.0.1");
         context("when mapped", @{
             it("should return null regardless of the function", @{
                 expect(null.map(@(x)"qwerty")).to().equal(null);
