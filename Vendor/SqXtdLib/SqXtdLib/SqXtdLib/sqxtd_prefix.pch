@@ -41,5 +41,6 @@
 #include "sqstate.h"
 #include "sqstring.h"
 #include "sqarray.h"
+#include "sqtable.h"
 
 #endif

@@ -71,6 +71,13 @@ namespace sqxtd {
             sqxtd::util::set_default_delegate_native_impl(vm, type, key, func);
         }, typemask);
     }
+    
+    
+    void set_global_constant(HSQUIRRELVM vm, const SQChar *key, const SQChar *value) {
+        SQString *keyString = SQString::Create(vm->_sharedstate, key);
+        SQString *valueString = SQString::Create(vm->_sharedstate, value);
+        _table(vm->_sharedstate->_consts)->NewSlot(keyString, valueString);
+    }
 };
 
 
