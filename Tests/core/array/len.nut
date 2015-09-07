@@ -1,8 +1,8 @@
 //
-//  array_spec.nut
+//  len.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 06.09.15.
+//  Created by Egor Chiglintsev on 07.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,30 +24,31 @@
 //  SOFTWARE.
 
 SqTest.spec("array", @{
-    requires("SQXTD_ARRAY_EXTENSION_VERSION", "0.0.1");
-    // The spec for array utility functions conversion is not true for vanilla Squirrel3,
-    // this functionality have been added by SqXtdLib and is possible with
-    // changes to the Squirrel language introduced in
-    // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
+    describe("len", @{
+        // Spec for len function is inspired by RubySpec
+        // See https://github.com/rubyspec/rubyspec/blob/archive/core/array/shared/length.rb
 
-    describe("componentsJoinedByString", @{
-        it("should return a string", @{
-            expect(typeof([1,2,3].componentsJoinedByString(","))).to().equal(typeof(""));
+        it("is a function", @{
+            expect(typeof([].len)).to().equal(typeof(@(){}));
+        });
+
+        it("returns the number of elements in the array", @{
+            expect([].len()).to().equal(0);
+            expect([1, "abc", 3.0].len()).to().equal(3);
         });
 
 
-        it("should join string representations of array elements with the given string", @{
-            expect([1,2,3].componentsJoinedByString(", ")).to().equal("1, 2, 3");
-        });
+        it("properly handles recursive arrays", @{
+            local empty_recursive_array = [];
+            empty_recursive_array.append(empty_recursive_array);
 
+            local recursive_array = [1, "abc", 3.0];
+            for (local i = 0; i < 5; ++i) {
+                recursive_array.append(recursive_array);
+            }
 
-        it("should return an empty string for an empty array", @{
-            expect([].componentsJoinedByString(",")).to().equal("");
-        });
-
-
-        it("should throw if the parameter is not a string", @{
-            expect(@()[1,2,3].componentsJoinedByString(1)).to().throwError();
+            expect(empty_recursive_array.len()).to().equal(1);
+            expect(recursive_array.len()).to().equal(8);
         });
     });
 });
