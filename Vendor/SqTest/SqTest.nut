@@ -70,8 +70,6 @@ function run() {
 
 
 function spec(what, how) {
-    assert(what in registered_specs == false);
-
     local spec = new_spec(what);
     how.bindenv(spec)();
 }

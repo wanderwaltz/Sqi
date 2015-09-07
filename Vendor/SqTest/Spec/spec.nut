@@ -29,7 +29,17 @@ registered_specs <- {}
 
 function new_spec(what) {
     local spec = new_context(what, this);
-    registered_specs[what] <- spec;
+    local same_key_specs = null;
+
+    if ((what in registered_specs) == false) {
+        same_key_specs = [];
+        registered_specs[what] <- same_key_specs;
+    }
+    else {
+        same_key_specs = registered_specs[what];
+    }
+
+    same_key_specs.append(spec);
 
     return spec;
 }
@@ -55,7 +65,9 @@ function enumerate_registered_contexts(func) {
 
 
 function enumerate_registered_specs(func) {
-    foreach (spec_id, spec in registered_specs) {
-        func(spec_id, spec);
+    foreach (spec_id, same_key_specs in registered_specs) {
+        foreach(index, spec in same_key_specs) {
+            func(spec_id, spec);
+        }
     }
 }
