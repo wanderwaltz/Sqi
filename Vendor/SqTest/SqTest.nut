@@ -38,11 +38,18 @@
 
 function run() {
     local result = {
-        failed_expectations = 0
-        total_expectations = 0
+        failed_expectations  = 0
+        skipped_expectations = 0
+        total_expectations   = 0
     };
 
-    enumerate_registered_examples(function(id, example) {
+    enumerate_registered_examples(function(id, example, requirements_check) {
+        if (requirements_check != null) {
+            print(id + " SKIPPED (" + requirements_check + ")\n");
+            result.skipped_expectations += 1;
+            return;
+        }
+
         print(id + " ");
         foreach (expectation in example.expectations) {
             result.total_expectations += 1;
@@ -57,6 +64,7 @@ function run() {
 
     print("\n");
     print("Total expectations: " + result.total_expectations + "\n");
+    print("Skipped expectations: " + result.skipped_expectations + "\n");
     print("Failed expectations: " + result.failed_expectations + "\n");
 }
 
@@ -66,6 +74,32 @@ function spec(what, how) {
 
     local spec = new_spec(what);
     how.bindenv(spec)();
+}
+
+
+function import_spec(path, constant = null, required_semver = null) {
+    if (constant != null) {
+        local constants = getconsttable();
+        local failed = false;
+
+        if ((constant in constants) == false) {
+            failed = true;
+        }
+        else if (compare_semver(constants[constant], required_semver) < 0) {
+            failed = true;
+        }
+
+        print("'" + path + "' import SKIPPED (" +
+                constant + " >= " + required_semver + " requirement is not met)");
+        return;
+    }
+
+    ::import(path);
+}
+
+
+function requires(constant, semver) {
+    requirements_table()[constant] <- semver;
 }
 
 
@@ -83,5 +117,60 @@ function it(what, how) {
     local example = new_example(what, this);
 
     examples.push(example);
-    how.bindenv(example)();
+
+    if (validate_context_requirements(this) == null) {
+        how.bindenv(example)();
+    }
 }
+
+
+function compare_semver(lhs, rhs) {
+    local kIndex = "index";
+    local kValue = "value";
+
+    function pair(index, value) {
+        local result = {};
+        result[kIndex] <- index;
+        result[kValue] <- value;
+
+        return result;
+    }
+
+    function extractNumber(string, startIndex) {
+        if (startIndex == null) {
+            return pair(null, "0");
+        }
+
+        local dotIndex = string.find(".", startIndex+1);
+        local value    = "0";
+
+        if (dotIndex != null) {
+            value = string.slice(startIndex+1, dotIndex);
+        }
+        else {
+            value = string.slice(startIndex+1, string.len());
+        }
+
+        return pair(dotIndex, value);
+    }
+
+    local leftToken = pair(-1, 0);
+    local rightToken = pair(-1, 0);
+
+    do {
+        leftToken = extractNumber(lhs, leftToken.index);
+        rightToken = extractNumber(rhs, rightToken.index);
+
+        // print(">> " + leftToken.index + " '" + leftToken.value + "' | " + rightToken.index + " '" + rightToken.value + "'\n");
+
+        local compare = leftToken.value <=> rightToken.value;
+
+        if (compare != 0) {
+            return (compare > 0) ? 1 : -1;
+        }
+
+    } while ((leftToken.index != null) || (rightToken.index != null));
+
+    return 0;
+}
+

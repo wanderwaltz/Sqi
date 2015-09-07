@@ -35,19 +35,57 @@ function new_context(id, delegate) {
 }
 
 
-function enumerate_examples(parent_id, context, func) {
+function requirements_table() {
+    if (("requirements" in this) == false) {
+        this.requirements <- {};
+    }
+
+    return this.requirements;
+}
+
+
+function validate_context_requirements(context) {
+    if ("requirements" in context) {
+        local constants = getconsttable();
+
+        foreach (constant, semver in context.requirements) {
+            local failure_message = constant + " >= " + semver + " requirement is not met";
+
+            if ((constant in constants) == false) {
+                return failure_message;
+            }
+
+            if (compare_semver(constants[constant], semver) < 0) {
+                return failure_message;
+            }
+        }
+    }
+
+    if (context.getdelegate() != null) {
+        return validate_context_requirements(context.getdelegate());
+    }
+
+    return null;
+}
+
+
+function enumerate_examples(parent_id, context, requirements_check, func) {
     foreach (example in context.examples) {
         local child_id = composite_example_id(parent_id, example.name);
-        func(child_id, example);
+        func(child_id, example, requirements_check);
     }
 }
 
 
-function enumerate_child_contexts(parent_id, context, func) {
+function enumerate_child_contexts(parent_id, context, requirements_check, func) {
+    local check = requirements_check || validate_context_requirements(context);
+
     foreach (child_context in context.contexts) {
         local child_id = composite_context_id(parent_id, child_context.name);
-        func(child_id, child_context);
-        enumerate_child_contexts(child_id, child_context, func);
+        local child_check = check || validate_context_requirements(child_context);
+
+        func(child_id, child_context, child_check);
+        enumerate_child_contexts(child_id, child_context, child_check, func);
     }
 }
 

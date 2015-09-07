@@ -27,12 +27,12 @@
 SqTest <- {};
 ::import("../Vendor/SqTest/SqTest", SqTest);
 
-::import("integer_spec");
-::import("getters_setters_spec");
-::import("tostring_spec");
-::import("getdefaultdelegate_spec");
-::import("map_spec");
-::import("string_spec");
-::import("array_spec");
+SqTest.import_spec("integer_spec");
+SqTest.import_spec("getters_setters_spec");
+SqTest.import_spec("tostring_spec");
+SqTest.import_spec("getdefaultdelegate_spec");
+SqTest.import_spec("map_spec");
+SqTest.import_spec("string_spec");
+SqTest.import_spec("array_spec");
 
 SqTest.run();

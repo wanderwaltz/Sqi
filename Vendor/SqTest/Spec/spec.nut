@@ -36,17 +36,20 @@ function new_spec(what) {
 
 
 function enumerate_registered_examples(func) {
-    enumerate_registered_contexts(function(id, context) {
-        enumerate_examples(id, context, func);
+    enumerate_registered_contexts(function(id, context, requirements_check) {
+        enumerate_examples(id, context, requirements_check, function(id, example, check){
+            func(id, example, check);
+        });
     });
 }
 
 
 function enumerate_registered_contexts(func) {
     enumerate_registered_specs(function(spec_id, spec) {
-        enumerate_child_contexts(spec_id, spec, function(child_id, context) {
-            func(child_id, context);
-        });
+        enumerate_child_contexts(spec_id, spec, null,
+            function(child_id, context, requirements_check) {
+                func(child_id, context, requirements_check);
+            });
     });
 }
 
