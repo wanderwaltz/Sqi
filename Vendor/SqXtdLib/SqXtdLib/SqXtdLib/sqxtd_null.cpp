@@ -35,6 +35,8 @@ namespace sqxtd { namespace native { namespace null {
 // Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void sqxtd_register_objectivec_null(HSQUIRRELVM vm) {
+    sqxtd::set_global_constant(vm, _SC("SQXTD_NULL_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
+    
     sqxtd::set_default_delegate_native(vm, OT_NULL, "_call", &sqxtd::native::null::default_metamethod);
     sqxtd::set_default_delegate_native(vm, OT_NULL, "_get", &sqxtd::native::null::default_metamethod);
     sqxtd::set_default_delegate_native(vm, OT_NULL, "_set", &sqxtd::native::null::default_metamethod);

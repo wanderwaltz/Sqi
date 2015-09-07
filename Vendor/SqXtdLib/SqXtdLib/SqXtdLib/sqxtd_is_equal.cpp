@@ -43,6 +43,8 @@ namespace sqxtd { namespace native { namespace common {
 // Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void sqxtd_register_is_equal(HSQUIRRELVM vm) {
+    sqxtd::set_global_constant(vm, _SC("SQXTD_IS_EQUAL_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
+    
     sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Null, kKeyIsEqual,
         &sqxtd::native::common::is_equal_default);
     

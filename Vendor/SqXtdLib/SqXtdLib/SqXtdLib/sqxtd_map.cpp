@@ -35,6 +35,8 @@ namespace sqxtd { namespace native { namespace common {
 // Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void sqxtd_register_map(HSQUIRRELVM vm) {
+    sqxtd::set_global_constant(vm, _SC("SQXTD_MAP_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
+    
     sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Null,   "map", &sqxtd::native::common::map_null);
     sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Scalar, "map", &sqxtd::native::common::map_single);
     sqxtd::set_default_delegate_native(vm, sqxtd::DefaultDelegable::Object, "map", &sqxtd::native::common::map_single);

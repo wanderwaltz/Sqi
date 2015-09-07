@@ -51,6 +51,8 @@ namespace sqxtd {
 // Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm) {
+    sqxtd::set_global_constant(vm, _SC("SQXTD_GET_DEFAULT_DELEGATE_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
+    
     const SQChar *name = "getdefaultdelegate";
     
     sq_pushstring(vm, name, strlen(name));
@@ -60,6 +62,8 @@ void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm) {
 
 
 void sqxtd_register_default_string_representations(HSQUIRRELVM vm) {
+    sqxtd::set_global_constant(vm, _SC("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
+    
     sqxtd::set_default_delegate_native(vm, OT_TABLE, "_tostring", sqxtd::native::table::tostring);
     sqxtd::set_default_delegate_native(vm, OT_ARRAY, "_tostring", sqxtd::native::array::tostring);
 }
