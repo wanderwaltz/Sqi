@@ -1,5 +1,5 @@
 //
-//  len.nut
+//  examples.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 07.09.15.
@@ -23,24 +23,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("array", @{
-    describe("len", @{
-        // Spec for len function is inspired by RubySpec
-        // See https://github.com/rubyspec/rubyspec/blob/archive/core/array/shared/length.rb
-
-        it("is a function", @{
-            expect(typeof([].len)).to().equal(typeof(@(){}));
-        });
-
-        it("returns the number of elements in the array", @{
-            expect([].len()).to().equal(0);
-            expect([1, "abc", 3.0].len()).to().equal(3);
-        });
+if (("ArraySpecs" in this) == false) {
+    ArraySpecs <- {
+        function empty_recursive() {
+            local empty_recursive_array = [];
+            empty_recursive_array.append(empty_recursive_array);
+            return empty_recursive_array;
+        }
 
 
-        it("properly handles recursive arrays", @{
-            expect(ArraySpecs.empty_recursive().len()).to().equal(1);
-            expect(ArraySpecs.recursive().len()).to().equal(8);
-        });
-    });
-});
+        function recursive() {
+            local recursive_array = [1, "abc", 3.0];
+            for (local i = 0; i < 5; ++i) {
+                recursive_array.append(recursive_array);
+            }
+            return recursive_array;
+        }
+    }
+}

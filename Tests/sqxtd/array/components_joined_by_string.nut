@@ -31,23 +31,29 @@ SqTest.spec("array", @{
     // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
     describe("componentsJoinedByString", @{
-        it("should return a string", @{
+        it("returns a string", @{
             expect(typeof([1,2,3].componentsJoinedByString(","))).to().equal(typeof(""));
         });
 
 
-        it("should join string representations of array elements with the given string", @{
+        it("joins string representations of array elements with the given string", @{
             expect([1,2,3].componentsJoinedByString(", ")).to().equal("1, 2, 3");
         });
 
 
-        it("should return an empty string for an empty array", @{
+        it("returns an empty string for an empty array", @{
             expect([].componentsJoinedByString(",")).to().equal("");
         });
 
 
-        it("should throw if the parameter is not a string", @{
+        it("throws an error if the parameter is not a string", @{
             expect(@()[1,2,3].componentsJoinedByString(1)).to().throwError();
+        });
+
+
+        it("does not break on recursive arrays", @{
+            expect(typeof(ArraySpecs.empty_recursive().componentsJoinedByString(","))).to().equal(typeof(""));
+            expect(typeof(ArraySpecs.recursive().componentsJoinedByString(","))).to().equal(typeof(""));
         });
     });
 });

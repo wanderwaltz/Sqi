@@ -1,5 +1,5 @@
 //
-//  len.nut
+//  tostring.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 07.09.15.
@@ -24,23 +24,24 @@
 //  SOFTWARE.
 
 SqTest.spec("array", @{
-    describe("len", @{
-        // Spec for len function is inspired by RubySpec
-        // See https://github.com/rubyspec/rubyspec/blob/archive/core/array/shared/length.rb
+    context("when converted to string", @{
+        requires("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION", "0.0.1");
+        // The spec for arrays tostring conversion is not true for vanilla Squirrel3,
+        // this functionality have been added by SqXtdLib and are possible with
+        // changes to the Squirrel language introduced in
+        // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
-        it("is a function", @{
-            expect(typeof([].len)).to().equal(typeof(@(){}));
+        it("lists all array's elements", @{
+            expect([1,2,3].tostring()).to().equal("[1, 2, 3]");
         });
 
-        it("returns the number of elements in the array", @{
-            expect([].len()).to().equal(0);
-            expect([1, "abc", 3.0].len()).to().equal(3);
+        it("puts strings inside the array into double quotes", @{
+            expect(["qwerty", "asdfg"].tostring()).to().equal("[\"qwerty\", \"asdfg\"]");
         });
 
-
-        it("properly handles recursive arrays", @{
-            expect(ArraySpecs.empty_recursive().len()).to().equal(1);
-            expect(ArraySpecs.recursive().len()).to().equal(8);
+        it("does not break on recursive arrays", @{
+            expect(typeof(ArraySpecs.empty_recursive().tostring())).to().equal(typeof(""));
+            expect(typeof(ArraySpecs.recursive().tostring())).to().equal(typeof(""));
         });
     });
 });

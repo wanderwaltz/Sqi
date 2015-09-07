@@ -23,4 +23,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+SqTest.import_spec("../core/array/shared/examples");
 SqTest.import_spec("array/components_joined_by_string");
+SqTest.import_spec("array/tostring");
