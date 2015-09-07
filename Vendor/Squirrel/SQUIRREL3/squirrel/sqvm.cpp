@@ -16,24 +16,33 @@
 
 #define TOP() (_stack._vals[_top-1])
 
-bool SQVM::BW_OP(SQUnsignedInteger op,SQObjectPtr &trg,const SQObjectPtr &o1,const SQObjectPtr &o2)
+bool SQVM::BW_OP(SQUnsignedInteger op, SQObjectPtr &result, const SQObjectPtr &o1, const SQObjectPtr &o2)
 {
-	SQInteger res;
-	if((type(o1)|type(o2)) == OT_INTEGER)
-	{
-		SQInteger i1 = _integer(o1), i2 = _integer(o2);
+	SQInteger res = 0;
+	if ((type(o1)|type(o2)) == OT_INTEGER) {
+        SQInteger i1 = _integer(o1);
+        SQInteger i2 = _integer(o2);
+        
 		switch(op) {
-			case BW_AND:	res = i1 & i2; break;
-			case BW_OR:		res = i1 | i2; break;
-			case BW_XOR:	res = i1 ^ i2; break;
-			case BW_SHIFTL:	res = i1 << i2; break;
-			case BW_SHIFTR:	res = i1 >> i2; break;
-			case BW_USHIFTR:res = (SQInteger)(*((SQUnsignedInteger*)&i1) >> i2); break;
-			default: { Raise_Error(_SC("internal vm error bitwise op failed")); return false; }
+			case BW_AND:	 res = i1 & i2; break;
+			case BW_OR:		 res = i1 | i2; break;
+			case BW_XOR:	 res = i1 ^ i2; break;
+			case BW_SHIFTL:	 res = i1 << i2; break;
+			case BW_SHIFTR:	 res = i1 >> i2; break;
+			case BW_USHIFTR: res = (SQInteger)(*((SQUnsignedInteger*)&i1) >> i2); break;
+			default: {
+                Raise_Error(_SC("internal vm error bitwise op failed"));
+                return false;
+            } break;
 		}
 	} 
-	else { Raise_Error(_SC("bitwise op between '%s' and '%s'"),GetTypeName(o1),GetTypeName(o2)); return false;}
-	trg = res;
+	else {
+        Raise_Error(_SC("bitwise op between '%s' and '%s'"), GetTypeName(o1), GetTypeName(o2));
+        return false;
+    }
+    
+	result = res;
+    
 	return true;
 }
 
@@ -59,46 +68,73 @@ bool SQVM::BW_OP(SQUnsignedInteger op,SQObjectPtr &trg,const SQObjectPtr &o1,con
 	} \
 }
 
-bool SQVM::ARITH_OP(SQUnsignedInteger op,SQObjectPtr &trg,const SQObjectPtr &o1,const SQObjectPtr &o2)
-{
-	SQInteger tmask = type(o1)|type(o2);
-	switch(tmask) {
-		case OT_INTEGER:{
-			SQInteger res, i1 = _integer(o1), i2 = _integer(o2);
+bool SQVM::ARITH_OP(SQUnsignedInteger op, SQObjectPtr &result, const SQObjectPtr &lhs, const SQObjectPtr &rhs) {
+	SQInteger tmask = type(lhs)|type(rhs);
+    
+	switch (tmask) {
+        case OT_INTEGER: {
+            SQInteger res;
+            SQInteger i1 = tointeger(lhs);
+            SQInteger i2 = tointeger(rhs);
+            
 			switch(op) {
-			case '+': res = i1 + i2; break;
-			case '-': res = i1 - i2; break;
-			case '/': if(i2 == 0) { Raise_Error(_SC("division by zero")); return false; }
-					res = i1 / i2; 
-					break;
-			case '*': res = i1 * i2; break;
-			case '%': if(i2 == 0) { Raise_Error(_SC("modulo by zero")); return false; }
-					res = i1 % i2; 
-					break;
-			default: res = 0xDEADBEEF;
+                case '+': res = i1 + i2; break;
+                case '-': res = i1 - i2; break;
+                case '/': {
+                    if (i2 == 0) {
+                        Raise_Error(_SC("division by zero"));
+                        return false;
+                    }
+                    res = i1 / i2;
+                } break;
+                case '*': res = i1 * i2; break;
+                case '%':  {
+                    if(i2 == 0) {
+                        Raise_Error(_SC("modulo by zero"));
+                        return false;
+                    }
+                    res = i1 % i2;
+                } break;
+                    
+                default: {
+                    assert(false && "unsupported arith op");
+                    res = 0xDEADBEEF;
+                } break;
 			}
-			trg = res; }
-			break;
+			result = res;
+        } break;
+            
 		case (OT_FLOAT|OT_INTEGER):
-		case (OT_FLOAT):{
-			SQFloat res, f1 = tofloat(o1), f2 = tofloat(o2);
+		case (OT_FLOAT): {
+            SQFloat res = 0.0;
+            SQFloat f1 = tofloat(lhs);
+            SQFloat f2 = tofloat(rhs);
+            
 			switch(op) {
-			case '+': res = f1 + f2; break;
-			case '-': res = f1 - f2; break;
-			case '/': res = f1 / f2; break;
-			case '*': res = f1 * f2; break;
-			case '%': res = SQFloat(fmod((double)f1,(double)f2)); break;
-			default: res = 0x0f;
+                case '+': res = f1 + f2; break;
+                case '-': res = f1 - f2; break;
+                case '/': res = f1 / f2; break;
+                case '*': res = f1 * f2; break;
+                case '%': res = SQFloat(fmod((double)f1,(double)f2)); break;
+                default: {
+                    assert(false && "unsupported arith op");
+                    res = 0x0f;
+                } break;
+            }
+			
+            result = res;
+        } break;
+            
+        default: {
+			if ((op == '+') && (tmask & _RT_STRING)) {
+                if (!StringCat(lhs, rhs, result)) {
+                    return false;
+                }
 			}
-			trg = res; }
-			break;
-		default:
-			if(op == '+' &&	(tmask & _RT_STRING)){
-				if(!StringCat(o1, o2, trg)) return false;
-			}
-			else if(!ArithMetaMethod(op,o1,o2,trg)) { 
+			else if (!ArithMetaMethod(op, lhs, rhs, result)) {
 				return false; 
 			}
+        } break;
 	}
 	return true;
 }
