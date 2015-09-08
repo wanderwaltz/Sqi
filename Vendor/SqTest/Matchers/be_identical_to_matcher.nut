@@ -1,8 +1,8 @@
 //
-//  matchers.nut
+//  be_identical_to_matcher.nut
 //  SqTest
 //
-//  Created by Egor Chiglintsev on 13.08.15.
+//  Created by Egor Chiglintsev on 09.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,42 +23,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-Matchers <- {}
-Matchers.setdelegate(this);
+class Matchers.BeIdenticalTo extends Matchers.Base {
+    expectedValue = null
 
-Matchers.equal <- function(expected_value) {
-    this.matcher = Equal(expected_value);
-}
-
-Matchers.beIdenticalTo <- function(expected_value) {
-    this.matcher = BeIdenticalTo(expected_value);
-}
-
-Matchers.beNoLessThan <- function(lower_bound) {
-    this.matcher = BeNoLessThan(lower_bound);
-}
-
-Matchers.beNegative <- function() {
-    this.matcher = BeNegative();
-}
-
-Matchers.haveSlot <- function(expected_key) {
-    this.matcher = HaveSlot(expected_key);
-}
-
-Matchers.throwError <- function() {
-    this.matcher = ThrowError();
-}
-
-Matchers.Base <- class {
-    actualValue = null
+    constructor(what) {
+        expectedValue = what
+    }
 
     function match(value) {
-        actualValue = value;
-        return false;
+        return base.match(value) || (expectedValue == value);
     }
 
     function description() {
-        return "matcher implmenentation";
+        return actualValue + " === " + expectedValue;
     }
 }

@@ -32,7 +32,9 @@
 ::import("Verifiers/should_not_verifier", this);
 ::import("Matchers/matchers", this);
 ::import("Matchers/equal_matcher", this);
+::import("Matchers/be_no_less_than_matcher", this);
 ::import("Matchers/be_negative_matcher", this);
+::import("Matchers/be_identical_to_matcher", this);
 ::import("Matchers/have_slot_matcher", this);
 ::import("Matchers/throw_error_matcher", this);
 
