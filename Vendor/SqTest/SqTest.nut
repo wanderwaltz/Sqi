@@ -50,6 +50,8 @@ function run() {
             return;
         }
 
+        example.block.bindenv(example)();
+
         print(id + " ");
         foreach (expectation in example.expectations) {
             result.total_expectations += 1;
@@ -113,12 +115,9 @@ context <- describe;
 
 function it(what, how) {
     local example = new_example(what, this);
+    example.block <- how;
 
     examples.push(example);
-
-    if (validate_context_requirements(this) == null) {
-        how.bindenv(example)();
-    }
 }
 
 
