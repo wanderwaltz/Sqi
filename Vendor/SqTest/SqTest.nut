@@ -53,13 +53,15 @@ function run() {
 
         example.block.bindenv(example)();
 
+        result.total_expectations += 1;
+
         print(id + " ");
         foreach (expectation in example.expectations) {
-            result.total_expectations += 1;
             local valid = expectation.verifier.verify();
             if (valid == false) {
                 result.failed_expectations += 1;
                 print("FAILED: " + expectation.verifier.result());
+                break;
             }
         }
         print("\n");
