@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  core/float/literals.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,18 +23,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
+SqTest.spec("float", @{
+    describe("literal", @{
+        it("supports usual float notation", @{
+            expect(12.5).to().equal(12.5);
+            expect(0.25).to().equal(0.25);
+            expect(-0.15).to().equal(-0.15);
+        });
 
-SqTest.import_spec("core/integer");
-SqTest.import_spec("core/float");
-SqTest.import_spec("core/array");
-SqTest.import_spec("sqxtd/array");
 
-SqTest.import_spec("getters_setters_spec");
-SqTest.import_spec("tostring_spec");
-SqTest.import_spec("getdefaultdelegate_spec");
-SqTest.import_spec("map_spec");
-SqTest.import_spec("string_spec");
-
-SqTest.run();
+        it("supports scientific notation", @{
+            expect(1.25e3).to().equal(1250.0);
+            expect(0.25e-1).to().equal(0.025);
+            expect(-0.15e1).to().equal(-1.5);
+        });
+    });
+});
