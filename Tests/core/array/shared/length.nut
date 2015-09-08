@@ -1,8 +1,8 @@
 //
-//  len.nut
+//  length.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 07.09.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,8 +23,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("shared/length");
+SqTest.shared_spec("array", "length", @{
+    describe(Method, @{
+        // Spec for length function is inspired by RubySpec
+        // See https://github.com/rubyspec/rubyspec/blob/archive/core/array/shared/length.rb
 
-SqTest.spec("array", @{
-    method("len").behaves_like("array", "length");
+        it("is a function", @{
+            expect(typeof([][Method])).to().equal(typeof(@(){}));
+        });
+
+        it("returns the number of elements in the array", @{
+            expect([][Method]()).to().equal(0);
+            expect([1, "abc", 3.0][Method]()).to().equal(3);
+        });
+
+
+        it("properly handles recursive arrays", @{
+            expect(ArraySpecs.empty_recursive()[Method]()).to().equal(1);
+            expect(ArraySpecs.recursive()[Method]()).to().equal(8);
+        });
+    });
 });
