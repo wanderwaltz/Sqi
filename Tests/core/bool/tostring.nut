@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  core/bool/tostring.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,19 +23,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
+SqTest.spec("bool", @{
+    describe("tostring", @{
+        it("returns 'true' for true", @{
+            expect((true).tostring()).to().equal("true");
+        });
 
-SqTest.import_spec("core/integer");
-SqTest.import_spec("core/float");
-SqTest.import_spec("core/bool");
-SqTest.import_spec("core/array");
-SqTest.import_spec("sqxtd/array");
 
-SqTest.import_spec("getters_setters_spec");
-SqTest.import_spec("tostring_spec");
-SqTest.import_spec("getdefaultdelegate_spec");
-SqTest.import_spec("map_spec");
-SqTest.import_spec("string_spec");
-
-SqTest.run();
+        it("returns 'false' for false", @{
+            expect((false).tostring()).to().equal("false");
+        });
+    });
+});
