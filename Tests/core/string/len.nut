@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  core/string/len.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,20 +23,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
+SqTest.spec("string", @{
+    describe("len", @{
+        context("for ASCII strings", @{
+            it("returns the number of characters in the string", @{
+                expect("".len()).to().equal(0);
+                expect("one".len()).to().equal(3);
+                expect("two".len()).to().equal(3);
+                expect("three".len()).to().equal(5);
+                expect("four".len()).to().equal(4);
+            });
+        });
 
-SqTest.import_spec("core/integer");
-SqTest.import_spec("core/float");
-SqTest.import_spec("core/bool");
-SqTest.import_spec("core/string");
-SqTest.import_spec("core/array");
-SqTest.import_spec("sqxtd/array");
 
-SqTest.import_spec("getters_setters_spec");
-SqTest.import_spec("tostring_spec");
-SqTest.import_spec("getdefaultdelegate_spec");
-SqTest.import_spec("map_spec");
-SqTest.import_spec("string_spec");
-
-SqTest.run();
+        context("for Unicode strings", @{
+            it("returns the number of SQChars needed to represent the string (SQChar == char || wchar_t)", @{
+                // depends on which SQChar is used when compiling Squirrel,
+                // cannot reliably test unicode now since I've no luck making
+                // it work with wchar_t; adding a test here just to mention
+                // that Unicode may not be supported.
+                expect("юникод".len()).to().beNoLessThan(6);
+            });
+        });
+    });
+});
