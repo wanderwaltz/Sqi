@@ -96,5 +96,13 @@ function composite_example_id(parent_id, child_id) {
 
 
 function composite_context_id(parent_id, child_id) {
-    return parent_id + ", " + child_id;
+    if ((parent_id != null) && (child_id != null)) {
+        return parent_id + ", " + child_id;
+    }
+    else if (parent_id != null) {
+        return parent_id;
+    }
+    else {
+        return child_id;
+    }
 }

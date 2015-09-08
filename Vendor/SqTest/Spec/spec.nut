@@ -25,7 +25,7 @@
 
 
 registered_specs <- {}
-
+registered_shared_specs <- {}
 
 function new_spec(what) {
     local spec = new_context(what, this);
@@ -42,6 +42,23 @@ function new_spec(what) {
     same_key_specs.append(spec);
 
     return spec;
+}
+
+
+function new_shared_spec(what, method_name) {
+    local key = shared_spec_key(what, method_name);
+
+    local spec = new_context(null, this);
+    spec.Method <- method_name;
+
+    registered_shared_specs[key] <- spec;
+
+    return spec;
+}
+
+
+function shared_spec_key(what, method_name) {
+    return what + "#" + method_name;
 }
 
 

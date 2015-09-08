@@ -25,6 +25,7 @@
 
 ::import("Spec/expectation", this);
 ::import("Spec/context", this);
+::import("Spec/method", this);
 ::import("Spec/spec", this);
 ::import("Verifiers/verifiers", this);
 ::import("Verifiers/should_verifier", this);
@@ -74,6 +75,17 @@ function run() {
 function spec(what, how) {
     local spec = new_spec(what);
     how.bindenv(spec)();
+}
+
+
+function shared_spec(what, method_name, how) {
+    local spec = new_shared_spec(what, method_name);
+    spec.block <- how;
+}
+
+
+function method(which) {
+    return new_method_expectation(which, this);
 }
 
 
