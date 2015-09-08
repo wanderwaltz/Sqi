@@ -1,5 +1,5 @@
 //
-//  core/integer.nut
+//  core/integer/literals.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 08.09.15.
@@ -23,13 +23,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("integer/literals");
-SqTest.import_spec("integer/typeof");
-SqTest.import_spec("integer/tointeger");
-SqTest.import_spec("integer/tofloat");
-SqTest.import_spec("integer/tochar");
-SqTest.import_spec("integer/tostring");
-SqTest.import_spec("integer/weakref");
-SqTest.import_spec("integer/addition");
-SqTest.import_spec("integer/multiplication");
-SqTest.import_spec("integer/division");
+SqTest.spec("integer", @{
+    describe("literal", @{
+        it("supports positive decimal integers", @{
+            expect(123).to().equal(123);
+            expect(11).to().equal(11);
+            expect(0).to().equal(0);
+        });
+
+        it("supports negative decimal integers", @{
+            expect(-33).to().equal(-33);
+            expect(-15).to().equal(-15);
+        });
+
+        it("supports positive hexadecimal integers", @{
+            expect(0xFF).to().equal(255);
+            expect(0xA).to().equal(10);
+            expect(0x0).to().equal(0);
+        });
+
+        it("supports positive octal integers", @{
+            expect(013).to().equal(11);
+            expect(020).to().equal(16);
+            expect(000).to().equal(0);
+        });
+
+        it("supports negative hexadecimal integers", @{
+            expect(-0xFA).to().equal(-250);
+            expect(-0xC).to().equal(-12);
+        });
+
+        it("supports negative octal integers", @{
+            expect(-043).to().equal(-35);
+            expect(-07).to().equal(-7);
+        });
+    });
+});

@@ -1,5 +1,5 @@
 //
-//  core/integer.nut
+//  core/integer/tostring.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 08.09.15.
@@ -23,13 +23,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("integer/literals");
-SqTest.import_spec("integer/typeof");
-SqTest.import_spec("integer/tointeger");
-SqTest.import_spec("integer/tofloat");
-SqTest.import_spec("integer/tochar");
-SqTest.import_spec("integer/tostring");
-SqTest.import_spec("integer/weakref");
-SqTest.import_spec("integer/addition");
-SqTest.import_spec("integer/multiplication");
-SqTest.import_spec("integer/division");
+SqTest.spec("integer", @{
+    describe("tostring", @{
+        it("converts the number to string and returns it", @{
+            expect((0).tostring()).to().equal("0");
+            expect((125).tostring()).to().equal("125");
+            expect((-6).tostring()).to().equal("-6");
+        });
+
+        it("uses decimal base when converting", @{
+            expect((013).tostring()).to().equal("11");
+            expect((0xFF).tostring()).to().equal("255");
+        });
+    });
+});
