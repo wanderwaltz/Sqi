@@ -1,5 +1,5 @@
 //
-//  core/integer.nut
+//  core/integer/tochar.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 08.09.15.
@@ -23,11 +23,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("integer/typeof");
-SqTest.import_spec("integer/tointeger");
-SqTest.import_spec("integer/tofloat");
-SqTest.import_spec("integer/tochar");
-SqTest.import_spec("integer/weakref");
-SqTest.import_spec("integer/addition");
-SqTest.import_spec("integer/multiplication");
-SqTest.import_spec("integer/division");
+SqTest.spec("integer", @{
+    describe("tochar", @{
+        it("returns a string containing a single character rapresented by the integer", @{
+            expect((97).tochar()).to().equal("a");
+            expect((98).tochar()).to().equal("b");
+            expect((99).tochar()).to().equal("c");
+
+            expect(("abc"[0]).tochar()).to().equal("a");
+            expect(("abc"[1]).tochar()).to().equal("b");
+            expect(("abc"[2]).tochar()).to().equal("c");
+        });
+    });
+});

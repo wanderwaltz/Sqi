@@ -1,5 +1,5 @@
 //
-//  core/integer.nut
+//  core/integer/shared/tointeger.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 08.09.15.
@@ -23,11 +23,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("integer/typeof");
-SqTest.import_spec("integer/tointeger");
-SqTest.import_spec("integer/tofloat");
-SqTest.import_spec("integer/tochar");
-SqTest.import_spec("integer/weakref");
-SqTest.import_spec("integer/addition");
-SqTest.import_spec("integer/multiplication");
-SqTest.import_spec("integer/division");
+SqTest.shared_spec("integer", "tointeger", @{
+    describe(Method, @{
+        it("returns the integer itself", @{
+            expect((1)[Method]()).to().equal(1);
+            expect((0)[Method]()).to().equal(0);
+            expect((-1234)[Method]()).to().equal(-1234);
+        });
+
+        it("returns a `integer` value", @{
+            expect(typeof((1)[Method]())).to().equal(typeof(0));
+            expect(typeof((0)[Method]())).to().equal(typeof(0));
+            expect(typeof((-1234)[Method]())).to().equal(typeof(0));
+        });
+    });
+});

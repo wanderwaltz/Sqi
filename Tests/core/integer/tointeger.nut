@@ -23,12 +23,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+SqTest.import_spec("shared/tointeger");
+
 SqTest.spec("integer", @{
-    describe("tointeger", @{
-        it("returns the integer itself", @{
-            expect((1).tointeger()).to().equal(1);
-            expect((0).tointeger()).to().equal(0);
-            expect((-1234).tointeger()).to().equal(-1234);
-        });
-    });
+    method("tointeger").behaves_like("integer", "tointeger");
 });

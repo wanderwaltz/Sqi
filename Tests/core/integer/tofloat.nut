@@ -1,5 +1,5 @@
 //
-//  core/integer.nut
+//  core/integer/tofloat.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 08.09.15.
@@ -23,11 +23,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("integer/typeof");
-SqTest.import_spec("integer/tointeger");
-SqTest.import_spec("integer/tofloat");
-SqTest.import_spec("integer/tochar");
-SqTest.import_spec("integer/weakref");
-SqTest.import_spec("integer/addition");
-SqTest.import_spec("integer/multiplication");
-SqTest.import_spec("integer/division");
+SqTest.spec("integer", @{
+    describe("tofloat", @{
+        it("returns the integer converted to float", @{
+            expect((1).tofloat()).to().equal(1.0);
+            expect((0).tofloat()).to().equal(0.0);
+            expect((-1234).tofloat()).to().equal(-1234.0);
+        });
+
+        it("returns a `float` value", @{
+            expect(typeof((1).tofloat())).to().equal(typeof(0.0));
+            expect(typeof((0).tofloat())).to().equal(typeof(0.0));
+            expect(typeof((-1234).tofloat())).to().equal(typeof(0.0));
+
+            expect(typeof((1).tofloat())).notTo().equal(typeof(0));
+            expect(typeof((0).tofloat())).notTo().equal(typeof(0));
+            expect(typeof((-1234).tofloat())).notTo().equal(typeof(0));
+        });
+    });
+});
