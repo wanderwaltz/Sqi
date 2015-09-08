@@ -1,8 +1,8 @@
 //
-//  core/array.nut
+//  push.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 07.09.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,7 +23,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("array/shared/examples");
-SqTest.import_spec("array/len");
-SqTest.import_spec("array/append");
-SqTest.import_spec("array/push");
+SqTest.import_spec("shared/append");
+
+SqTest.spec("array", @{
+    method("push").behaves_like("array", "append");
+});
