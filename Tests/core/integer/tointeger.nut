@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  core/integer/tointeger.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,17 +23,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
-
-SqTest.import_spec("core/integer");
-SqTest.import_spec("core/array");
-SqTest.import_spec("sqxtd/array");
-
-SqTest.import_spec("getters_setters_spec");
-SqTest.import_spec("tostring_spec");
-SqTest.import_spec("getdefaultdelegate_spec");
-SqTest.import_spec("map_spec");
-SqTest.import_spec("string_spec");
-
-SqTest.run();
+SqTest.spec("integer", @{
+    describe("tointeger", @{
+        it("returns the integer itself", @{
+            expect((1).tointeger()).to().equal(1);
+            expect((0).tointeger()).to().equal(0);
+            expect((-1234).tointeger()).to().equal(-1234);
+        });
+    });
+});

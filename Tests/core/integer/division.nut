@@ -1,8 +1,8 @@
 //
-//  integer_spec.nut
+//  core/integer/division.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,42 +23,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("integers", @{
-    describe("bool", @{
-        it("should cast `true` to 1", @() expect(true.tointeger()).to().equal(1));
-        it("should cast `false` to 0", @() expect(false.tointeger()).to().equal(0));
-    });
-
-    describe("zero", @{
-        it("should not change the sum when added to any number", @() expect(0+5).to().equal(5));
-        it("should set any multiplication result to zero", @() expect(0*5).to().equal(0));
-    });
-
-    describe("multiplication", @{
-        context("when multiplying a positive and a negative number", @{
-            it("should result in a negative number", @{
-                expect(-2 * 5).to().beNegative();
-            });
-
-            it("absolute value should equal to multiplication of absolute values", @{
-                expect(abs(-2 * 5)).to().equal(abs(-2)*abs(5));
-            });
-        });
-    });
-
+SqTest.spec("integer", @{
     describe("division", @{
         context("when dividing by another integer", @{
             context("when remainder is zero", @{
-                it("should result in an integer value", @()expect(6/3).to().equal(2));
+                it("returns the expected value", @{
+                    expect(6/3).to().equal(2);
+                });
+
+                it("returns in an `integer` value", @{
+                    expect(typeof(6/3)).to().equal(typeof(0));
+                });
             });
 
             context("when remainder is nonzero", @{
-                it("should result in an integer value rounded down", @() expect(5/2).to().equal(2));
+                it("returns the division result rounded down", @{
+                    expect(5/2).to().equal(2);
+                    expect(1/10).to().equal(0);
+                });
+
+                it("returns an `integer` value", @{
+                    expect(typeof(5/2)).to().equal(typeof(0));
+                });
             });
         });
 
         context("when dividing by a float", @{
-            it("should result in a float value", @() expect(5/2.0).to().equal(2.5));
+            it("returns the expected value", @{
+                expect(5/2.0).to().equal(2.5);
+            });
+
+            it("returns a `float` value", @{
+                expect(typeof(5/2.0)).to().equal(typeof(0.0));
+            });
         });
     });
 });

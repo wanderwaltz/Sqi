@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  core/integer/typeof.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,17 +23,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
+SqTest.spec("integer", @{
+    describe(@"typeof", @{
+        it("returns the same value for all integers", @{
+            expect(typeof(0)).to().equal(typeof(1));
+            expect(typeof(0)).to().equal(typeof(-1234));
+        });
 
-SqTest.import_spec("core/integer");
-SqTest.import_spec("core/array");
-SqTest.import_spec("sqxtd/array");
-
-SqTest.import_spec("getters_setters_spec");
-SqTest.import_spec("tostring_spec");
-SqTest.import_spec("getdefaultdelegate_spec");
-SqTest.import_spec("map_spec");
-SqTest.import_spec("string_spec");
-
-SqTest.run();
+        it("returns a different value for floats", @{
+            expect(typeof(0)).notTo().equal(typeof(1.5));
+            expect(typeof(0)).notTo().equal(typeof(-12.34));
+        });
+    });
+});
