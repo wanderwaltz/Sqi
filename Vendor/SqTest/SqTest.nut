@@ -40,6 +40,7 @@
 function run() {
     local result = {
         failed_expectations  = 0
+        unexpected_failures  = 0
         skipped_expectations = 0
         total_expectations   = 0
     };
@@ -51,18 +52,25 @@ function run() {
             return;
         }
 
-        example.block.bindenv(example)();
-
+        print(id + " ");
         result.total_expectations += 1;
 
-        print(id + " ");
-        foreach (expectation in example.expectations) {
-            local valid = expectation.verifier.verify();
-            if (valid == false) {
-                result.failed_expectations += 1;
-                print("FAILED: " + expectation.verifier.result());
-                break;
+        try {
+            example.block.bindenv(example)();
+
+            foreach (expectation in example.expectations) {
+                local valid = expectation.verifier.verify();
+                if (valid == false) {
+                    result.failed_expectations += 1;
+                    print("FAILED: " + expectation.verifier.result());
+                    break;
+                }
             }
+        }
+        catch (error) {
+            print("FAILED (unexpected): " + error);
+            result.failed_expectations += 1;
+            result.unexpected_failures += 1;
         }
         print("\n");
     });
@@ -70,7 +78,11 @@ function run() {
     print("\n");
     print("Total expectations: " + result.total_expectations + "\n");
     print("Skipped expectations: " + result.skipped_expectations + "\n");
-    print("Failed expectations: " + result.failed_expectations + "\n");
+    print("Failed expectations: " + result.failed_expectations);
+    if (result.unexpected_failures > 0) {
+        print(" (" + result.unexpected_failures + " unexpected)");
+    }
+    print("\n");
 }
 
 
