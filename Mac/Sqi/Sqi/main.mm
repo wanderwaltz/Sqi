@@ -59,6 +59,7 @@ void errorfunc(HSQUIRRELVM v,const SQChar *s,...)
     va_start(vl, s);
     vfprintf(stderr, s, vl);
     va_end(vl);
+    _exit(1);
 }
 
 
