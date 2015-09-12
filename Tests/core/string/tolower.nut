@@ -1,8 +1,8 @@
 //
-//  core/string.nut
+//  core/string/tolower.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 08.09.15.
+//  Created by Egor Chiglintsev on 09.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,13 +23,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("string/typeof");
-SqTest.import_spec("string/len");
-SqTest.import_spec("string/tointeger");
-SqTest.import_spec("string/tofloat");
-SqTest.import_spec("string/tostring");
-SqTest.import_spec("string/slice");
-SqTest.import_spec("string/find");
-SqTest.import_spec("string/tolower");
-SqTest.import_spec("string/toupper");
-SqTest.import_spec("string/weakref");
+SqTest.spec("string", @{
+    describe(@"tolower", @{
+        context("for ASCII strings", @{
+            it("returns lowercase string", @{
+                expect("Some String %$#@!".tolower()).to().equal("some string %$#@!");
+                expect("CAPS".tolower()).to().equal("caps");
+            });
+
+            it("returns the same string for empty string", @{
+                expect("".tolower()).to().equal("");
+            });
+
+
+            it("does not change numeric digits or symbols", @{
+                expect("0123456789!@#$%^&*()_+".tolower()).to().equal("0123456789!@#$%^&*()_+");
+            });
+        });
+
+
+        context("for Unicode strings (assuming Squirrel is compiled without wchar_t support)", @{
+            // Assuming Squirrel is compiled without wchar_t support; I was not be able to make
+            // it work under Mac OS X, which I'm currently using for testing
+            it("returns incorrect values", @{
+                expect("ЮНИКОД".tolower()).notTo().equal("юникод");
+            });
+        });
+    });
+});

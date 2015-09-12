@@ -1,8 +1,8 @@
 //
-//  core/string.nut
+//  core/string/weakref.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 08.09.15.
+//  Created by Egor Chiglintsev on 09.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,13 +23,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("string/typeof");
-SqTest.import_spec("string/len");
-SqTest.import_spec("string/tointeger");
-SqTest.import_spec("string/tofloat");
-SqTest.import_spec("string/tostring");
-SqTest.import_spec("string/slice");
-SqTest.import_spec("string/find");
-SqTest.import_spec("string/tolower");
-SqTest.import_spec("string/toupper");
-SqTest.import_spec("string/weakref");
+SqTest.spec("string", @{
+    describe(@"weakref", @{
+        it("returns a weakref", @{
+            expect(typeof("qwerty".weakref())).to().equal(typeof("".weakref()));
+            expect(typeof("qwerty".weakref())).notTo().equal("qwerty");
+        });
+
+        it("returns an object not identical to the original string", @{
+            local string = "qwerty";
+            expect(string.weakref() == string).to().equal(false);
+        });
+
+
+        it("returns an object not identical to the original string", @{
+            local string = "qwerty";
+            expect(string.weakref() == string).to().equal(false);
+        });
+
+
+        it("returns an object corresponding to the same string", @{
+            expect("qwerty".weakref().ref()).to().equal("qwerty");
+        });
+    });
+});
