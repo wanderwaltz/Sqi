@@ -40,6 +40,18 @@ SqTest.spec("table", @{
             expect(@()table["qwerty"]).to().throwError();
         });
 
+        it("returns the referenced object for stored weakrefs", @{
+            local table = {};
+            local string = "qwerty";
+            local weakString = string.weakref();
+
+            table.asdfg <- weakString;
+            expect(typeof(weakString)).to().equal(typeof(getroottable().weakref()));
+            expect(typeof(table.asdfg)).to().equal(typeof(string));
+            expect(typeof(table.asdfg)).notTo().equal(typeof(weakString));
+            expect(table.asdfg).to().equal(string);
+        });
+
         context("when having a delegate", @{
             it("invokes _get metamethod if available and key not found", @{
                 local delegate = {};

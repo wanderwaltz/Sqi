@@ -35,6 +35,18 @@ SqTest.spec("table", @{
             expect(@()table.rawget("qwerty")).to().throwError();
         });
 
+        it("returns the referenced object for stored weakrefs", @{
+            local table = {};
+            local string = "qwerty";
+            local weakString = string.weakref();
+
+            table.asdfg <- weakString;
+            expect(typeof(weakString)).to().equal(typeof(getroottable().weakref()));
+            expect(typeof(table.rawget("asdfg"))).to().equal(typeof(string));
+            expect(typeof(table.rawget("asdfg"))).notTo().equal(typeof(weakString));
+            expect(table.rawget("asdfg")).to().equal(string);
+        });
+
         context("when having a delegate", @{
             it("does not invoke _get metamethod", @{
                 local delegate = {};
