@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  core/table/rawget.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 12.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,21 +23,28 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
+SqTest.spec("table", @{
+    describe("rawget", @{
+        it("allows reading a value using the string key it was created with", @{
+            local table = { key = "value" };
+            expect(table.rawget("key")).to().equal("value");
+        });
 
-SqTest.import_spec("core/integer");
-SqTest.import_spec("core/float");
-SqTest.import_spec("core/bool");
-SqTest.import_spec("core/string");
-SqTest.import_spec("core/table");
-SqTest.import_spec("core/array");
-SqTest.import_spec("sqxtd/array");
+        it("throws an error if the key is not found", @{
+            local table = {};
+            expect(@()table.rawget("qwerty")).to().throwError();
+        });
 
-SqTest.import_spec("getters_setters_spec");
-SqTest.import_spec("tostring_spec");
-SqTest.import_spec("getdefaultdelegate_spec");
-SqTest.import_spec("map_spec");
-SqTest.import_spec("string_spec");
+        context("when having a delegate", @{
+            it("does not invoke _get metamethod", @{
+                local delegate = {};
+                delegate._get <- function(index) { return "invoked"; };
 
-SqTest.run();
+                local table = {};
+                table.setdelegate(delegate);
+
+                expect(@()table.rawget("asdfg")).to().throwError();
+            });
+        });
+    });
+});

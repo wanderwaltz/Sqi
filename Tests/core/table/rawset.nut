@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  core/table/rawset.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 12.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,21 +23,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
+SqTest.spec("table", @{
+    describe("rawset", @{
+        it("allows setting a value using the string key", @{
+            local table = { key = "value" };
+            table.rawset("key", "qwerty");
+            expect(table["key"]).to().equal("qwerty");
+        });
 
-SqTest.import_spec("core/integer");
-SqTest.import_spec("core/float");
-SqTest.import_spec("core/bool");
-SqTest.import_spec("core/string");
-SqTest.import_spec("core/table");
-SqTest.import_spec("core/array");
-SqTest.import_spec("sqxtd/array");
+        it("creates a new slot if the key does not exist", @{
+            local table = {};
+            table.rawset("qwerty", "asdfg")
+            expect(table.qwerty).to().equal("asdfg");
+        });
 
-SqTest.import_spec("getters_setters_spec");
-SqTest.import_spec("tostring_spec");
-SqTest.import_spec("getdefaultdelegate_spec");
-SqTest.import_spec("map_spec");
-SqTest.import_spec("string_spec");
+        context("when having a delegate", @{
+            it("does not invoke _set metamethod", @{
+                local result = { invoked = false };
+                local delegate = {};
+                delegate._set <- function(index, value) { result.invoked = true; };
 
-SqTest.run();
+                local table = {};
+                table.setdelegate(delegate);
+
+                table.rawset("asdfg", "not invoked");
+                expect(result.invoked).to().equal(false);
+            });
+        });
+    });
+});
