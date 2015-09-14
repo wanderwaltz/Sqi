@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44341FAD1BA74EFE00E89EB0 /* libSqUTF8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44341FAB1BA74EF200E89EB0 /* libSqUTF8.a */; };
 		4446DBCD1B78FFF80009F435 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4446DBCC1B78FFF80009F435 /* main.mm */; };
 		4446DC6C1B7901FA0009F435 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DC6B1B7901FA0009F435 /* libc++.dylib */; };
 		4446DC721B79059E0009F435 /* libc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4446DC711B79059E0009F435 /* libc.dylib */; };
@@ -58,6 +59,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		44341FAA1BA74EF200E89EB0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 44341FA61BA74EF200E89EB0 /* SqUTF8.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 44341F9D1BA74ECF00E89EB0;
+			remoteInfo = SqUTF8;
+		};
+		44341FAE1BA74F0700E89EB0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 44341FA61BA74EF200E89EB0 /* SqUTF8.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 44341F9C1BA74ECF00E89EB0;
+			remoteInfo = SqUTF8;
+		};
+		44341FB01BA74F0700E89EB0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 445B2EB01B8A3BD100ECC943;
+			remoteInfo = SqXtdLib;
+		};
 		445B2ECF1B8A409500ECC943 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */;
@@ -101,6 +123,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		44341FA61BA74EF200E89EB0 /* SqUTF8.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SqUTF8.xcodeproj; path = SqUTF8/SqUTF8/SqUTF8.xcodeproj; sourceTree = "<group>"; };
 		4446DBC91B78FFF80009F435 /* sqi */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sqi; sourceTree = BUILT_PRODUCTS_DIR; };
 		4446DBCC1B78FFF80009F435 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		4446DC6B1B7901FA0009F435 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -208,6 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44341FAD1BA74EFE00E89EB0 /* libSqUTF8.a in Frameworks */,
 				445B2ED21B8A40A300ECC943 /* libSqXtdLib.a in Frameworks */,
 				448010B91B8275D800DDF9E6 /* libSquirrel.a in Frameworks */,
 				4482DE6A1B7BA8990067E9B8 /* libSQRat-0.9.1.a in Frameworks */,
@@ -226,6 +250,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44341FA71BA74EF200E89EB0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				44341FAB1BA74EF200E89EB0 /* libSqUTF8.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4446DBC01B78FFF80009F435 = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +289,7 @@
 		4446DBDC1B7900810009F435 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				44341FA61BA74EF200E89EB0 /* SqUTF8.xcodeproj */,
 				445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */,
 				448010AF1B8275AB00DDF9E6 /* Squirrel.xcodeproj */,
 				4482DE6B1B7BA8A40067E9B8 /* sqrat-0.9.1 */,
@@ -549,6 +582,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				44341FAF1BA74F0700E89EB0 /* PBXTargetDependency */,
+				44341FB11BA74F0700E89EB0 /* PBXTargetDependency */,
 				448010B81B8275D100DDF9E6 /* PBXTargetDependency */,
 				4482DE691B7BA8920067E9B8 /* PBXTargetDependency */,
 			);
@@ -607,6 +642,10 @@
 					ProjectRef = 448010AF1B8275AB00DDF9E6 /* Squirrel.xcodeproj */;
 				},
 				{
+					ProductGroup = 44341FA71BA74EF200E89EB0 /* Products */;
+					ProjectRef = 44341FA61BA74EF200E89EB0 /* SqUTF8.xcodeproj */;
+				},
+				{
 					ProductGroup = 445B2ECB1B8A409500ECC943 /* Products */;
 					ProjectRef = 445B2ECA1B8A409500ECC943 /* SqXtdLib.xcodeproj */;
 				},
@@ -620,6 +659,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		44341FAB1BA74EF200E89EB0 /* libSqUTF8.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSqUTF8.a;
+			remoteRef = 44341FAA1BA74EF200E89EB0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		445B2ED01B8A409500ECC943 /* libSqXtdLib.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -657,6 +703,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		44341FAF1BA74F0700E89EB0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SqUTF8;
+			targetProxy = 44341FAE1BA74F0700E89EB0 /* PBXContainerItemProxy */;
+		};
+		44341FB11BA74F0700E89EB0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SqXtdLib;
+			targetProxy = 44341FB01BA74F0700E89EB0 /* PBXContainerItemProxy */;
+		};
 		448010B81B8275D100DDF9E6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Squirrel;
@@ -753,6 +809,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../Vendor/Squirrel/SQUIRREL3/include $(SRCROOT)/../../Vendor/SqXtdLib/SqXtdLib/Headers $(SRCROOT)/../../Vendor/SqUTF8/SqUTF8/Headers";
 			};
 			name = Debug;
 		};
@@ -760,6 +817,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../Vendor/Squirrel/SQUIRREL3/include $(SRCROOT)/../../Vendor/SqXtdLib/SqXtdLib/Headers $(SRCROOT)/../../Vendor/SqUTF8/SqUTF8/Headers";
 			};
 			name = Release;
 		};

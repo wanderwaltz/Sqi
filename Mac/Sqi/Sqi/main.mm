@@ -44,6 +44,7 @@ extern int errno;
 #include "sqratimport_pathutils.hpp"
 
 #include "SqXtdLib.h"
+#include "SqUTF8.h"
 
 void printfunc(HSQUIRRELVM v,const SQChar *s,...)
 {
@@ -100,6 +101,7 @@ int main(int argc, const char * argv[]) {
     sqxtd_register_array(v);
     sqxtd_register_is_equal(v);
     
+    squt8_register_string(v);
     
     sqstd_dofile(v, argv[1], SQFalse, SQTrue);
     
