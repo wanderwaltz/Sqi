@@ -1,8 +1,8 @@
 //
-//  verifiers.nut
+//  be_identical_to_matcher.nut
 //  SqTest
 //
-//  Created by Egor Chiglintsev on 13.08.15.
+//  Created by Egor Chiglintsev on 09.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-Verifiers <- {}
-Verifiers.setdelegate(this);
+class Matchers.BeIdenticalTo extends Matchers.Base {
+    expectedValue = null
 
-Verifiers.to <- function() {
-    local verifier = new_should_verifier(value);
-    this.verifier = verifier;
-    return verifier;
-}
+    constructor(what) {
+        expectedValue = what
+    }
 
+    function match(value) {
+        return base.match(value) || (expectedValue == value);
+    }
 
-Verifiers.notTo <- function() {
-    local verifier = new_should_not_verifier(value);
-    this.verifier = verifier;
-    return verifier;
+    function description() {
+        return actualValue + " === " + expectedValue;
+    }
 }

@@ -1,8 +1,8 @@
 //
-//  verifiers.nut
+//  method.nut
 //  SqTest
 //
-//  Created by Egor Chiglintsev on 13.08.15.
+//  Created by Egor Chiglintsev on 08.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-Verifiers <- {}
-Verifiers.setdelegate(this);
+function attach_shared_spec(what, method_name) {
+    local key = shared_spec_key(what, method_name);
+    local shared_spec = registered_shared_specs[key];
 
-Verifiers.to <- function() {
-    local verifier = new_should_verifier(value);
-    this.verifier = verifier;
-    return verifier;
+    local spec = new_context(null, this);
+    spec.Method <- this.name;
+    shared_spec.block.bindenv(spec)();
+
+    contexts.push(spec);
+}
+
+function new_method_expectation(which, delegate) {
+    local method = {
+        name = which
+        behaves_like = attach_shared_spec
+    };
+    method.setdelegate(delegate);
+    return method;
 }
 
 
-Verifiers.notTo <- function() {
-    local verifier = new_should_not_verifier(value);
-    this.verifier = verifier;
-    return verifier;
-}
+

@@ -24,11 +24,11 @@
 //  SOFTWARE.
 
 class Matchers.BeNegative extends Matchers.Base {
-  function match(value) {
-    return base.match(value) || (actualValue < 0);
-  }
+    function match(value) {
+        return base.match(value) || (actualValue < 0);
+    }
 
-  function description() {
-    return actualValue + " < 0";
-  }
+    function description() {
+        return actualValue + " < 0";
+    }
 }

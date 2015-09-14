@@ -1,8 +1,8 @@
 //
-//  verifiers.nut
+//  throw_error_matcher.nut
 //  SqTest
 //
-//  Created by Egor Chiglintsev on 13.08.15.
+//  Created by Egor Chiglintsev on 06.08.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-Verifiers <- {}
-Verifiers.setdelegate(this);
+class Matchers.ThrowError extends Matchers.Base {
+    catched = null;
 
-Verifiers.to <- function() {
-    local verifier = new_should_verifier(value);
-    this.verifier = verifier;
-    return verifier;
-}
+    function match(closure) {
+        local matches = base.match(closure);
 
+        if (matches) {
+            return true;
+        }
 
-Verifiers.notTo <- function() {
-    local verifier = new_should_not_verifier(value);
-    this.verifier = verifier;
-    return verifier;
+        try {
+            closure();
+        }
+        catch(something) {
+            catched = something;
+        }
+
+        return (catched != null);
+    }
+
+    function description() {
+        return "closure throws an error";
+    }
 }

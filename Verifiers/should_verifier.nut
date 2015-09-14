@@ -24,25 +24,25 @@
 //  SOFTWARE.
 
 function new_should_verifier(subject) {
-  local verifier = {};
-  verifier.subject <- subject;
-  verifier.matcher <- null;
-  verifier.valid <- false;
+    local verifier = {};
+    verifier.subject <- subject;
+    verifier.matcher <- null;
+    verifier.valid <- false;
 
-  verifier.verify <- function() {
-    valid = matcher.match(subject);
-    return valid;
-  };
+    verifier.verify <- function() {
+        valid = matcher.match(subject);
+        return valid;
+    };
 
-  verifier.result <- function() {
-    if (valid) {
-      return "OK";
+    verifier.result <- function() {
+        if (valid) {
+            return "OK";
+        }
+        else {
+            return "expected (" + matcher.description() + ") to be true";
+        }
     }
-    else {
-      return "expected (" + matcher.description() + ") to be true";
-    }
-  }
 
-  verifier.setdelegate(Matchers);
-  return verifier;
+    verifier.setdelegate(Matchers);
+    return verifier;
 }

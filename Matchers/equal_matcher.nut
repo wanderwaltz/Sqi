@@ -24,17 +24,41 @@
 //  SOFTWARE.
 
 class Matchers.Equal extends Matchers.Base {
-  expectedValue = null
+    expectedValue = null
 
-  constructor(what) {
-    expectedValue = what
-  }
+    constructor(what) {
+        expectedValue = what
+    }
 
-  function match(value) {
-    return base.match(value) || (expectedValue == actualValue);
-  }
+    function match(value) {
+        return base.match(value) || isEqual(expectedValue, value);
+    }
 
-  function description() {
-    return actualValue + " == " + expectedValue;
-  }
+    function isEqual(a, b) {
+        local equal = (a == b);
+
+        // isEqual is optionally added by SqXtdLib and
+        // checks arrays/tables equality memberwise
+        if (!equal) {
+            try {
+                equal = a.isEqual(b);
+            }
+            catch(error) {
+            }
+        }
+
+        if (!equal) {
+            try {
+                equal = b.isEqual(a);
+            }
+            catch(error) {
+            }
+        }
+
+        return equal;
+    }
+
+    function description() {
+        return actualValue + " == " + expectedValue;
+    }
 }

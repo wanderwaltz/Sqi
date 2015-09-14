@@ -24,37 +24,67 @@
 //  SOFTWARE.
 
 
-registered_specs <- {
+registered_specs <- {}
+registered_shared_specs <- {}
 
+function new_spec(what) {
+    local spec = new_context(what, this);
+    local same_key_specs = null;
+
+    if ((what in registered_specs) == false) {
+        same_key_specs = [];
+        registered_specs[what] <- same_key_specs;
+    }
+    else {
+        same_key_specs = registered_specs[what];
+    }
+
+    same_key_specs.append(spec);
+
+    return spec;
 }
 
 
-function new_spec(what) {
-  local spec = new_context(what, this);
-  registered_specs[what] <- spec;
+function new_shared_spec(what, method_name) {
+    local key = shared_spec_key(what, method_name);
 
-  return spec;
+    local spec = new_context(null, this);
+    spec.Method <- method_name;
+
+    registered_shared_specs[key] <- spec;
+
+    return spec;
+}
+
+
+function shared_spec_key(what, method_name) {
+    return what + "#" + method_name;
 }
 
 
 function enumerate_registered_examples(func) {
-  enumerate_registered_contexts(function(id, context) {
-    enumerate_examples(id, context, func);
+    enumerate_registered_contexts(function(id, context, requirements_check) {
+        enumerate_examples(id, context, requirements_check, function(id, example, check){
+            func(id, example, check);
+        });
     });
 }
 
 
 function enumerate_registered_contexts(func) {
-  enumerate_registered_specs(function(spec_id, spec) {
-    enumerate_child_contexts(spec_id, spec, function(child_id, context) {
-      func(child_id, context);
-      });
+    enumerate_registered_specs(function(spec_id, spec) {
+        enumerate_child_contexts(spec_id, spec, null,
+            function(child_id, context, requirements_check) {
+                func(child_id, context, requirements_check);
+            });
     });
 }
 
 
 function enumerate_registered_specs(func) {
-  foreach (spec_id, spec in registered_specs) {
-    func(spec_id, spec);
-  }
+    foreach (spec_id, same_key_specs in registered_specs) {
+        foreach(index, spec in same_key_specs) {
+            func(spec_id, spec);
+        }
+    }
 }

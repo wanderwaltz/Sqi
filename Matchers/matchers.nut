@@ -27,22 +27,38 @@ Matchers <- {}
 Matchers.setdelegate(this);
 
 Matchers.equal <- function(expected_value) {
-  this.matcher = Equal(expected_value);
+    this.matcher = Equal(expected_value);
+}
+
+Matchers.beIdenticalTo <- function(expected_value) {
+    this.matcher = BeIdenticalTo(expected_value);
+}
+
+Matchers.beNoLessThan <- function(lower_bound) {
+    this.matcher = BeNoLessThan(lower_bound);
 }
 
 Matchers.beNegative <- function() {
-  this.matcher = BeNegative();
+    this.matcher = BeNegative();
+}
+
+Matchers.haveSlot <- function(expected_key) {
+    this.matcher = HaveSlot(expected_key);
+}
+
+Matchers.throwError <- function() {
+    this.matcher = ThrowError();
 }
 
 Matchers.Base <- class {
-  actualValue = null
+    actualValue = null
 
-  function match(value) {
-    actualValue = value;
-    return false;
-  }
+    function match(value) {
+        actualValue = value;
+        return false;
+    }
 
-  function description() {
-    return "matcher implmenentation";
-  }
+    function description() {
+        return "matcher implmenentation";
+    }
 }

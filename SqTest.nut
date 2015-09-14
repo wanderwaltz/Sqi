@@ -25,63 +25,177 @@
 
 ::import("Spec/expectation", this);
 ::import("Spec/context", this);
+::import("Spec/method", this);
 ::import("Spec/spec", this);
 ::import("Verifiers/verifiers", this);
 ::import("Verifiers/should_verifier", this);
+::import("Verifiers/should_not_verifier", this);
 ::import("Matchers/matchers", this);
 ::import("Matchers/equal_matcher", this);
+::import("Matchers/be_no_less_than_matcher", this);
 ::import("Matchers/be_negative_matcher", this);
+::import("Matchers/be_identical_to_matcher", this);
+::import("Matchers/have_slot_matcher", this);
+::import("Matchers/throw_error_matcher", this);
 
 
 function run() {
-  local result = {
-    failed_expectations = 0
-    total_expectations = 0
-  };
+    local result = {
+        failed_expectations  = 0
+        unexpected_failures  = 0
+        skipped_expectations = 0
+        total_expectations   = 0
+    };
 
-  enumerate_registered_examples(function(id, example) {
-    print(id + " ");
-    foreach (expectation in example.expectations) {
-      result.total_expectations += 1;
-      local valid = expectation.verifier.verify();
-      if (valid == false) {
-        result.failed_expectations += 1;
-        print("FAILED: " + expectation.verifier.result());
-      }
-    }
-    print("\n");
+    enumerate_registered_examples(function(id, example, requirements_check) {
+        if (requirements_check != null) {
+            print(id + " SKIPPED (" + requirements_check + ")\n");
+            result.skipped_expectations += 1;
+            return;
+        }
+
+        print(id + " ");
+        result.total_expectations += 1;
+
+        try {
+            example.block.bindenv(example)();
+
+            foreach (expectation in example.expectations) {
+                local valid = expectation.verifier.verify();
+                if (valid == false) {
+                    result.failed_expectations += 1;
+                    print("FAILED: " + expectation.verifier.result());
+                    break;
+                }
+            }
+        }
+        catch (error) {
+            print("FAILED (unexpected): " + error);
+            result.failed_expectations += 1;
+            result.unexpected_failures += 1;
+        }
+        print("\n");
     });
 
-  print("\n");
-  print("Total expectations: " + result.total_expectations + "\n");
-  print("Failed expectations: " + result.failed_expectations + "\n");
+    print("\n");
+    print("Total expectations: " + result.total_expectations + "\n");
+    print("Skipped expectations: " + result.skipped_expectations + "\n");
+    print("Failed expectations: " + result.failed_expectations);
+    if (result.unexpected_failures > 0) {
+        print(" (" + result.unexpected_failures + " unexpected)");
+    }
+    print("\n");
 }
 
 
 function spec(what, how) {
-  assert(what in registered_specs == false);
+    local spec = new_spec(what);
+    how.bindenv(spec)();
+}
 
-  local spec = new_spec(what);
-  how.bindenv(spec)();
+
+function shared_spec(what, method_name, how) {
+    local spec = new_shared_spec(what, method_name);
+    spec.block <- how;
+}
+
+
+function method(which) {
+    return new_method_expectation(which, this);
+}
+
+
+function import_spec(path, constant = null, required_semver = null) {
+    if (constant != null) {
+        local constants = getconsttable();
+        local failed = false;
+
+        if ((constant in constants) == false) {
+            failed = true;
+        }
+        else if (compare_semver(constants[constant], required_semver) < 0) {
+            failed = true;
+        }
+
+        print("'" + path + "' import SKIPPED (" +
+                constant + " >= " + required_semver + " requirement is not met)");
+        return;
+    }
+
+    ::import(path);
+}
+
+
+function requires(constant, semver) {
+    requirements_table()[constant] <- semver;
 }
 
 
 function describe(what, how) {
-  local context = new_context(what, this);
+    local context = new_context(what, this);
 
-  contexts.push(context);
-  how.bindenv(context)();
+    contexts.push(context);
+    how.bindenv(context)();
 }
 
 context <- describe;
 
 
 function it(what, how) {
-  local example = new_example(what, this);
+    local example = new_example(what, this);
+    example.block <- how;
 
-  examples.push(example);
-  how.bindenv(example)();
+    examples.push(example);
 }
 
 
+function compare_semver(lhs, rhs) {
+    local kIndex = "index";
+    local kValue = "value";
+
+    function pair(index, value) {
+        local result = {};
+        result[kIndex] <- index;
+        result[kValue] <- value;
+
+        return result;
+    }
+
+    function extractNumber(string, startIndex) {
+        if (startIndex == null) {
+            return pair(null, "0");
+        }
+
+        local dotIndex = string.find(".", startIndex+1);
+        local value    = "0";
+
+        if (dotIndex != null) {
+            value = string.slice(startIndex+1, dotIndex);
+        }
+        else {
+            value = string.slice(startIndex+1, string.len());
+        }
+
+        return pair(dotIndex, value);
+    }
+
+    local leftToken = pair(-1, 0);
+    local rightToken = pair(-1, 0);
+
+    do {
+        leftToken = extractNumber(lhs, leftToken.index);
+        rightToken = extractNumber(rhs, rightToken.index);
+
+        // print(">> " + leftToken.index + " '" + leftToken.value + "' | " + rightToken.index + " '" + rightToken.value + "'\n");
+
+        local compare = leftToken.value <=> rightToken.value;
+
+        if (compare != 0) {
+            return (compare > 0) ? 1 : -1;
+        }
+
+    } while ((leftToken.index != null) || (rightToken.index != null));
+
+    return 0;
+}
 

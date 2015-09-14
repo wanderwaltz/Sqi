@@ -24,27 +24,27 @@
 //  SOFTWARE.
 
 function new_example(what, delegate) {
-  local example = { name = what };
-  example.setdelegate(delegate);
-  example.expectations <- [];
+    local example = { name = what };
+    example.setdelegate(delegate);
+    example.expectations <- [];
 
-  return example;
+    return example;
 }
 
 
 function new_expectation(value) {
-  local expectation = {};
-  expectation.value <- value;
-  expectation.verifier <- null;
+    local expectation = {};
+    expectation.value <- value;
+    expectation.verifier <- null;
 
-  return expectation;
+    return expectation;
 }
 
 
 function expect(value) {
-  local expectation = new_expectation(value);
-  expectation.setdelegate(Verifiers);
+    local expectation = new_expectation(value);
+    expectation.setdelegate(Verifiers);
 
-  expectations.push(expectation);
-  return expectation;
+    expectations.push(expectation);
+    return expectation;
 }
