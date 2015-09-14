@@ -41,11 +41,7 @@ static SQFloat sqrat_clock() {
 }
 
 static SQInteger sqrat_strlen(const SQChar* str) {
-#if defined(_UNICODE)
-    return static_cast<SQInteger>(wcslen(str) * sizeof(SQChar));
-#else
     return static_cast<SQInteger>(strlen(str) * sizeof(SQChar));
-#endif
 }
 
 static void sqrat_pushtaskarray(HSQUIRRELVM v) {

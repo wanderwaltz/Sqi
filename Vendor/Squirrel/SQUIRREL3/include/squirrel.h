@@ -106,45 +106,6 @@ struct SQInstance;
 struct SQDelegable;
 struct SQOuter;
 
-#ifdef _UNICODE
-#define SQUNICODE
-#endif
-
-#ifdef SQUNICODE
-#if (defined(_MSC_VER) && _MSC_VER >= 1400) // 1400 = VS8
-
-#if !defined(_NATIVE_WCHAR_T_DEFINED) //this is if the compiler considers wchar_t as native type
-#define wchar_t unsigned short
-#endif
-
-#else
-typedef unsigned short wchar_t;
-#endif
-
-typedef wchar_t SQChar;
-#define _SC(a) L##a
-#define	scstrcmp	wcscmp
-#define scsprintf	swprintf
-#define scstrlen	wcslen
-#define scstrtod	wcstod
-#ifdef _SQ64
-#define scstrtol	_wcstoi64
-#else
-#define scstrtol	wcstol
-#endif
-#define scatoi		_wtoi
-#define scstrtoul	wcstoul
-#define scvsprintf	vswprintf
-#define scstrstr	wcsstr
-#define scisspace	iswspace
-#define scisdigit	iswdigit
-#define scisxdigit	iswxdigit
-#define scisalpha	iswalpha
-#define sciscntrl	iswcntrl
-#define scisalnum	iswalnum
-#define scprintf	wprintf
-#define MAX_CHAR 0xFFFF
-#else
 typedef char SQChar;
 #define _SC(a) a
 #define	scstrcmp	strcmp
@@ -172,7 +133,6 @@ typedef char SQChar;
 #define scisalnum	isalnum
 #define scprintf	printf
 #define MAX_CHAR 0xFF
-#endif
 
 #ifdef _SQ64
 #define _PRINT_INT_PREC _SC("ll")
