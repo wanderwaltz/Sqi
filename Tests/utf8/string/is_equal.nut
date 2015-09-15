@@ -1,5 +1,5 @@
 //
-//  utf8/string.nut
+//  utf8/string/at.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 15.09.15.
@@ -23,6 +23,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("string/len");
-SqTest.import_spec("string/at");
-SqTest.import_spec("string/is_equal");
+SqTest.spec("string", @{
+    requires("SQUTF8_STRING_EXTENSION_VERSION", "0.0.1");
+
+    describe("isEqual", @{
+        it("compares strings for equality", @{
+            expect("юникод".isEqual("юникод")).to().equal(true);
+            expect("юникод".isEqual("いろはにほへとちりぬるを")).to().equal(false);
+        });
+
+        // Not yet
+        //
+        // it("uses the normalized form for string comparison", @{
+        //     expect("à".isEqual("à")).to().equal(true);
+        //     expect("é".isEqual("é")).to().equal(true);
+        //     expect("õ".isEqual("õ")).to().equal(true);
+        //     expect("ă".isEqual("ă")).to().equal(true);
+        //     expect("ė".isEqual("ė")).to().equal(true);
+        //     expect("ï".isEqual("ï")).to().equal(true);
+        //     expect("å".isEqual("å")).to().equal(true);
+        // });
+    });
+});
