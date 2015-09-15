@@ -1,6 +1,7 @@
 /*
 	see copyright notice in squirrel.h
 */
+#include <string>
 #include "sqpcheader.h"
 #ifndef NO_COMPILER
 #include <stdarg.h>
@@ -707,10 +708,16 @@ public:
 		_es.etype = EXPR;
 		switch(_token)
 		{
-		case TK_STRING_LITERAL:
-			_fs->AddInstruction(_OP_LOAD, _fs->PushTarget(), _fs->GetConstant(_fs->CreateString(_lex._svalue,_lex._longstr.size()-1)));
-			Lex(); 
-			break;
+            case TK_STRING_LITERAL: {
+                std::basic_string<SQChar> string(_SC(""));
+                while (_token == TK_STRING_LITERAL) {
+                    string += std::basic_string<SQChar>(_lex._svalue, _lex._longstr.size()-1);
+                    Lex();
+                }
+                
+                _fs->AddInstruction(_OP_LOAD, _fs->PushTarget(),
+                    _fs->GetConstant(_fs->CreateString(string.c_str(), string.length())));
+            } break;
 		case TK_BASE:
 			Lex();
 			_fs->AddInstruction(_OP_GETBASE, _fs->PushTarget());
