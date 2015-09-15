@@ -31,10 +31,7 @@
 // MARK: - Private forwards and constants
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 static const SQChar * const kKeyLen = _SC("len");
-
-namespace squtf8 { namespace native { namespace  string {
-    SQRESULT length(HSQUIRRELVM vm);
-}}}
+static const SQChar * const kKeyAt  = _SC("at");
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,4 +41,5 @@ void squt8_register_string(HSQUIRRELVM vm) {
     sqxtd::set_global_constant(vm, _SC("SQUTF8_STRING_EXTENSION_VERSION"), _SC(SQUTF8_VERSION));
     
     sqxtd::set_default_delegate_native(vm, OT_STRING, kKeyLen, &squtf8::native::string::length);
+    sqxtd::set_default_delegate_native(vm, OT_STRING, kKeyAt,  &squtf8::native::string::at);
 }

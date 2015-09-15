@@ -28,4 +28,13 @@
 
 #include "SqUTF8.h"
 
+namespace squtf8 { namespace string {
+    SQInteger length(SQString *string);
+}};
+
+namespace squtf8 { namespace native { namespace  string {
+    SQRESULT length(HSQUIRRELVM vm);
+    SQRESULT at(HSQUIRRELVM vm);
+}}}
+
 #endif // #ifndef __SqUTF8__squtf8_string__

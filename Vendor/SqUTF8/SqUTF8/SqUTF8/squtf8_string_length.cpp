@@ -27,17 +27,28 @@
 #include "utf8.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Private
+// Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+namespace squtf8 { namespace string {
+    SQInteger length(SQString *string) {
+        if (string == NULL) {
+            return 0;
+        }
+        
+        auto begin = string->_val;
+        auto end = begin+string->_len;
+        
+        return utf8::distance(begin, end);
+    }
+}};
+
+
 namespace squtf8 { namespace native { namespace string {
     SQRESULT length(HSQUIRRELVM vm) {
         SQObjectPtr self = vm->GetAt(vm->_top-1);
         
         if (type(self) == OT_STRING) {
-            SQString *selfString = _string(self);
-            SQInteger length = utf8::distance(selfString->_val, selfString->_val+selfString->_len);
-
-            sq_pushinteger(vm, length);
+            sq_pushinteger(vm, squtf8::string::length(_string(self)));
         }
         else {
             sq_pushinteger(vm, sq_getsize(vm, -1));
