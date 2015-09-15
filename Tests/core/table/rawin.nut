@@ -1,8 +1,8 @@
 //
-//  core/table.nut
+//  core/table/rawin.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 12.09.15.
+//  Created by Egor Chiglintsev on 16.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,12 +23,35 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("table/typeof");
-SqTest.import_spec("table/len");
-SqTest.import_spec("table/get");
-SqTest.import_spec("table/in");
-SqTest.import_spec("table/set");
-SqTest.import_spec("table/newslot");
-SqTest.import_spec("table/rawget");
-SqTest.import_spec("table/rawset");
-SqTest.import_spec("table/rawin");
+SqTest.spec("table", @{
+    describe("rawin", @{
+        it("returns true if the table has the given key", @{
+            local table = { key = "value" };
+            expect(table.rawin("key")).to().equal(true);
+        });
+
+
+        it("returns false if the table does not have the given key", @{
+            expect({}.rawin("key")).to().equal(false);
+            expect({}.rawin(1)).to().equal(false);
+        });
+
+        context("when having a delegate", @{
+            context("when having a delegate", @{
+            it("does not invoke _get metamethod", @{
+                local delegate = {};
+                local invoked = {
+                    value = false
+                };
+                delegate._get <- function(index) { invoked.value = true; return "invoked"; };
+
+                local table = {};
+                table.setdelegate(delegate);
+
+                expect(table.rawin("asdfg")).to().equal(false);
+                expect(invoked.value).to().equal(false);
+            });
+        });
+        });
+    });
+});
