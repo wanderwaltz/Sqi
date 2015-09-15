@@ -1,8 +1,8 @@
 //
-//  core/table.nut
+//  core/table/clear.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 12.09.15.
+//  Created by Egor Chiglintsev on 16.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,17 +23,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("table/typeof");
-SqTest.import_spec("table/len");
-SqTest.import_spec("table/get");
-SqTest.import_spec("table/in");
-SqTest.import_spec("table/set");
-SqTest.import_spec("table/newslot");
-SqTest.import_spec("table/rawget");
-SqTest.import_spec("table/rawset");
-SqTest.import_spec("table/rawin");
-SqTest.import_spec("table/weakref");
-SqTest.import_spec("table/tostring");
-SqTest.import_spec("table/clear");
-SqTest.import_spec("table/setdelegate");
-SqTest.import_spec("table/getdelegate");
+SqTest.spec("table", @{
+    describe(@"clear", @{
+        it("removes all slots from the table", @{
+            local single = {
+                key = "value"
+            };
+
+            local multiple = {
+                a = 123,
+                b = false,
+                c = "qwerty"
+            };
+
+            single.clear();
+            expect(single.len()).to().equal(0);
+
+            multiple.clear();
+            expect(multiple.len()).to().equal(0);
+        });
+    });
+});

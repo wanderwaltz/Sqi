@@ -53,6 +53,46 @@ SqTest.spec("table", @{
         });
 
         context("when having a delegate", @{
+            it("returns the delegate's value if the key is found in it", @{
+                local delegate = {
+                    key = "delegate value"
+                };
+
+                local table = {};
+                table.setdelegate(delegate);
+
+                expect(table.key).to().equal("delegate value");
+            });
+
+
+            it("uses the table's value if key is present in both the table and the delegate", @{
+                local delegate = {
+                    key = "delegate value"
+                };
+
+                local table = {
+                    key = "table value"
+                };
+                table.setdelegate(delegate);
+
+                expect(table.key).to().equal("table value");
+            });
+
+
+            it("traverses the delegate chain when searching for a key", @{
+                local table1 = {
+                    key = "table1 value"
+                };
+
+                local table2 = {};
+                local table3 = {};
+                table3.setdelegate(table2);
+                table2.setdelegate(table1);
+
+                expect(table3.key).to().equal("table1 value");
+            });
+
+
             it("invokes _get metamethod if available and key not found", @{
                 local delegate = {};
                 delegate._get <- function(index) { return "invoked"; };
@@ -61,6 +101,19 @@ SqTest.spec("table", @{
                 table.setdelegate(delegate);
 
                 expect(table["qwerty"]).to().equal("invoked");
+            });
+
+
+            it("traverses the delegate chain when searching for _get metamethod", @{
+                local table1 = {};
+                table1._get <- function(index) { return "invoked"; };
+
+                local table2 = {};
+                local table3 = {};
+                table3.setdelegate(table2);
+                table2.setdelegate(table1);
+
+                expect(table3["qwerty"]).to().equal("invoked");
             });
 
 

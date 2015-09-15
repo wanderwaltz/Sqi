@@ -43,6 +43,50 @@ SqTest.spec("table", @{
         });
 
         context("when having a delegate", @{
+            it("sets the delegate's value if key is found there", @{
+                local delegate = {
+                    key = "value"
+                };
+
+                local table = {};
+                table.setdelegate(delegate);
+
+                table.key = "other";
+                expect(delegate.key).to().equal("other");
+            });
+
+
+            it("sets the table's value if key is present in both the table and the delegate", @{
+                local delegate = {
+                    key = "delegate value"
+                };
+
+                local table = {
+                    key = "table value"
+                };
+                table.setdelegate(delegate);
+
+                table.key = "new value";
+                expect(table.key).to().equal("new value");
+                expect(delegate.key).to().equal("delegate value");
+            });
+
+
+            it("traverses the delegate chain when searching for a key", @{
+                local table1 = {
+                    key = "table1 value"
+                };
+
+                local table2 = {};
+                local table3 = {};
+                table3.setdelegate(table2);
+                table2.setdelegate(table1);
+
+                table3.key = "new value";
+                expect(table1.key).to().equal("new value");
+            });
+
+
             it("invokes _set metamethod if available and key not found", @{
                 local result = { invoked = false };
                 local delegate = {};
@@ -52,6 +96,21 @@ SqTest.spec("table", @{
                 table.setdelegate(delegate);
 
                 table["qwerty"] = 1234;
+                expect(result.invoked).to().equal(true);
+            });
+
+
+            it("traverses the delegate chain when searching for _set metamethod", @{
+                local result = { invoked = false };
+                local table1 = {};
+                table1._set <- function(index, value) { result.invoked = true; };
+
+                local table2 = {};
+                local table3 = {};
+                table3.setdelegate(table2);
+                table2.setdelegate(table1);
+
+                table3["qwerty"] = 1234;
                 expect(result.invoked).to().equal(true);
             });
 

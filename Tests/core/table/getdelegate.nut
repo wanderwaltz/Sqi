@@ -1,8 +1,8 @@
 //
-//  core/table.nut
+//  core/table/getdelegate.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 12.09.15.
+//  Created by Egor Chiglintsev on 16.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,17 +23,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("table/typeof");
-SqTest.import_spec("table/len");
-SqTest.import_spec("table/get");
-SqTest.import_spec("table/in");
-SqTest.import_spec("table/set");
-SqTest.import_spec("table/newslot");
-SqTest.import_spec("table/rawget");
-SqTest.import_spec("table/rawset");
-SqTest.import_spec("table/rawin");
-SqTest.import_spec("table/weakref");
-SqTest.import_spec("table/tostring");
-SqTest.import_spec("table/clear");
-SqTest.import_spec("table/setdelegate");
-SqTest.import_spec("table/getdelegate");
+SqTest.spec("table", @{
+    describe(@"getdelegate", @{
+        it("returns the table's delegate", @{
+            local delegate = {};
+            local table = {};
+            table.setdelegate(delegate);
+
+            expect(table.getdelegate()).to().beIdenticalTo(delegate);
+        });
+
+
+        it("returns null for tables without delegates", @{
+            expect({}.getdelegate()).to().equal(null);
+        });
+    });
+});
