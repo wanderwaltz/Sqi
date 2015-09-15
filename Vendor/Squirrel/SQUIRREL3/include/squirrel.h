@@ -141,10 +141,15 @@ typedef char SQChar;
 #define _PRINT_INT_FMT _SC("%d")
 #endif
 
-#define SQUIRREL_VERSION	_SC("Squirrel 3.0.7 stable")
-#define SQUIRREL_COPYRIGHT	_SC("Copyright (C) 2003-2015 Alberto Demichelis")
-#define SQUIRREL_AUTHOR		_SC("Alberto Demichelis")
-#define SQUIRREL_VERSION_NUMBER	307
+#define SQUIRREL_VERSION                   _SC("Squirrel 3.0.7 extended")
+#define SQUIRREL_COPYRIGHT                 _SC("Copyright (C) 2003-2015 Alberto Demichelis")
+#define SQUIRREL_AUTHOR                    _SC("Alberto Demichelis")
+#define SQUIRREL_VERSION_NUMBER            307
+
+#define SQUIRREL_EXTENSIONS_VERSION        _SC("Squirrel Extension 0.0.1")
+#define SQUIRREL_EXTENSIONS_COPYRIGHT      _SC("Copyright (C) 2015 Egor Chiglintsev")
+#define SQUIRREL_EXTENSIONS_AUTHOR         _SC("Egor Chiglintsev")
+#define SQUIRREL_EXTENSIONS_VERSION_NUMBER 001
 
 #define SQ_VMSTATE_IDLE			0
 #define SQ_VMSTATE_RUNNING		1
