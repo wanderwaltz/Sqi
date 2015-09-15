@@ -315,6 +315,7 @@ void sq_base_register(HSQUIRRELVM v)
 	sq_newslot(v,-3, SQFalse);
 	sq_pushstring(v,_SC("_version_"),-1);
 	sq_pushstring(v,SQUIRREL_VERSION,-1);
+    sq_newslot(v,-3, SQFalse);
     sq_pushstring(v,_SC("_extensions_version_"),-1);
     sq_pushstring(v,SQUIRREL_EXTENSIONS_VERSION,-1);
 	sq_newslot(v,-3, SQFalse);
