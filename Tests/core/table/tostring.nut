@@ -1,8 +1,8 @@
 //
-//  tostring_spec.nut
+//  core/table/tostring.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 04.09.15.
+//  Created by Egor Chiglintsev on 16.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,68 +23,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.spec("tosring", @{
-    describe("tables", @{
-        context("when converted to string", @{
-            requires("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION", "0.0.1");
-            // The spec for tables tostring conversion is not true for vanilla Squirrel3,
-            // this functionality have been added by SqXtdLib and are possible with
-            // changes to the Squirrel language introduced in
-            // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
-
-            it("should list all table slots", @{
-                local table = {
-                    name = "John Appleseed",
-                    age  = 27
-                };
-
-                expect(table.tostring()).to().equal("{\n\tname = John Appleseed\n\tage = 27\n}");
-                // {
-                //      name = John Appleseed
-                //      age = 27
-                // }
-            });
-
-            it("should indent nested tables with tabs", @{
-                local table = {
-                    key = "value"
-                    nestedTable = {
-                        x = "y"
-                    }
-                };
-
-                expect(table.tostring()).to().equal("{\n\tnestedTable = {\n\t\tx = y\n\t}\n\tkey = value\n}");
-                // {
-                //      key = value
-                //      nestedTable = {
-                //          x = y
-                //      }
-                // }
-            });
+SqTest.spec("table", @{
+    describe("tostring", @{
+        it("returns a string", @{
+            expect(typeof({}.tostring())).to().equal(typeof(""));
+            expect(typeof({ qwerty = "asdfg" }.tostring())).to().equal(typeof(""));
         });
-
-
-        context("when having a _tostring() metamethod in the default delegate", @{
-            requires("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION", "0.0.1");
-            requires("SQXTD_GET_DEFAULT_DELEGATE_EXTENSION_VERSION", "0.0.1");
-
-            it("should return the default delegate's _tostring() value", @{
-                local default_delegate = getdefaultdelegate({});
-                local original_implementation = default_delegate._tostring;
-
-                default_delegate._tostring = function(){
-                    return "default delegate tostring";
-                };
-
-                expect({}.tostring()).to().equal("default delegate tostring");
-
-                default_delegate._tostring = original_implementation;
-            });
-        });
-
 
         context("when having a delegate", @{
-            it("should return the _tostring() metamethod value if present", @{
+            it("returns the delegate's _tostring() metamethod value if present", @{
                 local delegate = {
                     _tostring = function(){
                         return "expected_value";
@@ -96,11 +43,28 @@ SqTest.spec("tosring", @{
 
                 expect(table.tostring()).to().equal("expected_value");
             });
+        });
 
+        context("when having a _tostring() metamethod in the default delegate", @{
+            requires("SQUIRREL_EXTENSIONS_VERSION", "0.0.1");
             requires("SQXTD_GET_DEFAULT_DELEGATE_EXTENSION_VERSION", "0.0.1");
-            requires("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION", "0.0.1");
 
-            it("should override the default delegate _tostring() metamethod value if present", @{
+            it("returns the default delegate's _tostring() value", @{
+                local default_delegate = getdefaultdelegate({});
+                local original_implementation = default_delegate._tostring;
+
+                default_delegate._tostring = function(){
+                    return "default delegate tostring";
+                };
+
+                expect({}.tostring()).to().equal("default delegate tostring");
+
+                default_delegate._tostring = original_implementation;
+            });
+
+
+            it("overrides the default delegate _tostring() metamethod with the table "
+               "delegate's implementation if present", @{
                 local default_delegate = getdefaultdelegate({});
                 local original_implementation = default_delegate._tostring;
 

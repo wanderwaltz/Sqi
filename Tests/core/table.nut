@@ -32,3 +32,5 @@ SqTest.import_spec("table/newslot");
 SqTest.import_spec("table/rawget");
 SqTest.import_spec("table/rawset");
 SqTest.import_spec("table/rawin");
+SqTest.import_spec("table/weakref");
+SqTest.import_spec("table/tostring");
