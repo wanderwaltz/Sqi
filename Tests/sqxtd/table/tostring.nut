@@ -32,7 +32,7 @@ SqTest.spec("table", @{
         // changes to the Squirrel language introduced in
         // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
-        it("should list all table slots", @{
+        it("lists all table slots", @{
             local table = {
                 name = "John Appleseed",
                 age  = 27
@@ -44,7 +44,7 @@ SqTest.spec("table", @{
                                                 "}");
         });
 
-        it("should indent nested tables with tabs", @{
+        it("indents nested tables with tabs", @{
             local table = {
                 key = "value"
                 nestedTable = {
@@ -54,7 +54,7 @@ SqTest.spec("table", @{
 
             expect(table.tostring()).to().equal("{\n"
                                                   "\t"  "nestedTable = {\n"
-                                                  "\t"                  "\t"  "x = y\n"
+                                                  "\t"                 "\t"  "x = y\n"
                                                   "\t"  "}\n"
                                                   "\t"  "key = value\n"
                                                 "}");
