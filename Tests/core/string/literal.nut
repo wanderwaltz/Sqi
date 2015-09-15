@@ -34,6 +34,13 @@ SqTest.spec("string", @{
             expect("いろはにほへとちりぬるを").to().equal("いろはにほへとちりぬるを");
         });
 
+        it("allows hexadecimal character codes", @{
+            expect("\xF0\x9D\x84\x9E").to().equal("𝄞");
+            expect("\xE2\x9D\xA4").to().equal("❤");
+            expect("\xE2\x98\xAD").to().equal("☭");
+            expect("\xE2\x99\xAB").to().equal("♫");
+        });
+
         context("when parsing several consecutive string literals", @{
             requires("SQUIRREL_EXTENSIONS_VERSION", "0.0.1");
 
