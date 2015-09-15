@@ -34,6 +34,7 @@
 //  SOFTWARE.
 
 SqTest.spec("string", @{
+    requires("SQUIRREL_EXTENSIONS_VERSION", "0.0.1"); // for multi-string literals
     requires("SQUTF8_STRING_EXTENSION_VERSION", "0.0.1");
 
     describe("len", @{
@@ -56,14 +57,10 @@ SqTest.spec("string", @{
             // By Markus Kuhn <http://www.cl.cam.ac.uk/~mgk25/> -- 2012-04-11
             // See http://www.cl.cam.ac.uk/~mgk25/ucs/examples/quickbrown.txt
             //
-            // NOTE: Some of the languages are commented out currently because Squirrel
-            //       does not support automatic concatenations of consecutive string
-            //       literals and thus longer strings are not possible to include
-            //       without messing the formatting too much.
-            //
             // Danish (da)
             // ---------
-                expect("Quizdeltagerne spiste jordbær med fløde, mens cirkusklovnen Wolther spillede på xylofon.".len()).to().equal(88);
+                expect("Quizdeltagerne spiste jordbær med fløde, mens cirkusklovnen "
+                       "Wolther spillede på xylofon.".len()).to().equal(88);
             //        (= Quiz contestants were eating strawbery with cream while Wolther
             //           the circus clown played on xylophone.)
 
@@ -93,26 +90,27 @@ SqTest.spec("string", @{
             //
             // Spanish (es)
             // ------------
-                expect("El pingüino Wenceslao hizo kilómetros bajo exhaustiva lluvia y frío, añoraba a su querido cachorro.".len()).to().equal(99);
+                expect("El pingüino Wenceslao hizo kilómetros bajo exhaustiva lluvia y frío, "
+                       "añoraba a su querido cachorro.".len()).to().equal(99);
             //        (Contains every letter and every accent, but not every combination
             //         of vowel + acute.)
             //
             // French (fr)
             // -----------
-            //   Portez ce vieux whisky au juge blond qui fume sur son île intérieure, à
-            //   côté de l'alcôve ovoïde, où les bûches se consument dans l'âtre, ce
-            //   qui lui permet de penser à la cænogenèse de l'être dont il est question
-            //   dans la cause ambiguë entendue à Moÿ, dans un capharnaüm qui,
-            //   pense-t-il, diminue çà et là la qualité de son œuvre.
+                expect("Portez ce vieux whisky au juge blond qui fume sur son île intérieure, à"
+                       "côté de l'alcôve ovoïde, où les bûches se consument dans l'âtre, ce"
+                       "qui lui permet de penser à la cænogenèse de l'être dont il est question"
+                       "dans la cause ambiguë entendue à Moÿ, dans un capharnaüm qui,"
+                       "pense-t-il, diminue çà et là la qualité de son œuvre.".len()).to().equal(323);
             //
-            //   l'île exiguë
-            //   Où l'obèse jury mûr
-            //   Fête l'haï volapük,
-            //   Âne ex aéquo au whist,
-            //   Ôtez ce vœu déçu.
+                expect("l'île exiguë"
+                       "Où l'obèse jury mûr"
+                       "Fête l'haï volapük,"
+                       "Âne ex aéquo au whist,"
+                       "Ôtez ce vœu déçu.".len()).to().equal(89);
             //
-            //   Le cœur déçu mais l'âme plutôt naïve, Louÿs rêva de crapaüter en
-            //   canoë au delà des îles, près du mälström où brûlent les novæ.
+                expect("Le cœur déçu mais l'âme plutôt naïve, Louÿs rêva de crapaüter en"
+                       "canoë au delà des îles, près du mälström où brûlent les novæ.".len()).to().equal(125);
             //
             // Irish Gaelic (ga)
             // -----------------
@@ -133,17 +131,15 @@ SqTest.spec("string", @{
             // Japanese (jp)
             // -------------
             //
-            //   Hiragana: (Iroha)
+            //  Hiragana: (Iroha)
+                expect("いろはにほへとちりぬるを"
+                       "わかよたれそつねならむ"
+                       "うゐのおくやまけふこえて"
+                       "あさきゆめみしゑひもせす".len()).to().equal(47);
             //
-            //   いろはにほへとちりぬるを
-            //   わかよたれそつねならむ
-            //   うゐのおくやまけふこえて
-            //   あさきゆめみしゑひもせす
-            //
-            //   Katakana:
-            //
-            //   イロハニホヘト チリヌルヲ ワカヨタレソ ツネナラム
-            //   ウヰノオクヤマ ケフコエテ アサキユメミシ ヱヒモセスン
+            //  Katakana:
+                expect("イロハニホヘト チリヌルヲ ワカヨタレソ ツネナラム"
+                       "ウヰノオクヤマ ケフコエテ アサキユメミシ ヱヒモセスン".len()).to().equal(54);
             //
             // Hebrew (iw)
             // -----------
@@ -165,11 +161,11 @@ SqTest.spec("string", @{
             // Thai (th)
             // ---------
             //
-            //   [--------------------------|------------------------]
-            //   ๏ เป็นมนุษย์สุดประเสริฐเลิศคุณค่า  กว่าบรรดาฝูงสัตว์เดรัจฉาน
-            //   จงฝ่าฟันพัฒนาวิชาการ           อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร
-            //   ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า     หัดอภัยเหมือนกีฬาอัชฌาสัย
-            //   ปฏิบัติประพฤติกฎกำหนดใจ        พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอย ฯ
+            //          [--------------------------|------------------------]
+                expect("๏ เป็นมนุษย์สุดประเสริฐเลิศคุณค่า  กว่าบรรดาฝูงสัตว์เดรัจฉาน"
+                       "จงฝ่าฟันพัฒนาวิชาการ           อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร"
+                       "ไม่ถือโทษโกรธแช่งซัดฮึดฮัดด่า     หัดอภัยเหมือนกีฬาอัชฌาสัย"
+                       "ปฏิบัติประพฤติกฎกำหนดใจ        พูดจาให้จ๊ะๆ จ๋าๆ น่าฟังเอย ฯ".len()).to().equal(238);
             //
             //   [The copyright for the Thai example is owned by The Computer
             //   Association of Thailand under the Royal Patronage of His Majesty the
