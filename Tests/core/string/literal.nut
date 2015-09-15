@@ -1,8 +1,8 @@
 //
-//  core/string.nut
+//  core/string/literal.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 08.09.15.
+//  Created by Egor Chiglintsev on 15.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,14 +23,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("string/typeof");
-SqTest.import_spec("string/literal");
-SqTest.import_spec("string/len");
-SqTest.import_spec("string/tointeger");
-SqTest.import_spec("string/tofloat");
-SqTest.import_spec("string/tostring");
-SqTest.import_spec("string/slice");
-SqTest.import_spec("string/find");
-SqTest.import_spec("string/tolower");
-SqTest.import_spec("string/toupper");
-SqTest.import_spec("string/weakref");
+SqTest.spec("string", @{
+    describe(@"literal", @{
+        it("returns string", @{
+            expect("qwerty").to().equal("qwerty");
+        });
+
+        it("allows Unicode strings", @{
+            expect(typeof("いろはにほへとちりぬるを")).to().equal(typeof("any string"));
+            expect("いろはにほへとちりぬるを").to().equal("いろはにほへとちりぬるを");
+        });
+
+        context("when parsing several consecutive string literals", @{
+            requires("SQUIRREL_EXTENSIONS_VERSION", "0.0.1");
+
+            it("concatenates the consequtive string literals into a single string", @{
+                expect("qwerty" "asdfg").to().equal("qwertyasdfg");
+                expect("first line\n"
+                       "second line").to().equal("first line\nsecond line");
+            });
+        });
+    });
+});
