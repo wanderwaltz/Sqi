@@ -35,13 +35,6 @@ SqTest.spec("string", @{
             expect(string.weakref() == string).to().equal(false);
         });
 
-
-        it("returns an object not identical to the original string", @{
-            local string = "qwerty";
-            expect(string.weakref() == string).to().equal(false);
-        });
-
-
         it("returns an object corresponding to the same string", @{
             expect("qwerty".weakref().ref()).to().equal("qwerty");
         });
