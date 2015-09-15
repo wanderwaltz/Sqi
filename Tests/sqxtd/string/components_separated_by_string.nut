@@ -1,8 +1,8 @@
 //
-//  string_spec.nut
+//  sqxtd/string/components_separated_by_string.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 05.09.15.
+//  Created by Egor Chiglintsev on 16.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,18 +25,18 @@
 
 SqTest.spec("string", @{
     requires("SQXTD_STRING_EXTENSION_VERSION", "0.0.1");
-    // The spec for string utility functions conversion is not true for vanilla Squirrel3,
+    // The spec for string utility functions is not true for vanilla Squirrel3,
     // this functionality have been added by SqXtdLib and is possible with
     // changes to the Squirrel language introduced in
     // https://github.com/wanderwaltz/Squirrel fork of the Squirrel language source.
 
     describe("componentsSeparatedByString", @{
-        it("should return an array", @{
+        it("returns an array", @{
             expect(typeof("a,b,c".componentsSeparatedByString(","))).to().equal(typeof([]));
         });
 
 
-        it("should return an array of strings", @{
+        it("returns an array of strings", @{
             local array = "a,b,c".componentsSeparatedByString(",");
 
             foreach (i, s in array) {
@@ -45,27 +45,27 @@ SqTest.spec("string", @{
         });
 
 
-        it("should return substrings separated by the given string", @{
+        it("returns substrings separated by the given string", @{
             expect("a,b,c".componentsSeparatedByString(",")).to().equal(["a","b","c"]);
         });
 
 
-        it("should support multi-char separators", @{
+        it("supports multi-char separators", @{
             expect("a---b---c".componentsSeparatedByString("---")).to().equal(["a","b","c"]);
         });
 
 
-        it("should return a single component if separator is not present in string", @{
+        it("returns a single component if separator is not present in string", @{
             expect("abc".componentsSeparatedByString(",")).to().equal(["abc"]);
         });
 
 
-        it("should keep empty components", @{
+        it("keeps empty components", @{
             expect("a,,b,c".componentsSeparatedByString(",")).to().equal(["a","","b","c"]);
         });
 
 
-        it("should throw if called with a non-string parameter", @{
+        it("throws an error if called with a non-string parameter", @{
             expect(@()"a,b,c".componentsSeparatedByString(1)).to().throwError();
         });
     });
