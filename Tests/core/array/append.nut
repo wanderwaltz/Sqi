@@ -1,5 +1,5 @@
 //
-//  append.nut
+//  core/array/append.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 08.09.15.

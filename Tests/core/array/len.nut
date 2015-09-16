@@ -1,5 +1,5 @@
 //
-//  len.nut
+//  core/array/len.nut
 //  Sqi
 //
 //  Created by Egor Chiglintsev on 07.09.15.
