@@ -42,4 +42,4 @@ SqTest.import_spec("getters_setters_spec");
 SqTest.import_spec("getdefaultdelegate_spec");
 SqTest.import_spec("map_spec");
 
-SqTest.run();
+SqTest.run({ hide_successful = true });
