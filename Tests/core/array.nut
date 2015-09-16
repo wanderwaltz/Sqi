@@ -27,3 +27,4 @@ SqTest.import_spec("array/shared/examples");
 SqTest.import_spec("array/len");
 SqTest.import_spec("array/append");
 SqTest.import_spec("array/push");
+SqTest.import_spec("array/extend");
