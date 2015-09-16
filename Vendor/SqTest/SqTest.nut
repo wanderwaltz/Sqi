@@ -39,13 +39,41 @@
 ::import("Matchers/throw_error_matcher", this);
 
 
-function run() {
+
+function run(...) {
+    local flags = {
+        hide_successful = false
+    };
+
+    local invalid_arguments_error = @()("run: unexpected arguments list received: " + vargv +
+                                        " (expected empty arguments list or a flags table)");
+
+    if (vargv.len() == 1) {
+        local table = vargv[0];
+        if (typeof(table) != typeof(flags)) {
+            throw invalid_arguments_error();
+        }
+
+        foreach (key, value in table) {
+            flags[key] <- value;
+        }
+    }
+    else if (vargv.len() != 0) {
+        throw invalid_arguments_error();
+    }
+
     local result = {
         failed_expectations  = 0
         unexpected_failures  = 0
         skipped_expectations = 0
         total_expectations   = 0
     };
+
+    local print_successful = function(successful, string) {
+        if (flags.hide_successful != successful) {
+            print(string);
+        }
+    }
 
     enumerate_registered_examples(function(id, example, requirements_check) {
         if (requirements_check != null) {
@@ -54,7 +82,7 @@ function run() {
             return;
         }
 
-        print(id + " ");
+        print_successful(true, id + " ");
         result.total_expectations += 1;
 
         try {
@@ -64,17 +92,22 @@ function run() {
                 local valid = expectation.verifier.verify();
                 if (valid == false) {
                     result.failed_expectations += 1;
+
+                    print_successful(false, id + " ");
                     print("FAILED: " + expectation.verifier.result());
+                    print_successful(false, "\n");
                     break;
                 }
             }
         }
         catch (error) {
+            print_successful(false, id + " ");
             print("FAILED (unexpected): " + error);
+            print_successful(false, "\n");
             result.failed_expectations += 1;
             result.unexpected_failures += 1;
         }
-        print("\n");
+        print_successful(true, "\n");
     });
 
     print("\n");
