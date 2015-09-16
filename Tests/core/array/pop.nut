@@ -1,8 +1,8 @@
 //
-//  core/array.nut
+//  core/array/pop.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 07.09.15.
+//  Created by Egor Chiglintsev on 16.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,9 +23,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("array/shared/examples");
-SqTest.import_spec("array/len");
-SqTest.import_spec("array/append");
-SqTest.import_spec("array/push");
-SqTest.import_spec("array/extend");
-SqTest.import_spec("array/pop");
+SqTest.spec("array", @{
+    describe("pop", @{
+        it("removes the last element of the array", @{
+            local array = [1.0, "abc", false];
+
+            array.pop();
+            expect(clone array).to().equal([1.0, "abc"]);
+            // need to clone since expect stores a reference to array and
+            // pop mutates it in-place
+
+            array.pop();
+            expect(clone array).to().equal([1.0]);
+
+            array.pop();
+            expect(clone array).to().equal([]);
+        });
+
+        it("returns the removed element", @{
+            expect([1,2,3].pop()).to().equal(3);
+            expect([1.0, "abc", false].pop()).to().equal(false);
+        });
+
+        it("throws an error if trying to pop from an empty array", @{
+            expect(@()[].pop()).to().throwError();
+        });
+    });
+});
