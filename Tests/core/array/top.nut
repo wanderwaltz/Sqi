@@ -1,8 +1,8 @@
 //
-//  core/array.nut
+//  core/array/top.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 07.09.15.
+//  Created by Egor Chiglintsev on 18.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,13 +23,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("array/shared/examples");
-SqTest.import_spec("array/len");
-SqTest.import_spec("array/append");
-SqTest.import_spec("array/push");
-SqTest.import_spec("array/extend");
-SqTest.import_spec("array/pop");
-SqTest.import_spec("array/top");
-SqTest.import_spec("array/insert");
-SqTest.import_spec("array/remove");
-SqTest.import_spec("array/resize");
+SqTest.spec("array", @{
+    describe("top", @{
+        it("returns the last element of the array", @{
+            expect([1.0, "abc", false].top()).to().equal(false);
+            expect([1, 2, 3].top()).to().equal(3);
+            expect(["qwerty", "asdfg", "zxcvb"].top()).to().equal("zxcvb");
+        });
+
+        it("throws an error if called on an empty array", @{
+            expect(@()[].top()).to().throwError();
+        });
+    });
+});
