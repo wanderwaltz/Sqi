@@ -23,4 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+SqTest.import_spec("null/get");
+SqTest.import_spec("null/set");
+SqTest.import_spec("null/call");
 SqTest.import_spec("null/map");

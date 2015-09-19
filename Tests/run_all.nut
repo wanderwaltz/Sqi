@@ -44,7 +44,6 @@ SqTest.import_spec("sqxtd/null");
 
 SqTest.import_spec("utf8/string");
 
-SqTest.import_spec("getters_setters_spec");
 SqTest.import_spec("getdefaultdelegate_spec");
 
 SqTest.run({ hide_successful = true });
