@@ -27,7 +27,7 @@ SqTest.spec("table", @{
     describe(@"weakref", @{
         it("returns a weakref", @{
             expect(typeof({}.weakref())).to().equal(typeof({ a = 123 }.weakref()));
-            expect(typeof({}.weakref())).notTo().equal({});
+            expect(typeof({}.weakref())).notTo().equal(typeof({}));
         });
 
         it("returns an object not identical to the original table", @{
@@ -37,7 +37,7 @@ SqTest.spec("table", @{
 
         it("returns an object corresponding to the same table", @{
             local table = { qwerty = "asdfg" };
-            expect(table.weakref().ref()).to().equal(table);
+            expect(table.weakref().ref()).to().beIdenticalTo(table);
         });
     });
 });
