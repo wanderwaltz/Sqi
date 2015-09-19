@@ -34,12 +34,17 @@ SqTest.import_spec("core/string");
 SqTest.import_spec("core/table");
 SqTest.import_spec("core/array");
 SqTest.import_spec("sqxtd/table");
+
+SqTest.import_spec("sqxtd/integer");
+SqTest.import_spec("sqxtd/float");
+SqTest.import_spec("sqxtd/bool");
 SqTest.import_spec("sqxtd/array");
 SqTest.import_spec("sqxtd/string");
+SqTest.import_spec("sqxtd/null");
+
 SqTest.import_spec("utf8/string");
 
 SqTest.import_spec("getters_setters_spec");
 SqTest.import_spec("getdefaultdelegate_spec");
-SqTest.import_spec("map_spec");
 
 SqTest.run({ hide_successful = true });

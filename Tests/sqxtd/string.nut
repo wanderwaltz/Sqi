@@ -23,4 +23,5 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+SqTest.import_spec("string/map");
 SqTest.import_spec("string/components_separated_by_string");

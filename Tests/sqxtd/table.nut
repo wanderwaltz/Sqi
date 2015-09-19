@@ -24,3 +24,4 @@
 //  SOFTWARE.
 
 SqTest.import_spec("table/tostring");
+SqTest.import_spec("table/map");

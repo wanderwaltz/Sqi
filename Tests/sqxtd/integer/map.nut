@@ -1,8 +1,8 @@
 //
-//  core/array.nut
+//  sqxtd/integer/map.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 07.09.15.
+//  Created by Egor Chiglintsev on 20.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,20 +23,35 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("array/shared/examples");
-SqTest.import_spec("array/len");
-SqTest.import_spec("array/append");
-SqTest.import_spec("array/push");
-SqTest.import_spec("array/extend");
-SqTest.import_spec("array/pop");
-SqTest.import_spec("array/top");
-SqTest.import_spec("array/insert");
-SqTest.import_spec("array/remove");
-SqTest.import_spec("array/resize");
-SqTest.import_spec("array/sort");
-SqTest.import_spec("array/reverse");
-SqTest.import_spec("array/slice");
-SqTest.import_spec("array/weakref");
-SqTest.import_spec("array/tostring");
-SqTest.import_spec("array/clear");
-SqTest.import_spec("array/map");
+SqTest.spec("integer", @{
+    describe("map", @{
+        requires("SQXTD_MAP_EXTENSION_VERSION", "0.0.1");
+
+        it("receives the integer as an implicit `this` parameter to map function", @{
+            local actual = {
+                parameter = null
+            };
+
+            (1).map(@(x)(actual.parameter = this));
+
+            expect(actual.parameter).to().equal(1);
+        });
+
+
+        it("receives the integer as an explicit parameter to map function", @{
+            local actual = {
+                parameter = null
+            };
+
+            (1).map(@(x)(actual.parameter = x));
+
+            expect(actual.parameter).to().equal(1);
+        });
+
+
+        it("returns the mapping function return value", @{
+            expect((2).map(@(x)this+5)).to().equal(7);
+        });
+    });
+});
+
