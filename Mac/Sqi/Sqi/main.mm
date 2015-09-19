@@ -54,13 +54,22 @@ void printfunc(HSQUIRRELVM v,const SQChar *s,...)
     va_end(vl);
 }
 
+
 void errorfunc(HSQUIRRELVM v,const SQChar *s,...)
 {
+    static bool inside_errorfunc = false;
+    
     va_list vl;
     va_start(vl, s);
     vfprintf(stderr, s, vl);
     va_end(vl);
-    _exit(1);
+    
+    if (!inside_errorfunc) {
+        inside_errorfunc = true;
+        sqstd_printcallstack(v);
+        inside_errorfunc = false;
+        _exit(1);
+    }
 }
 
 
