@@ -1,8 +1,8 @@
 //
-//  core/array.nut
+//  core/array/weakref.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 07.09.15.
+//  Created by Egor Chiglintsev on 20.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,19 +23,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("array/shared/examples");
-SqTest.import_spec("array/len");
-SqTest.import_spec("array/append");
-SqTest.import_spec("array/push");
-SqTest.import_spec("array/extend");
-SqTest.import_spec("array/pop");
-SqTest.import_spec("array/top");
-SqTest.import_spec("array/insert");
-SqTest.import_spec("array/remove");
-SqTest.import_spec("array/resize");
-SqTest.import_spec("array/sort");
-SqTest.import_spec("array/reverse");
-SqTest.import_spec("array/slice");
-SqTest.import_spec("array/weakref");
-SqTest.import_spec("array/tostring");
-SqTest.import_spec("array/clear");
+SqTest.spec("array", @{
+    describe(@"weakref", @{
+        it("returns a weakref", @{
+            expect(typeof([].weakref())).to().equal(typeof([1,2,3,4,5].weakref()));
+            expect(typeof([].weakref())).notTo().equal(typeof([]));
+        });
+
+        it("returns an object not identical to the original array", @{
+            local array = [1.0, "abc", false];
+            expect(array.weakref() == array).to().equal(false);
+        });
+
+        it("returns an object corresponding to the same array", @{
+            local array = [1.0, "abc", false];
+            expect(array.weakref().ref()).to().beIdenticalTo(array);
+        });
+    });
+});
