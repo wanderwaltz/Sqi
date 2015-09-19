@@ -284,10 +284,18 @@ SQRESULT sqrat_import(HSQUIRRELVM v) {
     //    }
     
     res = sqrat_importscript(v, moduleName);
-
+    
     sq_settop(v, 0); // Clean up the stack (just in case the module load leaves it messy)
     sq_pushobject(v, table); // return the target table
     sq_release(v, &table);
+    
+    if (SQ_FAILED(res)) {
+        std::string message("import: failed loading module '");
+        message += moduleName;
+        message += "'";
+        
+        return sq_throwerror(v, message.c_str());
+    }
     
     return res;
 }
@@ -303,12 +311,11 @@ static SQInteger sqratbase_import(HSQUIRRELVM v) {
         break;
     default:
         // Error, unexpected number of arguments
+        return sq_throwerror(v, "import: unexpected number of arguments");
         break;
     }
 
-    sqrat_import(v);
-
-    return 1;
+    return sqrat_import(v);
 }
 
 SQRESULT sqrat_register_importlib(HSQUIRRELVM v) {
