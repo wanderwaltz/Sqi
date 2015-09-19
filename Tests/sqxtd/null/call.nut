@@ -49,5 +49,27 @@ SqTest.spec("null", @{
             expect(null(1, "abc", false)).to().equal(null);
             expect(null(1,2,3,4,5,6,7)).to().equal(null);
         });
+
+
+        context("when having a custom _call metamethod in the default delegate", @{
+            beforeAll(@{
+                local null_delegate = getdefaultdelegate(null);
+                null_default_delegate_original_call <- null_delegate._call;
+                null_delegate._call = @(...) {
+                    // skip the implicit `this`
+                    return vargv.slice(1);
+                };
+            });
+
+            it("returns the _call metamethod return value", @{
+                expect(null()).to().equal([]);
+                expect(null("qwerty")).to().equal(["qwerty"]);
+                expect(null(1, "abc", false)).to().equal([1, "abc", false]);
+            });
+
+            afterAll(@{
+                getdefaultdelegate(null)._call = null_default_delegate_original_call;
+            });
+        });
     });
 });

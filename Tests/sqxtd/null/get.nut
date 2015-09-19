@@ -34,44 +34,69 @@ SqTest.spec("null", @{
         // The goal was to make `null` behave more like Objective-C `nil` which
         // responds to any selector and returns `nil` back.
 
-        it("returns null for any literal key", @{
-            expect(null.someKey).to().equal(null);
-            expect(null.otherKey).to().equal(null);
-            expect(null.qwerty).to().equal(null);
+        context("with default SqXtdLib null extension", @{
+            it("returns null for any literal key", @{
+                expect(null.someKey).to().equal(null);
+                expect(null.otherKey).to().equal(null);
+                expect(null.qwerty).to().equal(null);
+            });
+
+            it("returns null for any string key", @{
+                expect(null["some string key"]).to().equal(null);
+                expect(null["name"]).to().equal(null);
+                expect(null[""]).to().equal(null);
+                expect(null["abc"]).to().equal(null);
+            });
+
+            it("returns null for any integer key", @{
+                expect(null[123]).to().equal(null);
+                expect(null[0]).to().equal(null);
+                expect(null[-2]).to().equal(null);
+                expect(null[-15622]).to().equal(null);
+            });
+
+            it("returns null for any bool key", @{
+                expect(null[true]).to().equal(null);
+                expect(null[false]).to().equal(null);
+            });
+
+            it("returns null for any array key", @{
+                expect(null[[1,2,3]]).to().equal(null);
+                expect(null[[]]).to().equal(null);
+            });
+
+            it("returns null for any table key", @{
+                expect(null[{}]).to().equal(null);
+                expect(null[{ name = "John Appleseed" }]).to().equal(null);
+            });
+
+            it("returns null for any function key", @{
+                expect(null[@(x)x+1]).to().equal(null);
+                expect(null[function(){return false}]).to().equal(null);
+            });
         });
 
-        it("returns null for any string key", @{
-            expect(null["some string key"]).to().equal(null);
-            expect(null["name"]).to().equal(null);
-            expect(null[""]).to().equal(null);
-            expect(null["abc"]).to().equal(null);
-        });
 
-        it("returns null for any integer key", @{
-            expect(null[123]).to().equal(null);
-            expect(null[0]).to().equal(null);
-            expect(null[-2]).to().equal(null);
-            expect(null[-15622]).to().equal(null);
-        });
+        context("when having a custom _get metamethod in the default delegate", @{
+            beforeAll(@{
+                local null_delegate = getdefaultdelegate(null);
+                null_default_delegate_original_get <- null_delegate._get;
+                null_delegate._get = @(key) {
+                    return key;
+                };
+            });
 
-        it("returns null for any bool key", @{
-            expect(null[true]).to().equal(null);
-            expect(null[false]).to().equal(null);
-        });
+            it("returns the _get metamethod return value", @{
+                expect(null.key).to().equal("key");
+                expect(null["asdfg"]).to().equal("asdfg");
+                expect(null[12]).to().equal(12);
+                expect(null[true]).to().equal(true);
+                expect(null[[1,"abc",false]]).to().equal([1,"abc",false]);
+            });
 
-        it("returns null for any array key", @{
-            expect(null[[1,2,3]]).to().equal(null);
-            expect(null[[]]).to().equal(null);
-        });
-
-        it("returns null for any table key", @{
-            expect(null[{}]).to().equal(null);
-            expect(null[{ name = "John Appleseed" }]).to().equal(null);
-        });
-
-        it("returns null for any function key", @{
-            expect(null[@(x)x+1]).to().equal(null);
-            expect(null[function(){return false}]).to().equal(null);
+            afterAll(@{
+                getdefaultdelegate(null)._get = null_default_delegate_original_get;
+            });
         });
     });
 });
