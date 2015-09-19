@@ -29,9 +29,43 @@ function new_context(id, delegate) {
     context.name <- id;
     context.contexts <- [];
     context.examples <- [];
+    context.before_all <- [];
+    context.after_all <- [];
+    context.before_each <- [];
+    context.after_each <- [];
 
     context.setdelegate(delegate);
     return context;
+}
+
+
+function perform_blocks(context, key) {
+    local queue = [];
+    local table = context;
+
+    while (table != null) {
+        if (table.rawin(key)) {
+            queue.push(table);
+        }
+
+        if ((key == "before_all") || (key == "after_all")) {
+            break;
+        }
+
+        table = table.getdelegate();
+    }
+
+    // outer scopes should perform their `before` blocks first,
+    // but their `after` blocks last
+    if ((key != "after_each") && (key != "after_all")) {
+        queue.reverse();
+    }
+
+    foreach (i, table in queue) {
+        foreach (i, block in table[key]) {
+            block();
+        }
+    }
 }
 
 
@@ -86,6 +120,10 @@ function enumerate_child_contexts(parent_id, context, requirements_check, func) 
 
         func(child_id, child_context, child_check);
         enumerate_child_contexts(child_id, child_context, child_check, func);
+    }
+
+    if (check == null) {
+        perform_blocks(context, "after_all");
     }
 }
 

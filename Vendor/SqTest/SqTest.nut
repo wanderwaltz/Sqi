@@ -182,6 +182,26 @@ function it(what, how) {
 }
 
 
+function beforeAll(what) {
+    before_all.push(what);
+}
+
+
+function afterAll(what) {
+    after_all.push(what);
+}
+
+
+function beforeEach(what) {
+    before_each.push(what);
+}
+
+
+function afterEach(what) {
+    after_each.push(what);
+}
+
+
 function compare_semver(lhs, rhs) {
     local kIndex = "index";
     local kValue = "value";

@@ -64,9 +64,25 @@ function shared_spec_key(what, method_name) {
 
 function enumerate_registered_examples(func) {
     enumerate_registered_contexts(function(id, context, requirements_check) {
+        if (requirements_check == null) {
+            perform_blocks(context, "before_all");
+        }
+
         enumerate_examples(id, context, requirements_check, function(id, example, check){
+            if (check == null) {
+                perform_blocks(context, "before_each");
+            }
+
             func(id, example, check);
+
+            if (check == null) {
+                perform_blocks(context, "after_each");
+            }
         });
+        // corresponding perform_blocks(context, "before_all") is called
+        // after enumerating child contexts of the context, see
+        // function enumerate_child_contexts(parent_id, context, requirements_check, func)
+        // in context.nut
     });
 }
 
