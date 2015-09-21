@@ -30,9 +30,93 @@
 
 #ifdef __cplusplus
 
+#include "sqxtd_object.hpp"
+
+namespace sqxtd {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - table
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class table {
+    public:
+        table(HSQUIRRELVM &vm, SQTable *table) : _vm(vm), _table(table) {}
+        
+        class iterator;
+        
+        inline iterator begin() const;
+        inline iterator end() const;
+    private:
+        HSQUIRRELVM &_vm;
+        SQTable * const _table;
+    };
+    
+    
+    inline object::operator table() const {
+        if (type() != OT_TABLE) {
+            throw TypeError::InvalidCast;
+        }
+        
+        return table{_vm, _table(_value)};
+    }
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - iterator
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class table::iterator {
+    public:
+        iterator(const table &tbl, SQInteger refpos) : _table(tbl), _refpos(refpos) {
+            next();
+        };
+        
+        inline const std::pair<object, object> operator *() {
+            return {object{_table._vm, _key}, object{_table._vm, _value}};
+        }
+        
+        iterator &operator ++() {
+            next();
+            return *this;
+        }
+        
+        inline bool operator ==(const iterator &other) const {
+            return (_table._vm == other._table._vm) &&
+                   (_table._table == other._table._table) &&
+                   (_refpos == other._refpos);
+        }
+        
+        inline bool operator !=(const iterator &other) const {
+            return ((*this == other) == false);
+        }
+        
+    private:
+        inline void next() {
+            if (_refpos != -1) {
+                _refpos = _table._table->Next(false, _refpos, _key, _value);
+            }
+        }
+        
+        const sqxtd::table &_table;
+        SQInteger _refpos;
+        SQObjectPtr _key;
+        SQObjectPtr _value;
+    };
+    
+    
+    inline table::iterator table::begin() const {
+        return iterator{*this, 0};
+    }
+    
+    inline table::iterator table::end() const {
+        return iterator{*this, -1};
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - native functions
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace sqxtd { namespace native { namespace table {
     SQRESULT tostring(HSQUIRRELVM vm);
 }}}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif // #ifdef __cplusplus
 #endif // #ifndef __SqXtdLib__sqxtd_table__

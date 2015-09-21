@@ -25,6 +25,7 @@
 
 #include "sqxtd_string.h"
 #include "sqxtd_utils.h"
+#include "sqxtd_array.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MARK: - Private forwards and constants
@@ -49,42 +50,16 @@ void sqxtd_register_string(HSQUIRRELVM vm) {
 
 
 namespace sqxtd {
-    const string tostring(HSQUIRRELVM vm, SQInteger idx) {
-        SQObjectPtr object = stack_get(vm, idx);
-        return tostring(vm, object);
-    }
-    
-    
-    const string tostring(HSQUIRRELVM vm, const SQObjectPtr &object) {
-        SQObjectPtr string;
-        
-        vm->ToString(object, string);
-        assert(type(string) == OT_STRING);
-        
-        return sqxtd::string(string._unVal.pString->_val);
-    }
-    
-    
-    const string tostring(const SQObjectPtr &object) {
-        if (type(object) != OT_STRING) {
-            throw StringError::InvalidSQObjectType;
-        }
-        
-        SQString *string = _string(object);
-        return sqxtd::string(string->_val, string->_len);
-    }
-    
-    
-    void push_string(HSQUIRRELVM vm, const string &s) {
+    void push_string(HSQUIRRELVM vm, const native_string &s) {
         sq_pushstring(vm, s.c_str(), s.length());
     }
     
     
-    const string indent_string(const string &string, const SQChar *with) {
-        std::string result;
+    const native_string indent_string(const native_string &string, const SQChar *with) {
+        native_string result;
         
         std::istringstream stream(string);
-        std::string line;
+        native_string line;
         
         while (std::getline(stream, line)) {
             result += with;
@@ -97,8 +72,8 @@ namespace sqxtd {
     }
     
     
-    const string format_key_value(const string &key, const string &value) {
-        std::string result(key);
+    const native_string format_key_value(const native_string &key, const native_string &value) {
+        native_string result(key);
         result += " = ";
         result += value;
         
@@ -106,30 +81,23 @@ namespace sqxtd {
     }
     
     
-    const string format_key_value_at(HSQUIRRELVM vm, SQInteger keyIdx, SQInteger valueIdx) {
-        auto key(tostring(vm, keyIdx));
-        auto value(tostring(vm, valueIdx));
-        
-        return format_key_value(key, value).c_str();
-    }
-    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MARK: - Private
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     // Credit for this implementation goes to http://stackoverflow.com/a/236180/892696
-    static std::vector<string> split(const string& s, const string& delim, const bool keep_empty = true) {
-        std::vector<string> result;
+    static std::vector<native_string> split(const native_string& s, const native_string& delim, const bool keep_empty = true) {
+        std::vector<native_string> result;
         
         if (delim.empty()) {
             result.push_back(s);
             return result;
         }
         
-        string::const_iterator substart = s.begin(), subend;
+        native_string::const_iterator substart = s.begin(), subend;
         while (true) {
             subend = search(substart, s.end(), delim.begin(), delim.end());
-            string temp(substart, subend);
+            native_string temp(substart, subend);
             
             if (keep_empty || !temp.empty()) {
                 result.push_back(temp);
@@ -147,33 +115,37 @@ namespace sqxtd {
     
     namespace native { namespace string {
         static SQRESULT components_separated_by_string(HSQUIRRELVM vm) {
-            SQObjectPtr selfObject = vm->GetAt(vm->_top-2);
-            SQObjectPtr separatorObject = vm->GetAt(vm->_top-1);
-            
-            assert((type(selfObject) == OT_STRING) &&
-                    "componentsSeparatedByString is expected to be used with a string receiver");
-            
-            if (type(selfObject) != OT_STRING) {
-                vm->Raise_Error(_SC("%s is expected to be used with a string receiver"), kKeyComponentsSeparatedByString);
+            try {
+                sqxtd::string self = object::from_stack(vm, -2);
+                
+                try {
+                    sqxtd::string separator = object::from_stack(vm, -1);
+                    
+                    auto components = split(self.tostring(), separator.tostring());
+                    auto array = sqxtd::array(vm);
+                    
+                    for (auto &string : components) {
+                        array.append(sqxtd::string{vm, string});
+                    }
+                    
+                    vm->Push(array);
+                    
+                } catch (TypeError) {
+                    vm->Raise_Error(_SC("string::%s invalid parameter of type `%s` (expected a `string`)"),
+                                    kKeyComponentsSeparatedByString,
+                                    IdType2Name(sq_gettype(vm, -1)));
+                    return SQ_ERROR;
+                }
+                
+            } catch (TypeError) {
+                vm->Raise_Error(_SC("string::%s invalid receiver of type `%s` "
+                                    "(are you calling the %s function on "
+                                    "the `array` default delegate directly?)"),
+                                kKeyComponentsSeparatedByString,
+                                IdType2Name(sq_gettype(vm, -2)),
+                                kKeyComponentsSeparatedByString);
                 return SQ_ERROR;
             }
-            
-            
-            if (type(separatorObject) != OT_STRING) {
-                vm->Raise_Error(_SC("%s expects a separator string as the parameter"), kKeyComponentsSeparatedByString);
-                return SQ_ERROR;
-            }
-            
-            SQArray *array = SQArray::Create(vm->_sharedstate, 0);
-            
-            auto components = split(tostring(selfObject), tostring(separatorObject));
-            
-            for (auto &string : components) {
-                SQObjectPtr component = SQString::Create(vm->_sharedstate, string.c_str());
-                array->Append(component);
-            }
-        
-            vm->Push(array);
             
             return 1;
         }

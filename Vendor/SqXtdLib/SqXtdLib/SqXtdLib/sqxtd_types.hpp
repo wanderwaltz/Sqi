@@ -1,8 +1,8 @@
 //
-//  sqxtd_table.cpp
+//  sqxtd_types.hpp
 //  SqXtdLib
 //
-//  Created by Egor Chiglintsev on 24.08.15.
+//  Created by Egor Chiglintsev on 21.09.15.
 //  Copyright (c) 2015 Egor Chiglintsev. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,34 +23,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#include "sqxtd_table.h"
-#include "sqxtd_string.h"
-#include "sqxtd_object.hpp"
+#ifndef SqXtdLib_sqxtd_types_hpp
+#define SqXtdLib_sqxtd_types_hpp
 
-namespace sqxtd { namespace native { namespace table {
-    SQRESULT tostring(HSQUIRRELVM vm) {
-        native_string result("{\n");
-        
-        try {
-            sqxtd::table table = object::from_stack(vm, -1);
-            
-            for (auto &pair : table) {
-                auto key_value = format_key_value(pair.first.tostring(), pair.second.tostring_quoted());
-                
-                result += indent_string(key_value);
-                result += "\n";
-            }
-        } catch (TypeError) {
-            vm->Raise_Error(_SC("table::tostring: invalid receiver of type `%s` "
-                                "(are you calling the _tostring() metamethod on "
-                                "the `table` default delegate directly?)"),
-                                IdType2Name(sq_gettype(vm, -1)));
-            return SQ_ERROR;
-        }
-        
-        result += "}";
-        
-        push_string(vm, result);
-        return 1;
-    }
-}}}
+#ifdef __cplusplus
+#include <string>
+
+namespace sqxtd {
+    typedef std::basic_string<SQChar> native_string;
+    
+    enum class TypeError {
+        InvalidCast
+    };
+    
+    class object;
+    class string;
+    class array;
+    class table;
+}
+
+#endif // #ifdef __cplusplus
+#endif // #ifndef SqXtdLib_sqxtd_types_hpp

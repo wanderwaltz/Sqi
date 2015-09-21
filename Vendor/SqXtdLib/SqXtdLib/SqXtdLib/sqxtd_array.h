@@ -30,9 +30,98 @@
 
 #ifdef __cplusplus
 
+#include "sqxtd_object.hpp"
+
+namespace sqxtd {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - array
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class array {
+    public:
+        array(HSQUIRRELVM &vm, SQArray *array) : _vm(vm), _array(array) {};
+        
+        array(HSQUIRRELVM &vm, SQInteger initialSize = 0) :
+            _vm(vm), _array(SQArray::Create(vm->_sharedstate, initialSize)) {}
+        
+        
+        template<typename T>
+        inline void append(const T &obj) {
+            _array->Append(obj);
+        }
+        
+        inline operator SQObjectPtr() const {
+            return SQObjectPtr{_array};
+        }
+        
+        class forward_iterator;
+        
+        inline forward_iterator begin() const;
+        inline forward_iterator end() const;
+    private:
+        HSQUIRRELVM &_vm;
+        SQArray * const _array;
+    };
+    
+    
+    inline object::operator array() const {
+        if (type() != OT_ARRAY) {
+            throw TypeError::InvalidCast;
+        }
+        
+        return array{_vm, _array(_value)};
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - forward_iterator
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class array::forward_iterator {
+    public:
+        forward_iterator(const array &arr, SQInteger index) : _array(arr), _index(index) {};
+        
+        inline const object operator *() {
+            SQObjectPtr value;
+            _array._array->Get(_index, value);
+            return object{_array._vm, value};
+        }
+        
+        forward_iterator &operator ++() {
+            _index ++;
+            return *this;
+        }
+        
+        inline bool operator ==(const forward_iterator &other) const {
+            return (_array._vm == other._array._vm) &&
+            (_array._array == other._array._array) &&
+            (_index == other._index);
+        }
+        
+        inline bool operator !=(const forward_iterator &other) const {
+            return ((*this == other) == false);
+        }
+        
+    private:
+        const sqxtd::array &_array;
+        SQInteger _index;
+    };
+    
+    
+    inline array::forward_iterator array::begin() const {
+        return forward_iterator{*this, 0};
+    }
+    
+    inline array::forward_iterator array::end() const {
+        return forward_iterator{*this, _array->Size()};
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - native functions
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace sqxtd { namespace native { namespace array {
     SQRESULT tostring(HSQUIRRELVM vm);
 }}}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif // #ifdef __cplusplus
 #endif // #ifndef __SqXtdLib__sqxtd_array__

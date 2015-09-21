@@ -85,10 +85,10 @@ namespace sqxtd { namespace native { namespace common {
             
             vm->Get(lhs, isEqualClosureKey, isEqualClosure, SQFalse, vm->_top-2);
             
-            if ((type(isEqualClosure) == OT_CLOSURE) || (type(isEqualClosure) == OT_NATIVECLOSURE)) {
+            if ((sq_type(isEqualClosure) == OT_CLOSURE) || (sq_type(isEqualClosure) == OT_NATIVECLOSURE)) {
                 vm->Call(isEqualClosure, 2, vm->_top-2, isEqualResult, SQTrue);
                 
-                if (type(isEqualResult) == OT_BOOL) {
+                if (sq_type(isEqualResult) == OT_BOOL) {
                     equal = _integer(isEqualResult);
                 }
             }
@@ -135,12 +135,12 @@ namespace sqxtd { namespace native { namespace common {
         }
         
         // in all other cases selfObject should be of array type
-        assert((type(selfObject) == OT_ARRAY) && "is_equal_array is expected to be used with array receiver");
-        if (type(selfObject) != OT_ARRAY) {
+        assert((sq_type(selfObject) == OT_ARRAY) && "is_equal_array is expected to be used with array receiver");
+        if (sq_type(selfObject) != OT_ARRAY) {
             return result_not_equal(vm);
         }
         
-        if (type(otherObject) != OT_ARRAY) {
+        if (sq_type(otherObject) != OT_ARRAY) {
             return result_not_equal(vm);
         }
         

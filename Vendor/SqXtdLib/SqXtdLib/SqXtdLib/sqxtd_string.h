@@ -31,55 +31,66 @@
 
 #ifdef __cplusplus
 #include <string>
+#include "sqxtd_object.hpp"
 
 struct SQObjectPtr;
 
 namespace sqxtd {
-    typedef std::string string;
-    
-    enum class StringError {
-        InvalidSQObjectType
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - string
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class string {
+    public:
+        string(HSQUIRRELVM &vm, SQString *string) : _vm(vm), _string(string) {}
+        
+        string(HSQUIRRELVM &vm, const native_string &string) :
+            _vm(vm), _string(SQString::Create(vm->_sharedstate, string.c_str())) {}
+        
+        inline const native_string tostring() const {
+            return native_string(_string->_val, _string->_len);
+        }
+        
+        inline operator SQObjectPtr() const {
+            return SQObjectPtr{_string};
+        }
+        
+        inline operator object() const {
+            return object{_vm, SQObjectPtr{_string}};
+        }
+        
+    private:
+        HSQUIRRELVM &_vm;
+        SQString *_string;
     };
     
-    /** Returns the string representation of an object at the given position in the stack.
-     */
-    const string tostring(HSQUIRRELVM vm, SQInteger idx);
     
+    inline object::operator string() const {
+        if (type() != OT_STRING) {
+            throw TypeError::InvalidCast;
+        }
+        
+        return string{_vm, _string(_value)};
+    }
     
-    /** Returns the string representation of the given object
-     */
-    const string tostring(HSQUIRRELVM vm, const SQObjectPtr &object);
-    
-    
-    /** Returns the given object value as sqxtd::string; throws StringError::InvalidSQObjectType if
-     *  the parameter is not an OT_STRING.
-     */
-    const string tostring(const SQObjectPtr &object);
-    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - functions
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     /** Pushes the given sqxtd::string as a Squirrel string
      */
-    void push_string(HSQUIRRELVM vm, const string &s);
+    void push_string(HSQUIRRELVM vm, const native_string &s);
     
     
     /** Indents each line of the given std::string with a number of whitespace characters specified
      *  in the second parameter. Useful when printing tostring() representations of objects which
      *  contain other objects (tables, arrays, etc.)
      */
-    const string indent_string(const string &string, const SQChar *with = "\t");
+    const native_string indent_string(const native_string &string, const SQChar *with = "\t");
     
     
     /** Formats the two given strings as a single 'key = value' string.
      */
-    const string format_key_value(const string &key, const string &value);
-    
-    
-    /** Returns a formatted key-value string for objects stored at the given stack positions.
-     *
-     *  Calls sqxtd_format_key_value internally, so the output of these two functions is identical.
-     */
-    const string format_key_value_at(HSQUIRRELVM vm, SQInteger keyIdx, SQInteger valueIdx);
-
+    const native_string format_key_value(const native_string &key, const native_string &value);
 }
 
 #endif // #ifdef __cplusplus

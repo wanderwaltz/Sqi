@@ -49,30 +49,21 @@ void sqxtd_register_array(HSQUIRRELVM vm) {
 
 namespace sqxtd { namespace native { namespace array {
     SQRESULT tostring(HSQUIRRELVM vm) {
-        sqxtd::string result("[");
+        native_string result("[");
         
-        sq_pushnull(vm);
-        
-        while(SQ_SUCCEEDED(sq_next(vm, -2)))
-        {
-            __unused static const SQInteger key_index = -2;
-            static const SQInteger value_index = -1;
+        try {
+            sqxtd::array array = object::from_stack(vm, -1);
             
-            bool isString = (sq_gettype(vm, value_index) == OT_STRING);
-            
-            if (isString) {
-                result += "\"";
+            for (auto &object : array) {
+                result += object.tostring_quoted();
+                result += ", ";
             }
-            
-            result += sqxtd::tostring(vm, value_index);
-            
-            if (isString) {
-                result += "\"";
-            }
-            
-            result += ", ";
-            
-            sq_pop(vm,2);
+        } catch (TypeError) {
+            vm->Raise_Error(_SC("array::tostring: invalid receiver of type `%s` "
+                                "(are you calling the _tostring() metamethod on "
+                                "the `array` default delegate directly?)"),
+                            IdType2Name(sq_gettype(vm, -1)));
+            return SQ_ERROR;
         }
         
         // no commas to delete for empty array
@@ -93,37 +84,44 @@ namespace sqxtd { namespace native { namespace array {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace sqxtd { namespace native { namespace array {
     static SQRESULT components_joined_by_string(HSQUIRRELVM vm) {
-        SQObjectPtr selfObject  = vm->GetAt(vm->_top-2);
-        SQObjectPtr otherObject = vm->GetAt(vm->_top-1);
-        
-        assert((type(selfObject) == OT_ARRAY) && "componentsJoinedByString is expected to be used with array receiver");
-        if (type(selfObject) != OT_ARRAY) {
-            vm->Raise_Error(_SC("%s expected `this` of array type"), kKeyComponentsJoinedByString);
-            return SQ_ERROR;
-        }
-        
-        if (type(otherObject) != OT_STRING) {
-            vm->Raise_Error(_SC("%s expected parameter of string type"), kKeyComponentsJoinedByString);
-            return SQ_ERROR;
-        }
-        
-        SQArray *self = _array(selfObject);
-        auto separator = sqxtd::tostring(otherObject);
-        auto result(string(""));
-        
-        for (SQInteger i = 0; i < self->Size(); ++i) {
-            SQObjectPtr selfElement;
-            self->Get(i, selfElement);
-        
-            auto elementString = sqxtd::tostring(vm, selfElement);
-            result += elementString;
+        try {
+            sqxtd::array array = object::from_stack(vm, -2);
             
-            if (i+1 < self->Size()) {
-                result += separator;
+            try {
+                sqxtd::string joiner = object::from_stack(vm, -1);
+                
+                native_string result;
+                
+                auto iter = array.begin();
+                auto end = array.end();
+                
+                while (iter != end) {
+                    result += (*iter).tostring();
+                    
+                    ++iter;
+                    
+                    if (iter != end) {
+                        result += joiner.tostring();
+                    }
+                }
+                
+                push_string(vm, result);
+            } catch (TypeError) {
+                vm->Raise_Error(_SC("array::%s invalid parameter of type `%s` (expected a `string`)"),
+                                kKeyComponentsJoinedByString,
+                                IdType2Name(sq_gettype(vm, -1)));
+                return SQ_ERROR;
             }
+            
+        } catch (TypeError) {
+            vm->Raise_Error(_SC("array::%s invalid receiver of type `%s` "
+                                "(are you calling the %s function on "
+                                "the `array` default delegate directly?)"),
+                                kKeyComponentsJoinedByString,
+                                IdType2Name(sq_gettype(vm, -2)),
+                                kKeyComponentsJoinedByString);
+            return SQ_ERROR;
         }
-        
-        push_string(vm, result);
         return 1;
     }
 }}}
