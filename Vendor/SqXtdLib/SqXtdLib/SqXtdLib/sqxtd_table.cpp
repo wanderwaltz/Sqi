@@ -26,13 +26,19 @@
 #include "sqxtd_table.h"
 #include "sqxtd_string.h"
 #include "sqxtd_object.hpp"
+#include "sqxtd_utils.h"
 
 namespace sqxtd { namespace native { namespace table {
     SQRESULT tostring(HSQUIRRELVM vm) {
         native_string result("{\n");
         
         try {
-            sqxtd::table table = object::from_stack(vm, -1);
+            sqxtd::table table
+                {validate<sqxtd::table>(object::from_stack(vm, -1))
+                    .with_error(_SC("table::tostring: invalid receiver of type `%s` "
+                                    "(are you calling the _tostring() metamethod on "
+                                    "the `table` default delegate directly?)"),
+                                IdType2Name(sq_gettype(vm, -1))).value()};
             
             for (auto &pair : table) {
                 auto key_value = format_key_value(pair.first.tostring(), pair.second.tostring_quoted());
@@ -41,10 +47,6 @@ namespace sqxtd { namespace native { namespace table {
                 result += "\n";
             }
         } catch (TypeError) {
-            vm->Raise_Error(_SC("table::tostring: invalid receiver of type `%s` "
-                                "(are you calling the _tostring() metamethod on "
-                                "the `table` default delegate directly?)"),
-                                IdType2Name(sq_gettype(vm, -1)));
             return SQ_ERROR;
         }
         

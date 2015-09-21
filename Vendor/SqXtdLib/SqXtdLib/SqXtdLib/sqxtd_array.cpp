@@ -52,17 +52,17 @@ namespace sqxtd { namespace native { namespace array {
         native_string result("[");
         
         try {
-            sqxtd::array array = object::from_stack(vm, -1);
+            sqxtd::array array{validate<sqxtd::array>(object::from_stack(vm, -1))
+                .with_error(_SC("array::tostring: invalid receiver of type `%s` "
+                                "(are you calling the _tostring() metamethod on "
+                                "the `array` default delegate directly?)"),
+                            IdType2Name(sq_gettype(vm, -1))).value()};
             
             for (auto &object : array) {
                 result += object.tostring_quoted();
                 result += ", ";
             }
         } catch (TypeError) {
-            vm->Raise_Error(_SC("array::tostring: invalid receiver of type `%s` "
-                                "(are you calling the _tostring() metamethod on "
-                                "the `array` default delegate directly?)"),
-                            IdType2Name(sq_gettype(vm, -1)));
             return SQ_ERROR;
         }
         
@@ -85,43 +85,40 @@ namespace sqxtd { namespace native { namespace array {
 namespace sqxtd { namespace native { namespace array {
     static SQRESULT components_joined_by_string(HSQUIRRELVM vm) {
         try {
-            sqxtd::array array = object::from_stack(vm, -2);
-            
-            try {
-                sqxtd::string joiner = object::from_stack(vm, -1);
-                
-                native_string result;
-                
-                auto iter = array.begin();
-                auto end = array.end();
-                
-                while (iter != end) {
-                    result += (*iter).tostring();
-                    
-                    ++iter;
-                    
-                    if (iter != end) {
-                        result += joiner.tostring();
-                    }
-                }
-                
-                push_string(vm, result);
-            } catch (TypeError) {
-                vm->Raise_Error(_SC("array::%s invalid parameter of type `%s` (expected a `string`)"),
-                                kKeyComponentsJoinedByString,
-                                IdType2Name(sq_gettype(vm, -1)));
-                return SQ_ERROR;
-            }
-            
-        } catch (TypeError) {
-            vm->Raise_Error(_SC("array::%s invalid receiver of type `%s` "
-                                "(are you calling the %s function on "
-                                "the `array` default delegate directly?)"),
+            sqxtd::array array
+                {validate<sqxtd::array>(object::from_stack(vm, -2))
+                    .with_error(_SC("array::%s invalid receiver of type `%s` "
+                                    "(are you calling the %s function on "
+                                    "the `array` default delegate directly?)"),
                                 kKeyComponentsJoinedByString,
                                 IdType2Name(sq_gettype(vm, -2)),
-                                kKeyComponentsJoinedByString);
+                                kKeyComponentsJoinedByString).value()};
+            
+            sqxtd::string joiner{validate<sqxtd::string>(object::from_stack(vm, -1))
+                .with_error(_SC("array::%s invalid parameter of type `%s` (expected a `string`)"),
+                            kKeyComponentsJoinedByString,
+                            IdType2Name(sq_gettype(vm, -1))).value()};
+            
+            native_string result;
+            
+            auto iter = array.begin();
+            auto end = array.end();
+            
+            while (iter != end) {
+                result += (*iter).tostring();
+                
+                ++iter;
+                
+                if (iter != end) {
+                    result += joiner.tostring();
+                }
+            }
+            
+            push_string(vm, result);
+        } catch (TypeError) {
             return SQ_ERROR;
         }
+        
         return 1;
     }
 }}}

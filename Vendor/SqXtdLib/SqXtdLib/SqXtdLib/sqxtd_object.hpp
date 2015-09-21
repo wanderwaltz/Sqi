@@ -51,6 +51,10 @@ namespace sqxtd {
             return _value._type;
         }
         
+        inline HSQUIRRELVM &vm() const {
+            return _vm;
+        }
+        
         inline const native_string tostring() const {
             SQObjectPtr result;
             

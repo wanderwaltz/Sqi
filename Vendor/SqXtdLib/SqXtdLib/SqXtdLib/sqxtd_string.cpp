@@ -116,34 +116,30 @@ namespace sqxtd {
     namespace native { namespace string {
         static SQRESULT components_separated_by_string(HSQUIRRELVM vm) {
             try {
-                sqxtd::string self = object::from_stack(vm, -2);
-                
-                try {
-                    sqxtd::string separator = object::from_stack(vm, -1);
-                    
-                    auto components = split(self.tostring(), separator.tostring());
-                    auto array = sqxtd::array(vm);
-                    
-                    for (auto &string : components) {
-                        array.append(sqxtd::string{vm, string});
-                    }
-                    
-                    vm->Push(array);
-                    
-                } catch (TypeError) {
-                    vm->Raise_Error(_SC("string::%s invalid parameter of type `%s` (expected a `string`)"),
+                sqxtd::string self
+                    {validate<sqxtd::string>(object::from_stack(vm, -2))
+                        .with_error(_SC("string::%s invalid receiver of type `%s` "
+                                        "(are you calling the %s function on "
+                                        "the `string` default delegate directly?)"),
                                     kKeyComponentsSeparatedByString,
-                                    IdType2Name(sq_gettype(vm, -1)));
-                    return SQ_ERROR;
+                                    IdType2Name(sq_gettype(vm, -2)),
+                                    kKeyComponentsSeparatedByString).value()};
+                
+                sqxtd::string separator
+                    {validate<sqxtd::string>(object::from_stack(vm, -1))
+                        .with_error(_SC("string::%s invalid parameter of type `%s` (expected a `string`)"),
+                                    kKeyComponentsSeparatedByString,
+                                    IdType2Name(sq_gettype(vm, -1))).value()};
+                
+                auto components = split(self.tostring(), separator.tostring());
+                auto array = sqxtd::array(vm);
+                
+                for (auto &string : components) {
+                    array.append(sqxtd::string{vm, string});
                 }
                 
+                vm->Push(array);
             } catch (TypeError) {
-                vm->Raise_Error(_SC("string::%s invalid receiver of type `%s` "
-                                    "(are you calling the %s function on "
-                                    "the `array` default delegate directly?)"),
-                                kKeyComponentsSeparatedByString,
-                                IdType2Name(sq_gettype(vm, -2)),
-                                kKeyComponentsSeparatedByString);
                 return SQ_ERROR;
             }
             

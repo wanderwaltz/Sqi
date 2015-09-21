@@ -30,7 +30,44 @@
 
 #ifdef __cplusplus
 
+#include "sqxtd_types.hpp"
+#include "sqxtd_object.hpp"
+
 namespace sqxtd {
+    
+    template<typename T>
+    class validate {
+    public:
+        validate(const object &obj) : _obj(obj) {}
+        
+        const validate &with_error(const SQChar *format, ...) {
+            static const size_t buffer_size = 1024;
+            static SQChar buffer[buffer_size];
+            memset(buffer, 0, sizeof(SQChar)*buffer_size);
+            
+            va_list vl;
+            va_start(vl, format);
+            vsnprintf(buffer, buffer_size-1, format, vl);
+            va_end(vl);
+            
+            _error = native_string{buffer};
+            
+            return *this;
+        }
+        
+        T value() const {
+            try {
+                return static_cast<T>(_obj);
+            } catch (TypeError) {
+                _obj.vm()->Raise_Error(_error.c_str());
+                throw;
+            }
+        }
+    private:
+        const object &_obj;
+        native_string _error;
+    };
+    
     namespace DefaultDelegable {
         const SQUnsignedInteger Null   = OT_NULL;
         const SQUnsignedInteger Scalar = OT_INTEGER | OT_FLOAT | OT_BOOL | OT_STRING;
