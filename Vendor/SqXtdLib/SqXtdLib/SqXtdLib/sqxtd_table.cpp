@@ -41,7 +41,7 @@ namespace sqxtd { namespace native { namespace table {
                                 IdType2Name(sq_gettype(vm, -1))).value()};
             
             for (auto &pair : table) {
-                auto key_value = format_key_value(pair.first.tostring(), pair.second.tostring_quoted());
+                auto key_value = format_key_value(pair.first.tostring(), quoted(pair.second).tostring());
                 
                 result += indent_string(key_value);
                 result += "\n";

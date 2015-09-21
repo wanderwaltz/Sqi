@@ -59,7 +59,7 @@ namespace sqxtd { namespace native { namespace array {
                             IdType2Name(sq_gettype(vm, -1))).value()};
             
             for (auto &object : array) {
-                result += object.tostring_quoted();
+                result += quoted(object).tostring();
                 result += ", ";
             }
         } catch (TypeError) {

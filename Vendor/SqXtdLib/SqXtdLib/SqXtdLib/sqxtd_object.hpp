@@ -65,15 +65,6 @@ namespace sqxtd {
             return native_string(pString->_val, pString->_len);
         }
         
-        inline const native_string tostring_quoted() const {
-            if (type() == OT_STRING) {
-                return native_string{"\""} + tostring() + native_string{"\""};
-            }
-            else {
-                return tostring();
-            }
-        }
-        
         inline operator string() const;
         inline operator array() const;
         inline operator table() const;
