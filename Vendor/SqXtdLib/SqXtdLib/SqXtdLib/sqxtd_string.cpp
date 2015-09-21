@@ -23,6 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+#include "sqxtd_vm.hpp"
 #include "sqxtd_string.h"
 #include "sqxtd_utils.h"
 #include "sqxtd_array.h"
@@ -114,22 +115,24 @@ namespace sqxtd {
     
     
     namespace native { namespace string {
-        static SQRESULT components_separated_by_string(HSQUIRRELVM vm) {
+        static SQRESULT components_separated_by_string(HSQUIRRELVM sqvm) {
+            sqxtd::vm vm{sqvm};
+            
             try {
                 sqxtd::string self
-                    {validate<sqxtd::string>(object::from_stack(vm, -2))
+                    {validate<sqxtd::string>(vm.stack.at(-2))
                         .with_error(_SC("string::%s invalid receiver of type `%s` "
                                         "(are you calling the %s function on "
                                         "the `string` default delegate directly?)"),
                                     kKeyComponentsSeparatedByString,
-                                    IdType2Name(sq_gettype(vm, -2)),
+                                    vm.stack.typename_at(-2),
                                     kKeyComponentsSeparatedByString).value()};
                 
                 sqxtd::string separator
-                    {validate<sqxtd::string>(object::from_stack(vm, -1))
+                    {validate<sqxtd::string>(vm.stack.at(-1))
                         .with_error(_SC("string::%s invalid parameter of type `%s` (expected a `string`)"),
                                     kKeyComponentsSeparatedByString,
-                                    IdType2Name(sq_gettype(vm, -1))).value()};
+                                    vm.stack.typename_at(-2)).value()};
                 
                 auto components = split(self.tostring(), separator.tostring());
                 auto array = sqxtd::array(vm);
@@ -138,7 +141,7 @@ namespace sqxtd {
                     array.append(sqxtd::string{vm, string});
                 }
                 
-                vm->Push(array);
+                vm.stack.push(array);
             } catch (TypeError) {
                 return SQ_ERROR;
             }

@@ -30,6 +30,7 @@
 
 #ifdef __cplusplus
 
+#include "sqxtd_vm.hpp"
 #include "sqxtd_object.hpp"
 
 namespace sqxtd {
@@ -39,7 +40,6 @@ namespace sqxtd {
     class array {
     public:
         array(HSQUIRRELVM &vm, SQArray *array) : _vm(vm), _array(array) {};
-        
         array(HSQUIRRELVM &vm, SQInteger initialSize = 0) :
             _vm(vm), _array(SQArray::Create(vm->_sharedstate, initialSize)) {}
         

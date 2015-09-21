@@ -23,6 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+#include "sqxtd_vm.hpp"
 #include "sqxtd_array.h"
 #include "sqxtd_string.h"
 #include "sqxtd_utils.h"
@@ -48,15 +49,17 @@ void sqxtd_register_array(HSQUIRRELVM vm) {
 }
 
 namespace sqxtd { namespace native { namespace array {
-    SQRESULT tostring(HSQUIRRELVM vm) {
+    SQRESULT tostring(HSQUIRRELVM sqvm) {
         native_string result("[");
         
+        sqxtd::vm vm{sqvm};
+        
         try {
-            sqxtd::array array{validate<sqxtd::array>(object::from_stack(vm, -1))
+            sqxtd::array array{validate<sqxtd::array>(vm.stack.at(-1))
                 .with_error(_SC("array::tostring: invalid receiver of type `%s` "
                                 "(are you calling the _tostring() metamethod on "
                                 "the `array` default delegate directly?)"),
-                            IdType2Name(sq_gettype(vm, -1))).value()};
+                            vm.stack.typename_at(-1)).value()};
             
             for (auto &object : array) {
                 result += quoted(object).tostring();
@@ -73,7 +76,7 @@ namespace sqxtd { namespace native { namespace array {
         
         result += "]";
         
-        push_string(vm, result);
+        vm.stack.push(result);
         return 1;
     }
 }}}
@@ -83,21 +86,23 @@ namespace sqxtd { namespace native { namespace array {
 // MARK: - Private
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace sqxtd { namespace native { namespace array {
-    static SQRESULT components_joined_by_string(HSQUIRRELVM vm) {
+    static SQRESULT components_joined_by_string(HSQUIRRELVM sqvm) {
+        sqxtd::vm vm{sqvm};
+        
         try {
             sqxtd::array array
-                {validate<sqxtd::array>(object::from_stack(vm, -2))
+                {validate<sqxtd::array>(vm.stack.at(-2))
                     .with_error(_SC("array::%s invalid receiver of type `%s` "
                                     "(are you calling the %s function on "
                                     "the `array` default delegate directly?)"),
                                 kKeyComponentsJoinedByString,
-                                IdType2Name(sq_gettype(vm, -2)),
+                                vm.stack.typename_at(-2),
                                 kKeyComponentsJoinedByString).value()};
             
-            sqxtd::string joiner{validate<sqxtd::string>(object::from_stack(vm, -1))
+            sqxtd::string joiner{validate<sqxtd::string>(vm.stack.at(-1))
                 .with_error(_SC("array::%s invalid parameter of type `%s` (expected a `string`)"),
                             kKeyComponentsJoinedByString,
-                            IdType2Name(sq_gettype(vm, -1))).value()};
+                            vm.stack.typename_at(-1)).value()};
             
             native_string result;
             
@@ -114,7 +119,7 @@ namespace sqxtd { namespace native { namespace array {
                 }
             }
             
-            push_string(vm, result);
+            vm.stack.push(result);
         } catch (TypeError) {
             return SQ_ERROR;
         }

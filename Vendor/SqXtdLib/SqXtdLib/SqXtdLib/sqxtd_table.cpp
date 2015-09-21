@@ -23,22 +23,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+#include "sqxtd_vm.hpp"
 #include "sqxtd_table.h"
 #include "sqxtd_string.h"
 #include "sqxtd_object.hpp"
 #include "sqxtd_utils.h"
 
 namespace sqxtd { namespace native { namespace table {
-    SQRESULT tostring(HSQUIRRELVM vm) {
+    SQRESULT tostring(HSQUIRRELVM sqvm) {
+        sqxtd::vm vm{sqvm};
+        
         native_string result("{\n");
         
         try {
             sqxtd::table table
-                {validate<sqxtd::table>(object::from_stack(vm, -1))
+                {validate<sqxtd::table>(vm.stack.at(-1))
                     .with_error(_SC("table::tostring: invalid receiver of type `%s` "
                                     "(are you calling the _tostring() metamethod on "
                                     "the `table` default delegate directly?)"),
-                                IdType2Name(sq_gettype(vm, -1))).value()};
+                                vm.stack.typename_at(-1)).value()};
             
             for (auto &pair : table) {
                 auto key_value = format_key_value(pair.first.tostring(), quoted(pair.second).tostring());
@@ -52,7 +55,7 @@ namespace sqxtd { namespace native { namespace table {
         
         result += "}";
         
-        push_string(vm, result);
+        vm.stack.push(result);
         return 1;
     }
 }}}

@@ -41,10 +41,6 @@ namespace sqxtd {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class object {
     public:
-        inline static object from_stack(HSQUIRRELVM &vm, SQInteger index) {
-            return object{vm, stack_get(vm, index)};
-        }
-        
         object(HSQUIRRELVM &vm, const SQObjectPtr &value) : _vm(vm), _value(value) {};
         
         inline SQObjectType type() const {
