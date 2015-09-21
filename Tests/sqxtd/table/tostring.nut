@@ -39,7 +39,7 @@ SqTest.spec("table", @{
             };
 
             expect(table.tostring()).to().equal("{\n"
-                                                 "\t"  "name = John Appleseed\n"
+                                                 "\t"  "name = \"John Appleseed\"\n"
                                                  "\t"  "age = 27\n"
                                                 "}");
         });
@@ -54,9 +54,9 @@ SqTest.spec("table", @{
 
             expect(table.tostring()).to().equal("{\n"
                                                   "\t"  "nestedTable = {\n"
-                                                  "\t"                 "\t"  "x = y\n"
+                                                  "\t"                 "\t"  "x = \"y\"\n"
                                                   "\t"  "}\n"
-                                                  "\t"  "key = value\n"
+                                                  "\t"  "key = \"value\"\n"
                                                 "}");
         });
     });
