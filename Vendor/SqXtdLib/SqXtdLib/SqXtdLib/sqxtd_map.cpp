@@ -58,8 +58,8 @@ namespace sqxtd { namespace native { namespace common {
     static SQRESULT map_single(HSQUIRRELVM vm) {
         SQObjectPtr closure = vm->GetAt(vm->_top-1);
         
-        if ((type(closure) != OT_CLOSURE) && (type(closure) != OT_NATIVECLOSURE)) {
-            vm->Raise_ParamTypeError(1, OT_CLOSURE | OT_NATIVECLOSURE, type(closure));
+        if ((sq_type(closure) != OT_CLOSURE) && (sq_type(closure) != OT_NATIVECLOSURE)) {
+            vm->Raise_ParamTypeError(1, OT_CLOSURE | OT_NATIVECLOSURE, sq_type(closure));
             return 0;
         }
         
