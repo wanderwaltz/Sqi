@@ -150,9 +150,11 @@ function import_spec(path, constant = null, required_semver = null) {
             failed = true;
         }
 
-        print("'" + path + "' import SKIPPED (" +
-                constant + " >= " + required_semver + " requirement is not met)");
-        return;
+        if (failed) {
+            print("'" + path + "' import SKIPPED (" +
+                    constant + " >= " + required_semver + " requirement is not met)");
+            return;
+        }
     }
 
     ::import(path);
