@@ -28,6 +28,7 @@
 
 #ifdef __cplusplus
 #include "sqxtd_object.hpp"
+#include "sqxtd_table.h"
 
 namespace sqxtd {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,6 +46,8 @@ namespace sqxtd {
             inline object at(SQInteger pos) const;
             inline SQObjectType type_at(SQInteger pos) const;
             inline const SQChar *typename_at(SQInteger pos) const;
+            
+            class preserve_top;
         private:
             HSQUIRRELVM &_vm;
         };
@@ -56,10 +59,17 @@ namespace sqxtd {
         inline operator HSQUIRRELVM &() {
             return _vm;
         }
-    private:
-        HSQUIRRELVM &_vm;
         
+        inline table const_table() const;
+        
+        template<typename T>
+        inline table::slot const_table(T key) const;
+        
+        inline table root_table() const;
+    private:
+        HSQUIRRELVM _vm;
     };
+    
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // MARK: - stack
@@ -86,6 +96,41 @@ namespace sqxtd {
     
     inline const SQChar *vm::stack::typename_at(SQInteger pos) const {
         return IdType2Name(type_at(pos));
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - stack::preserve_top
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class vm::stack::preserve_top {
+    public:
+        preserve_top(const HSQUIRRELVM &vm) : _vm(vm), _top(sq_gettop(vm)) {};
+        ~preserve_top() {
+            sq_settop(_vm, _top);
+        }
+    private:
+        const HSQUIRRELVM _vm;
+        const SQInteger _top;
+    };
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - vm methods
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    inline table vm::root_table() const {
+        stack::preserve_top pt{_vm};
+        sq_pushroottable(_vm);
+        return stack.at(-1);
+    }
+    
+    inline table vm::const_table() const {
+        stack::preserve_top pt{_vm};
+        sq_pushconsttable(_vm);
+        return stack.at(-1);
+    }
+    
+    template<typename T>
+    inline table::slot vm::const_table(T key) const {
+        return const_table()[key];
     }
 }
 
