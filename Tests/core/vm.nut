@@ -1,9 +1,8 @@
-#!/usr/bin/sqi
 //
-//  run_all.nut
+//  core/vm.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 03.09.15.
+//  Created by Egor Chiglintsev on 22.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,27 +23,4 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest <- {};
-::import("../Vendor/SqTest/SqTest", SqTest);
-
-SqTest.import_spec("core/vm");
-SqTest.import_spec("core/integer");
-SqTest.import_spec("core/float");
-SqTest.import_spec("core/bool");
-SqTest.import_spec("core/string");
-SqTest.import_spec("core/table");
-SqTest.import_spec("core/array");
-SqTest.import_spec("sqxtd/table");
-
-SqTest.import_spec("sqxtd/integer");
-SqTest.import_spec("sqxtd/float");
-SqTest.import_spec("sqxtd/bool");
-SqTest.import_spec("sqxtd/array");
-SqTest.import_spec("sqxtd/string");
-SqTest.import_spec("sqxtd/null");
-
-SqTest.import_spec("utf8/string");
-
-SqTest.import_spec("getdefaultdelegate_spec");
-
-SqTest.run({ hide_successful = true });
+SqTest.import_spec("vm/lexer", "SQUIRREL_EXTENSIONS_VERSION", "0.0.1");
