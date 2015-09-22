@@ -51,11 +51,6 @@ void sqxtd_register_string(HSQUIRRELVM vm) {
 
 
 namespace sqxtd {
-    void push_string(HSQUIRRELVM vm, const native_string &s) {
-        sq_pushstring(vm, s.c_str(), s.length());
-    }
-    
-    
     const native_string indent_string(const native_string &string, const SQChar *with) {
         native_string result;
         
