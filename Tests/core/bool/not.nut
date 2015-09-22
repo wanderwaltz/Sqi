@@ -1,8 +1,8 @@
 //
-//  core/bool.nut
+//  core/bool/not.nut
 //  Sqi
 //
-//  Created by Egor Chiglintsev on 08.09.15.
+//  Created by Egor Chiglintsev on 22.09.15.
 //  Copyright (c) 2015  Egor Chiglintsev
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,11 +23,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-SqTest.import_spec("bool/typeof");
-SqTest.import_spec("bool/tointeger");
-SqTest.import_spec("bool/tofloat");
-SqTest.import_spec("bool/tostring");
-SqTest.import_spec("bool/weakref");
-SqTest.import_spec("bool/and");
-SqTest.import_spec("bool/or");
-SqTest.import_spec("bool/not");
+SqTest.spec("bool", @{
+    describe("not", @{
+        it("satisfies !true == false", @{
+            expect(!true).to().equal(false);
+        });
+
+        it("satisfies !false == true", @{
+            expect(!false).to().equal(true);
+        });
+    });
+});
