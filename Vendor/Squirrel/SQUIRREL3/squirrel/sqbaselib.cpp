@@ -317,7 +317,7 @@ void sq_base_register(HSQUIRRELVM v)
 	sq_pushstring(v,SQUIRREL_VERSION,-1);
     sq_newslot(v,-3, SQFalse);
     sq_pushstring(v,_SC("_extensions_version_"),-1);
-    sq_pushstring(v,SQUIRREL_EXTENSIONS_VERSION,-1);
+    sq_pushstring(v,SQUIRREL_EXTENSIONS_VERSION_LONG,-1);
 	sq_newslot(v,-3, SQFalse);
 	sq_pushstring(v,_SC("_charsize_"),-1);
 	sq_pushinteger(v,sizeof(SQChar));
@@ -332,7 +332,7 @@ void sq_base_register(HSQUIRRELVM v)
     
     sq_pushconsttable(v);
     sq_pushstring(v,_SC("SQUIRREL_EXTENSIONS_VERSION"),-1);
-    sq_pushstring(v,SQUIRREL_EXTENSIONS_VERSION,-1);
+    sq_pushstring(v,SQUIRREL_EXTENSIONS_VERSION_SHORT,-1);
     sq_newslot(v,-3, SQFalse);
     sq_pop(v, 1);
 }

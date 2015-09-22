@@ -146,7 +146,8 @@ typedef char SQChar;
 #define SQUIRREL_AUTHOR                    _SC("Alberto Demichelis")
 #define SQUIRREL_VERSION_NUMBER            307
 
-#define SQUIRREL_EXTENSIONS_VERSION        _SC("Squirrel Extension 0.0.1")
+#define SQUIRREL_EXTENSIONS_VERSION_SHORT  _SC("0.0.1")
+#define SQUIRREL_EXTENSIONS_VERSION_LONG   _SC("Squirrel Extension 0.0.1")
 #define SQUIRREL_EXTENSIONS_COPYRIGHT      _SC("Copyright (C) 2015 Egor Chiglintsev")
 #define SQUIRREL_EXTENSIONS_AUTHOR         _SC("Egor Chiglintsev")
 #define SQUIRREL_EXTENSIONS_VERSION_NUMBER 001
