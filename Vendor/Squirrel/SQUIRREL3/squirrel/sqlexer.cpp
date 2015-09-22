@@ -18,6 +18,59 @@
 #define TERMINATE_BUFFER() {_longstr.push_back(_SC('\0'));}
 #define ADD_KEYWORD(key,id) _keywords->NewSlot( SQString::Create(ss, _SC(#key)) ,SQInteger(id))
 
+bool identifier_restricted(SQChar c) {
+    switch (c) {
+        case '+':
+        case '-':
+        case '@':
+        case '#':
+        case '$':
+        case '%':
+        case '^':
+        case '&':
+        case '*':
+        case '(':
+        case ')':
+        case '{':
+        case '}':
+        case '[':
+        case ']':
+        case '\'':
+        case '"':
+        case '\\':
+        case '/':
+        case '~':
+        case '`':
+        case '.':
+        case ',':
+        case '<':
+        case '>':
+        case '|':
+        case '\t':
+        case '\n':
+        case '\r':
+        case ' ':
+        case ':':
+        case ';':
+        case '=':
+        // case '!':     // '!' is explicitly allowed, but not the first symbol in identifier, see scisalpha
+        // case '?':     // '?' is explicitly allowed, but not the first symbol in identifier, see scisalpha
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool scisalpha(SQChar c) {
+    return (scisdigit(c) == false) && (identifier_restricted(c) == false) && (c != '!') && (c != '?');
+}
+
+bool scisalnum(SQChar c) {
+    return (identifier_restricted(c) == false);
+}
+
+
+
 SQLexer::SQLexer(){}
 SQLexer::~SQLexer()
 {
@@ -469,6 +522,7 @@ SQInteger SQLexer::ReadNumber()
 	}
 	return 0;
 }
+
 
 SQInteger SQLexer::ReadID()
 {

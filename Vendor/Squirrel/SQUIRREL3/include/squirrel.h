@@ -129,8 +129,6 @@ typedef char SQChar;
 #define scisdigit	isdigit
 #define scisxdigit	isxdigit
 #define sciscntrl	iscntrl
-#define scisalpha	isalpha
-#define scisalnum	isalnum
 #define scprintf	printf
 #define MAX_CHAR 0xFF
 
