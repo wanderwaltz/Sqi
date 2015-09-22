@@ -58,7 +58,7 @@ namespace sqxtd {
         T value() const {
             try {
                 return static_cast<T>(_obj);
-            } catch (TypeError) {
+            } catch (object::invalid_cast) {
                 _obj.vm()->Raise_Error(_error.c_str());
                 throw;
             }

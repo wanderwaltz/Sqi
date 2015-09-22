@@ -41,6 +41,8 @@ namespace sqxtd {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     class object {
     public:
+        class invalid_cast {};
+        
         object(HSQUIRRELVM &vm, const SQObjectPtr &value) : _vm(vm), _value(value) {};
         
         inline SQObjectType type() const {

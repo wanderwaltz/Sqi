@@ -32,10 +32,6 @@
 namespace sqxtd {
     typedef std::basic_string<SQChar> native_string;
     
-    enum class TypeError {
-        InvalidCast
-    };
-    
     class object;
     class string;
     class array;

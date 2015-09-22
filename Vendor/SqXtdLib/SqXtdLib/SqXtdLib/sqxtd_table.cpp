@@ -49,7 +49,7 @@ namespace sqxtd { namespace native { namespace table {
                 result += indent_string(key_value);
                 result += "\n";
             }
-        } catch (TypeError) {
+        } catch (object::invalid_cast) {
             return SQ_ERROR;
         }
         

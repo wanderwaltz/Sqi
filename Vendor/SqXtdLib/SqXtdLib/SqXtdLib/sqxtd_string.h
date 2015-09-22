@@ -70,7 +70,7 @@ namespace sqxtd {
     
     inline object::operator string() const {
         if (type() != OT_STRING) {
-            throw TypeError::InvalidCast;
+            throw object::invalid_cast{};
         }
         
         return string{_vm, _string(_value)};

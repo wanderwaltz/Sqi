@@ -142,7 +142,7 @@ namespace sqxtd {
                 }
                 
                 vm.stack.push(array);
-            } catch (TypeError) {
+            } catch (object::invalid_cast) {
                 return SQ_ERROR;
             }
             

@@ -65,7 +65,7 @@ namespace sqxtd { namespace native { namespace array {
                 result += quoted(object).tostring();
                 result += ", ";
             }
-        } catch (TypeError) {
+        } catch (object::invalid_cast) {
             return SQ_ERROR;
         }
         
@@ -120,7 +120,7 @@ namespace sqxtd { namespace native { namespace array {
             }
             
             vm.stack.push(result);
-        } catch (TypeError) {
+        } catch (object::invalid_cast) {
             return SQ_ERROR;
         }
         

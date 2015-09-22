@@ -60,7 +60,7 @@ namespace sqxtd {
     
     inline object::operator table() const {
         if (type() != OT_TABLE) {
-            throw TypeError::InvalidCast;
+            throw object::invalid_cast{};
         }
         
         return table{_vm, _table(_value)};

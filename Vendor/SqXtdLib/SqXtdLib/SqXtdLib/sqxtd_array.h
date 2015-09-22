@@ -65,7 +65,7 @@ namespace sqxtd {
     
     inline object::operator array() const {
         if (type() != OT_ARRAY) {
-            throw TypeError::InvalidCast;
+            throw object::invalid_cast{};
         }
         
         return array{_vm, _array(_value)};
