@@ -31,6 +31,7 @@
 #ifdef __cplusplus
 
 #include "sqxtd_object.hpp"
+#include "sqxtd_string.h"
 
 namespace sqxtd {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,9 +42,16 @@ namespace sqxtd {
         table(HSQUIRRELVM &vm, SQTable *table) : _vm(vm), _table(table) {}
         
         class iterator;
+        class slot;
         
         inline iterator begin() const;
         inline iterator end() const;
+        
+        inline slot operator [](const native_string &key) const;
+        
+        inline void push() const {
+            sq_pushobject(_vm, SQObjectPtr{_table});
+        }
     private:
         HSQUIRRELVM &_vm;
         SQTable * const _table;
@@ -56,6 +64,36 @@ namespace sqxtd {
         }
         
         return table{_vm, _table(_value)};
+    }
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - slot
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    class table::slot {
+    public:
+        slot(const table &t, object &key) : _table(t), _key(key) {};
+        slot(const table &t, const native_string &key) : _table(t), _key(string{t._vm, key}) {};
+        
+        inline string operator= (const native_string &value) const {
+            string result{_table._vm, value};
+            
+            _table.push();
+            _key.push();
+            result.push();
+            
+            sq_newslot(_table._vm, -3, SQFalse);
+            sq_pop(_table._vm, 1);
+            
+            return result;
+        }
+    private:
+        table _table;
+        object _key;
+    };
+    
+    inline table::slot table::operator [](const native_string &key) const {
+        return slot(*this, key);
     }
     
     
