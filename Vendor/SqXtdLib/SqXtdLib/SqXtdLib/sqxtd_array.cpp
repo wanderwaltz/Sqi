@@ -42,7 +42,7 @@ namespace sqxtd { namespace native { namespace array {
 // MARK: - Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void sqxtd_register_array(HSQUIRRELVM vm) {
-    sqxtd::set_global_constant(vm, _SC("SQXTD_ARRAY_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
+    sqxtd::vm{vm}.const_table(_SC("SQXTD_ARRAY_EXTENSION_VERSION")) = _SC(SQXTD_VERSION);
     
     sqxtd::set_default_delegate_native(vm, OT_ARRAY, kKeyComponentsJoinedByString,
         &sqxtd::native::array::components_joined_by_string);

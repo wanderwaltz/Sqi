@@ -26,6 +26,7 @@
 #include "SqXtdLib.h"
 #include "string.h"
 
+#include "sqxtd_vm.hpp"
 #include "sqxtd_utils.h"
 #include "sqxtd_table.h"
 #include "sqxtd_array.h"
@@ -51,8 +52,8 @@ namespace sqxtd {
 // Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm) {
-    sqxtd::set_global_constant(vm, _SC("SQXTD_GET_DEFAULT_DELEGATE_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
-    
+    sqxtd::vm{vm}.const_table(_SC("SQXTD_GET_DEFAULT_DELEGATE_EXTENSION_VERSION")) = _SC(SQXTD_VERSION);
+
     const SQChar *name = "getdefaultdelegate";
     
     sq_pushstring(vm, name, strlen(name));
@@ -62,7 +63,7 @@ void sqxtd_register_getdefaultdelegate(HSQUIRRELVM vm) {
 
 
 void sqxtd_register_default_string_representations(HSQUIRRELVM vm) {
-    sqxtd::set_global_constant(vm, _SC("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
+    sqxtd::vm{vm}.const_table(_SC("SQXTD_DEFAULT_TOSTRING_REPRESENTATIONS_EXTENSION_VERSION")) = _SC(SQXTD_VERSION);
     
     sqxtd::set_default_delegate_native(vm, OT_TABLE, "_tostring", sqxtd::native::table::tostring);
     sqxtd::set_default_delegate_native(vm, OT_ARRAY, "_tostring", sqxtd::native::array::tostring);
@@ -74,13 +75,6 @@ namespace sqxtd {
         sqxtd::util::enumerate_default_delegable_types([=](SQObjectType type) {
             sqxtd::util::set_default_delegate_native_impl(vm, type, key, func);
         }, typemask);
-    }
-    
-    
-    void set_global_constant(HSQUIRRELVM vm, const SQChar *key, const SQChar *value) {
-        SQString *keyString = SQString::Create(vm->_sharedstate, key);
-        SQString *valueString = SQString::Create(vm->_sharedstate, value);
-        _table(vm->_sharedstate->_consts)->NewSlot(keyString, valueString);
     }
 };
 
@@ -123,7 +117,8 @@ namespace sqxtd {
         }
         
         
-        static void set_default_delegate_native_impl(HSQUIRRELVM vm, SQObjectType type, const SQChar *key, SQFUNCTION func) {
+        static void set_default_delegate_native_impl(HSQUIRRELVM vm, SQObjectType type,
+                                                     const SQChar *key, SQFUNCTION func) {
             sq_getdefaultdelegate(vm, type);
             sq_pushstring(vm, key, strlen(key));
             sq_newclosure(vm, func, 0);

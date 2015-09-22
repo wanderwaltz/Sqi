@@ -69,6 +69,10 @@ namespace sqxtd {
             return SQObjectPtr{_value};
         }
         
+        inline void push() const {
+            _vm->Push(_value);
+        }
+        
     private:
         HSQUIRRELVM &_vm;
         SQObjectPtr _value;

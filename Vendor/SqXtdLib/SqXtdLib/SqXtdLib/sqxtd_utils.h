@@ -81,7 +81,6 @@ namespace sqxtd {
     };
     
     void set_default_delegate_native(HSQUIRRELVM vm, SQUnsignedInteger typemask, const SQChar *key, SQFUNCTION func);
-    void set_global_constant(HSQUIRRELVM vm, const SQChar *key, const SQChar *value);
 }
 
 #endif // #ifdef __cplusplus

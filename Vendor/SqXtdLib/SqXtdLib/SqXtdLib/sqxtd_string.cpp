@@ -43,7 +43,7 @@ namespace sqxtd { namespace native { namespace  string {
 // MARK: - Public
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void sqxtd_register_string(HSQUIRRELVM vm) {
-    sqxtd::set_global_constant(vm, _SC("SQXTD_STRING_EXTENSION_VERSION"), _SC(SQXTD_VERSION));
+    sqxtd::vm{vm}.const_table(_SC("SQXTD_STRING_EXTENSION_VERSION")) = _SC(SQXTD_VERSION);
     
     sqxtd::set_default_delegate_native(vm, OT_STRING, kKeyComponentsSeparatedByString,
                                        &sqxtd::native::string::components_separated_by_string);

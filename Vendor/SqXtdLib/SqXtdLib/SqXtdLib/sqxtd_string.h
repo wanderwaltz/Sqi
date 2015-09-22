@@ -58,6 +58,10 @@ namespace sqxtd {
             return object{_vm, SQObjectPtr{_string}};
         }
         
+        inline void push() const {
+            sq_pushobject(_vm, SQObjectPtr{_string});
+        }
+        
     private:
         HSQUIRRELVM &_vm;
         SQString *_string;
