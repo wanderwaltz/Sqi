@@ -24,7 +24,7 @@
 //  SOFTWARE.
 
 SqTest.spec("table", @{
-    describe(@"typeof", @{
+    describe("typeof", @{
         it("returns the same value for all tables", @{
             expect(typeof({})).to().equal(typeof(getroottable()));
             expect(typeof({})).to().equal(typeof(getconsttable()));
